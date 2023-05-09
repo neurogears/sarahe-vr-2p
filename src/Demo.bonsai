@@ -5,8 +5,8 @@
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -16,17 +16,17 @@
           <Nodes>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateWindow">
-                <gl:Width>1920</gl:Width>
-                <gl:Height>1080</gl:Height>
+                <gl:Width>960</gl:Width>
+                <gl:Height>540</gl:Height>
                 <gl:VSync>On</gl:VSync>
-                <gl:SwapSync>true</gl:SwapSync>
+                <gl:SwapSync>false</gl:SwapSync>
                 <gl:ClearColor>Gray</gl:ClearColor>
                 <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                 <gl:CursorVisible>true</gl:CursorVisible>
                 <gl:Location xsi:nil="true" />
-                <gl:WindowBorder>Hidden</gl:WindowBorder>
-                <gl:WindowState>Fullscreen</gl:WindowState>
-                <gl:DisplayDevice>Second</gl:DisplayDevice>
+                <gl:WindowBorder>Fixed</gl:WindowBorder>
+                <gl:WindowState>Normal</gl:WindowState>
+                <gl:DisplayDevice>First</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
                 <gl:RenderState />
@@ -94,6 +94,19 @@
                     <gl:ColorType>Unchanged</gl:ColorType>
                     <gl:FlipMode>Vertical</gl:FlipMode>
                   </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>Floor</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Assets\Textures\Floor.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
                 </gl:Textures>
               </Combinator>
             </Expression>
@@ -111,7 +124,7 @@
                 <Z>0</Z>
               </Eye>
               <NearClip>1E-05</NearClip>
-              <FarClip>1000</FarClip>
+              <FarClip>1</FarClip>
               <Light>
                 <X>0</X>
                 <Y>0</Y>
@@ -215,6 +228,7 @@
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="WorkflowOutput" />
       <Expression xsi:type="GroupWorkflow">
         <Name>PositionUpdates</Name>
         <Workflow>
@@ -226,17 +240,17 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0</gl:X>
-                <gl:Y>0.2</gl:Y>
-                <gl:Z>0</gl:Z>
+              <Combinator xsi:type="FloatProperty">
+                <Value>0</Value>
               </Combinator>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Y" DisplayName="DefaultY" />
+              <Property Name="X" DisplayName="DefaultX" />
+            </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0</gl:X>
-                <gl:Y>0.2</gl:Y>
-                <gl:Z>0</gl:Z>
+              <Combinator xsi:type="FloatProperty">
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -262,34 +276,41 @@
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>TeleportPosition</Name>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gli:MouseWheel" />
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="PositionMax" />
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>EventArgs.DeltaPrecise</Selector>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="FloatProperty">
+                      <Value>7</Value>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Gain" />
-                  </Expression>
-                  <Expression xsi:type="Multiply">
-                    <Operand xsi:type="FloatProperty">
-                      <Value>-0.025</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Z" Selector="it" />
-                    </PropertyMappings>
+                    <Property Name="Value" DisplayName="PositionMin" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0</gl:X>
-                      <gl:Y>0</gl:Y>
-                      <gl:Z>0.025</gl:Z>
+                    <Combinator xsi:type="FloatProperty">
+                      <Value>-1</Value>
                     </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>PositionBounds</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TeleportPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TeleportPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>DisplacementUpdate</Name>
                   </Expression>
                   <Expression xsi:type="rx:Scan">
                     <Workflow>
@@ -307,6 +328,24 @@
                           <Combinator xsi:type="rx:Zip" />
                         </Expression>
                         <Expression xsi:type="Add" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>PositionBounds</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>it.Item1 &lt; it.Item2.Item1 ? it.Item2.Item1 : (it.Item1 &gt; it.Item2.Item2 ? it.Item2.Item2 : it.Item1)
+
+
+</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
@@ -315,17 +354,15 @@
                         <Edge From="1" To="3" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="4" To="8" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
                       </Edges>
                     </Workflow>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>TeleportPosition</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Concat" />
@@ -336,21 +373,33 @@
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="6" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="4" To="7" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="10" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source2" />
-                  <Edge From="10" To="13" Label="Source2" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="9" To="13" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="14" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Switch" />
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Z" Selector="it" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:CreateVector3">
+                <gl:X>0</gl:X>
+                <gl:Y>0.2</gl:Y>
+                <gl:Z>2.82500124</gl:Z>
+              </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>CurrentPosition</Name>
@@ -390,7 +439,7 @@
               <Top>1</Top>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
-              <Text>0.725</Text>
+              <Text>2.825</Text>
               <Font>Microsoft Sans Serif, 48pt</Font>
               <Alignment>Center</Alignment>
               <LineAlignment>Center</LineAlignment>
@@ -408,22 +457,46 @@
               <Layer>0</Layer>
               <Angle>0</Angle>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gli:MouseWheel" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>EventArgs.DeltaPrecise</Selector>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="Gain" />
+            </Expression>
+            <Expression xsi:type="Multiply">
+              <Operand xsi:type="FloatProperty">
+                <Value>-0.025</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>DisplacementUpdate</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="4" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="1" To="5" Label="Source2" />
+            <Edge From="2" To="9" Label="Source2" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="15" Label="Source2" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="13" To="18" Label="Source2" />
             <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="22" Label="Source1" />
+            <Edge From="21" To="22" Label="Source2" />
+            <Edge From="22" To="23" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -478,9 +551,9 @@
               <LocationY>4.4</LocationY>
               <Layer>10</Layer>
               <Angle>0</Angle>
-              <ColorR>0</ColorR>
-              <ColorG>0</ColorG>
-              <ColorB>0</ColorB>
+              <ColorR>1</ColorR>
+              <ColorG>1</ColorG>
+              <ColorB>1</ColorB>
               <ColorA>1</ColorA>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -532,207 +605,100 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>CorridorSpecs</Name>
             </Expression>
-            <Expression xsi:type="rx:Defer">
-              <Name>DrawSegment</Name>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFloorSegment.bonsai">
+              <TextureFloor>Floor</TextureFloor>
+              <IsVisible>true</IsVisible>
+              <Start>5.5</Start>
+              <End>0</End>
+              <Name>Floor</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
+              <TextureLeft>Reward</TextureLeft>
+              <TextureRight>ColorDots</TextureRight>
+              <IsVisible>true</IsVisible>
+              <Start>0</Start>
+              <End>1</End>
+              <Name>Landmark1</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
+              <TextureLeft>BluePlaid</TextureLeft>
+              <TextureRight>BluePlaid</TextureRight>
+              <IsVisible>true</IsVisible>
+              <Start>1</Start>
+              <End>2</End>
+              <Name>StimA</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
+              <TextureLeft>ColorDots</TextureLeft>
+              <TextureRight>Reward</TextureRight>
+              <IsVisible>true</IsVisible>
+              <Start>2</Start>
+              <End>3</End>
+              <Name>Landmark2</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
+              <TextureLeft>BluePlaid</TextureLeft>
+              <TextureRight>BluePlaid</TextureRight>
+              <IsVisible>true</IsVisible>
+              <Start>3</Start>
+              <End>4</End>
+              <Name>StimB</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
+              <TextureLeft>Reward</TextureLeft>
+              <TextureRight>ColorDots</TextureRight>
+              <IsVisible>true</IsVisible>
+              <Start>4</Start>
+              <End>5</End>
+              <Name>Landmark3</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
+              <TextureLeft>Floor</TextureLeft>
+              <TextureRight>Floor</TextureRight>
+              <IsVisible>true</IsVisible>
+              <Start>5</Start>
+              <End>5.5</End>
+              <Name>LickingZone</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CurrentPosition</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Z</Selector>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="TeleportThreshold" />
+            </Expression>
+            <Expression xsi:type="GreaterThan">
+              <Operand xsi:type="FloatProperty">
+                <Value>0</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Start" />
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Stop" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>1</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:CombineLatest" />
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Visible" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Name" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="StringProperty">
-                      <Value>Segment</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="TextureLeft" />
-                  </Expression>
-                  <Expression xsi:type="PropertySource" TypeArguments="gl:BindTexture,sys:String">
-                    <MemberName>TextureName</MemberName>
-                    <Value>Reward</Value>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="TextureRight" />
-                  </Expression>
-                  <Expression xsi:type="PropertySource" TypeArguments="gl:BindTexture,sys:String">
-                    <MemberName>TextureName</MemberName>
-                    <Value>ColorDots</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:CombineLatest" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:CombineLatest" />
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-it.Item1 as Name,
-it.Item2 as Visible,
-it.Item3.Item1 as Start,
-it.Item3.Item2 as Stop,
-it.Item3.Item2 - it.Item3.Item1 as Length,
-(0.5 * (it.Item3.Item2 - it.Item3.Item1)) + it.Item3.Item1  as Center,
-new(
-  it.Item4.Item1 as Left,
-  it.Item4.Item2 as Right) as Textures)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>SegmentSpecs</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawWall.bonsai">
-                    <IsRightWall>true</IsRightWall>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawWall.bonsai">
-                    <IsRightWall>false</IsRightWall>
-                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="14" Label="Source3" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="14" Label="Source2" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="14" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="13" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source2" />
-                  <Edge From="13" To="14" Label="Source4" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="rx:Defer">
-              <Name>DrawSegment</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Start" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>1.5</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Stop" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>3.5</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:CombineLatest" />
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Visible" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Name" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="StringProperty">
-                      <Value>Segment</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="TextureLeft" />
-                  </Expression>
-                  <Expression xsi:type="PropertySource" TypeArguments="gl:BindTexture,sys:String">
-                    <MemberName>TextureName</MemberName>
-                    <Value>Reward</Value>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="TextureRight" />
-                  </Expression>
-                  <Expression xsi:type="PropertySource" TypeArguments="gl:BindTexture,sys:String">
-                    <MemberName>TextureName</MemberName>
-                    <Value>ColorDots</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:CombineLatest" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:CombineLatest" />
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-it.Item1 as Name,
-it.Item2 as Visible,
-it.Item3.Item1 as Start,
-it.Item3.Item2 as Stop,
-it.Item3.Item2 - it.Item3.Item1 as Length,
-(0.5 * (it.Item3.Item2 - it.Item3.Item1)) + it.Item3.Item1  as Center,
-new(
-  it.Item4.Item1 as Left,
-  it.Item4.Item2 as Right) as Textures)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>SegmentSpecs</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawWall.bonsai">
-                    <IsRightWall>true</IsRightWall>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawWall.bonsai">
-                    <IsRightWall>false</IsRightWall>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="14" Label="Source3" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="14" Label="Source2" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="14" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="13" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source2" />
-                  <Edge From="13" To="14" Label="Source4" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="DueTime" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:Delay">
+                <gl:DueTime>PT0S</gl:DueTime>
+              </Combinator>
             </Expression>
           </Nodes>
           <Edges>
@@ -742,10 +708,19 @@ new(
             <Edge From="3" To="4" Label="Source2" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="17" Label="Source1" />
+            <Edge From="16" To="17" Label="Source2" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="21" Label="Source1" />
+            <Edge From="20" To="21" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
     </Nodes>
-    <Edges />
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+    </Edges>
   </Workflow>
 </WorkflowBuilder>
