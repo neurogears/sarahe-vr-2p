@@ -1,1 +1,8 @@
 # sarahe-vr-2p
+
+## Setting-up
+ * Windows 10
+ * [Visual Studio Code](https://code.visualstudio.com/) (recommended for editing code scripts and git commits)
+ * [.NET Framework 4.7.2 Developer Pack](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-developer-pack-offline-installer) (required for intellisense when editing code scripts)
+ * [Git for Windows](https://gitforwindows.org/) (recommended for cloning and manipulating this repository)
+ * [Visual C++ Redistributable for Visual Studio 2012](https://www.microsoft.com/en-us/download/details.aspx?id=30679) (native dependency for OpenCV)
