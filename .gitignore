@@ -8,5 +8,6 @@ Packages
 *.dll
 *.exe
 *.exe.settings
+*.bonsai.layout
 
 
