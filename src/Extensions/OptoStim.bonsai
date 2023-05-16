@@ -7,12 +7,12 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="RewardThreshold" />
-        <Property Name="DelayReward" />
-        <Property Name="RewardAmount" />
+        <Property Name="StimThreshold" />
+        <Property Name="DelayToStim" />
+        <Property Name="StimId" />
       </Expression>
       <Expression xsi:type="rx:CreateObservable">
-        <Name>Reward</Name>
+        <Name>OptoStim</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
@@ -22,7 +22,7 @@
               <Selector>Z</Selector>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="RewardThreshold" />
+              <Property Name="Value" DisplayName="StimThreshold" />
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="FloatProperty">
@@ -59,7 +59,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="DueTime" DisplayName="DelayReward" />
+              <Property Name="DueTime" DisplayName="DelayToStim" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Delay">
@@ -67,7 +67,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="RewardAmount" />
+              <Property Name="Value" DisplayName="StimId" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
@@ -75,10 +75,10 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>CurrentRewardAmount</Name>
+              <Name>CurrentOptoStimId</Name>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>GiveReward</Name>
+              <Name>GiveOptoStim</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
