@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.7.3"
+<WorkflowBuilder Version="2.8.0-alpha012"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
@@ -11,7 +11,7 @@
         <Property Name="DelayReward" />
         <Property Name="RewardAmount" />
       </Expression>
-      <Expression xsi:type="rx:Defer">
+      <Expression xsi:type="rx:CreateObservable">
         <Name>Reward</Name>
         <Workflow>
           <Nodes>

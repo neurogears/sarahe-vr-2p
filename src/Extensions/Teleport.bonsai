@@ -12,7 +12,7 @@
         <Property Name="DelayTeleport" />
         <Property Name="TeleportToPosition" />
       </Expression>
-      <Expression xsi:type="rx:Defer">
+      <Expression xsi:type="rx:CreateObservable">
         <Name>Teleport</Name>
         <Workflow>
           <Nodes>
