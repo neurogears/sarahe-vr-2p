@@ -1203,7 +1203,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>2.8199985</gl:Z>
+                <gl:Z>2.76999855</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1659,7 +1659,7 @@ Segment, RightWallVisibility, ["1", "0"]]]></Text>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <Text>2.82</Text>
+              <Text>2.77</Text>
               <Font>Microsoft Sans Serif, 48pt</Font>
               <Alignment>Center</Alignment>
               <LineAlignment>Center</LineAlignment>
