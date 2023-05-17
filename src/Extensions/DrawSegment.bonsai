@@ -506,7 +506,7 @@ it.Item4 as SegmentSpecs)
               </Workflow>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>SegmentCommands</Name>
+              <Name>GroupBySegmentCommands</Name>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>FilterSegmentCommands</Name>
@@ -514,9 +514,6 @@ it.Item4 as SegmentSpecs)
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
                     <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:GroupBy">
-                    <rx:KeySelector>Item1</rx:KeySelector>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
                     <Workflow>
@@ -566,7 +563,6 @@ it.Item4 as SegmentSpecs)
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
