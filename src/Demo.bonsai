@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.0-alpha012"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -284,9 +284,9 @@
                     <LocationY>4.4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
-                    <ColorR>0</ColorR>
-                    <ColorG>0</ColorG>
-                    <ColorB>0</ColorB>
+                    <ColorR>1</ColorR>
+                    <ColorG>1</ColorG>
+                    <ColorB>1</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1203,7 +1203,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>2.76999855</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1654,7 +1654,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <Text>2.77</Text>
+              <Text>0</Text>
               <Font>Microsoft Sans Serif, 48pt</Font>
               <Alignment>Center</Alignment>
               <LineAlignment>Center</LineAlignment>
@@ -1684,9 +1684,50 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="Annotation">
+        <Name>Trial Settings</Name>
+        <Text><![CDATA[# Trial Settings
+
+| Parameter      | Value | Comments |
+| ----------- | ----------- | ----------- |
+| CorridorType      | Int       |Specifies the corridor type to be rendered. ([0,1...]) |
+| EnablePassiveMode      | Bool     |Enables(1) or Disables(0) a pre-defined passive mode logic in the selected trial type|
+| GainPassiveMode      | Float       |Specifies the gain to be used if using a passive viewig mode during the trial |
+| StimATex   | String;String        | Path to the textures to be used in StimA Segment Left and Right Walls, respectively  |
+| StimBTex   | String;String        | Path to the textures to be used in StimB Segment Left and Right Walls, respectively  |
+| StimCTex   | String;String        | Path to the textures to be used in StimC Segment Left and Right Walls, respectively  |
+| RewardEnable   | Bool     |Enables(1) or Disables(0) a pre-defined reward logic in the selected trial type|
+| RewardAmount | Float;Float | Reward amount (in milliseconds) to be delivered in the HIGH and LOW conditions, respectively |
+| RewardProbability | Float;Float | Reward probability (0-1) in the HIGH and LOW conditions, respectively |
+| RewardLocation | Float | Location in the corridor that will trigger a reward event |
+| RewardDelay | Float | Temporal delay (in seconds) for reward delivery after RewardLocation has been crossed |
+| LedStimEnable      | Bool     |Enables(1) or Disables(0) a pre-defined Led stimulation delivery logic in the selected trial type|
+| LedStimIndex | Int | Index of the Led stimulation protocol to be used |
+| LedStimLocation | Float | Location in the corridor that will trigger an Led stimulation event |
+| LedStimDelay | Float | Temporal delay (in seconds) for Led stimulation event after LedStimLocation has been crossed |
+| TeleportEnable   | Bool     |Enables(1) or Disables(0) a pre-defined teleport logic in the selected trial type|
+| TeleportFrom   | Float     |Specifies the teleport position trigger. In other words the position that will end the current trial |
+| TeleportTo   | Float     |Specifies the teleport destination. In other words, the initiation position of the next trial |
+| TeleportDelay   | Float     |Temporal delay (in seconds) for the teleport event to trigger after the TeleportFrom position has been crossed|
+| TeleportLock   | Bool     |Specifies whether the position in VR can be update (1) or not (0), during TeleportDelay|
+| TeleportOnLick | Bool | Specifies whether "Lick" events will result (1), or not(0), in teleports to TeleportTo prior to trial conclusion |
+
+]]></Text>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gli:KeyDown">
+          <gli:Key>T</gli:Key>
+          <gli:Modifiers xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Expression>it</scr:Expression>
+      </Expression>
     </Nodes>
     <Edges>
       <Edge From="1" To="2" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
