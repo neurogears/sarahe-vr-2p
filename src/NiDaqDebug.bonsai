@@ -749,6 +749,17 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
           <p1:NumberOfSamples xsi:nil="true" />
         </Combinator>
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p1:CounterInput">
+          <p1:SignalSource />
+          <p1:SampleRate>0</p1:SampleRate>
+          <p1:ActiveEdge>Rising</p1:ActiveEdge>
+          <p1:SampleMode>ContinuousSamples</p1:SampleMode>
+          <p1:BufferSize>1000</p1:BufferSize>
+          <p1:SamplesPerChannel xsi:nil="true" />
+          <p1:Channel>Dev1/ctr1</p1:Channel>
+        </Combinator>
+      </Expression>
     </Nodes>
     <Edges />
   </Workflow>
