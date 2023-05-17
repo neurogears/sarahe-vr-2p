@@ -123,8 +123,10 @@ namespace Bonsai.DAQmx
             {
                 var task = CreateTask();
                 var bufferSize = BufferSize;
-                task.Timing.ConfigureSampleClock(SignalSource, SampleRate, ActiveEdge, SampleMode, bufferSize);
+                //task.Timing.ConfigureSampleClock(SignalSource, SampleRate, ActiveEdge, SampleMode, bufferSize);
+                //task.Timing.ConfigureImplicit(SampleMode, bufferSize);
                 task.Control(TaskAction.Verify);
+                task.Control(TaskAction.Commit);
                 var counterInReader = new CounterReader(task.Stream);
                 var samplesPerChannel = SamplesPerChannel.GetValueOrDefault(bufferSize);
                 AsyncCallback counterCallback = null;
@@ -164,20 +166,21 @@ namespace Bonsai.DAQmx
         /// the order in which you specify the channels in the <see cref="Channels"/>
         /// property.
         /// </returns>
-        public IObservable<Mat> Generate<TSource>(IObservable<TSource> source)
+        public IObservable<int> Generate<TSource>(IObservable<TSource> source)
         {
             return Observable.Defer(() =>
             {
                 var task = CreateTask();
                 var bufferSize = BufferSize;
                 var sampleRate = SampleRate;
-                if (sampleRate > 0)
-                {
-                    task.Timing.ConfigureSampleClock(SignalSource, sampleRate, ActiveEdge, SampleMode, bufferSize);
-                }
+                // if (sampleRate > 0)
+                // {
+                //     task.Timing.ConfigureSampleClock(SignalSource, sampleRate, ActiveEdge, SampleMode, bufferSize);
+                // }
                 task.Control(TaskAction.Verify);
                 var counterInReader = new CounterReader(task.Stream);
                 var samplesPerChannel = SamplesPerChannel.GetValueOrDefault(bufferSize);
+                task.Start();
                 return Observable.Using(() => Disposable.Create(
                     () =>
                     {
@@ -186,8 +189,8 @@ namespace Bonsai.DAQmx
                     }),
                     resource => source.Select(_ =>
                     {
-                        var data = counterInReader.ReadMultiSampleInt32(samplesPerChannel);
-                        return Mat.FromArray(data);
+                        var data = counterInReader.ReadSingleSampleInt32();
+                        return data;
                     }));
             });
         }

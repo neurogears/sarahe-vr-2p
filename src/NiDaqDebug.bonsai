@@ -740,13 +740,21 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
           </Workflow>
         </Builder>
       </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="p1:CounterOutput">
+            <p1:CounterChannel>Dev1/ctr0</p1:CounterChannel>
+            <p1:TriggerSource />
+            <p1:Frequency>10</p1:Frequency>
+            <p1:DutyCycle>0.5</p1:DutyCycle>
+            <p1:NumberOfSamples xsi:nil="true" />
+          </Combinator>
+        </Builder>
+      </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:CounterOutput">
-          <p1:CounterChannel>Dev1/ctr0</p1:CounterChannel>
-          <p1:TriggerSource />
-          <p1:Frequency>10</p1:Frequency>
-          <p1:DutyCycle>0.5</p1:DutyCycle>
-          <p1:NumberOfSamples xsi:nil="true" />
+        <Combinator xsi:type="rx:Timer">
+          <rx:DueTime>PT0S</rx:DueTime>
+          <rx:Period>PT0.01S</rx:Period>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -755,12 +763,20 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
           <p1:SampleRate>0</p1:SampleRate>
           <p1:ActiveEdge>Rising</p1:ActiveEdge>
           <p1:SampleMode>ContinuousSamples</p1:SampleMode>
-          <p1:BufferSize>1000</p1:BufferSize>
+          <p1:BufferSize>1</p1:BufferSize>
           <p1:SamplesPerChannel xsi:nil="true" />
           <p1:Channel>Dev1/ctr1</p1:Channel>
         </Combinator>
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:Difference">
+          <dsp:Order>1</dsp:Order>
+        </Combinator>
+      </Expression>
     </Nodes>
-    <Edges />
+    <Edges>
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+    </Edges>
   </Workflow>
 </WorkflowBuilder>
