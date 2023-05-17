@@ -1361,9 +1361,12 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Annotation">
                           <Text><![CDATA[# Currently available commands:
+  All Commands are of the format:
+  `Tuple<String, String, String>` or `Tuple<SegmentName, FunctionName, Value>`
 
-Segment, LeftWallVisibility, ["1", "0"]
-Segment, RightWallVisibility, ["1", "0"]]]></Text>
+
+ - Segment, LeftWallVisibility, ["1", "0"]
+ - Segment, RightWallVisibility, ["1", "0"]]]></Text>
                         </Expression>
                         <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:String,sys:String,sys:String)">
                           <rx:Name>SegmentCommands</rx:Name>
