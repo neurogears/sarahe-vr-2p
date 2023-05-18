@@ -4,8 +4,9 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
-                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:mx="clr-namespace:Bonsai.DAQmx;assembly=Bonsai.DAQmx"
@@ -212,17 +213,54 @@
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
-                    <Name>Source2</Name>
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>DefaultMonitorCalibration</Name>
                   </Expression>
                   <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
+                    <Name>Source2</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>DefaultMonitorCalibration</Name>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="Width" Selector="DisplayWidth" />
                       <Property Name="Height" Selector="DisplayHeight" />
                       <Property Name="Rotation" Selector="Rotation" />
-                      <Property Name="Translation" Selector="Translation" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>DefaultMonitorCalibration</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Translation</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ManualScreenCalibration</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="FloatProperty">
+                      <Value>0.1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Multiply" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="Add" />
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Translation" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
@@ -252,14 +290,142 @@
                     <Height>1</Height>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CreatePoint3d">
+                      <cv:X>0</cv:X>
+                      <cv:Y>0</cv:Y>
+                      <cv:Z>0</cv:Z>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gli:KeyDown">
+                      <gli:Key>Left</gli:Key>
+                      <gli:Modifiers xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>-1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gli:KeyDown">
+                      <gli:Key>Right</gli:Key>
+                      <gli:Modifiers xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="X" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CreatePoint3d">
+                      <cv:X>-1</cv:X>
+                      <cv:Y>0</cv:Y>
+                      <cv:Z>0</cv:Z>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gli:KeyDown">
+                      <gli:Key>Up</gli:Key>
+                      <gli:Modifiers xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gli:KeyDown">
+                      <gli:Key>Down</gli:Key>
+                      <gli:Modifiers xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>-1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Y" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CreatePoint3d">
+                      <cv:X>0</cv:X>
+                      <cv:Y>1</cv:Y>
+                      <cv:Z>0</cv:Z>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="rx:Accumulate" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Concat" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>ManualScreenCalibration</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="3" Label="Source1" />
+                  <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
-                  <Edge From="3" To="5" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source2" />
-                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="3" To="15" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="15" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="12" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source2" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source3" />
+                  <Edge From="15" To="17" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="37" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="25" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source2" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="25" To="27" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="27" To="35" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="32" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="32" To="34" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source2" />
+                  <Edge From="34" To="35" Label="Source2" />
+                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source2" />
+                  <Edge From="37" To="38" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1235,7 +1401,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>0.00250000018</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1296,7 +1462,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>0.0005</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1717,7 +1883,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <Text>0.0025</Text>
+              <Text>0</Text>
               <Font>Microsoft Sans Serif, 48pt</Font>
               <Alignment>Center</Alignment>
               <LineAlignment>Center</LineAlignment>
