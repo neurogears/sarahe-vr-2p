@@ -14,6 +14,36 @@
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
+      <Expression xsi:type="Annotation">
+        <Name>README</Name>
+        <Text><![CDATA[# Trial Settings
+
+| Parameter      | Value | Comments |
+| ----------- | ----------- | ----------- |
+| CorridorType      | Int       |Specifies the corridor type to be rendered. ([0,1...]) |
+| EnablePassiveMode      | Bool     |Enables(1) or Disables(0) a pre-defined passive mode logic in the selected trial type|
+| GainPassiveMode      | Float       |Specifies the gain to be used if using a passive viewig mode during the trial |
+| StimATex   | String;String        | Path to the textures to be used in StimA Segment Left and Right Walls, respectively  |
+| StimBTex   | String;String        | Path to the textures to be used in StimB Segment Left and Right Walls, respectively  |
+| StimCTex   | String;String        | Path to the textures to be used in StimC Segment Left and Right Walls, respectively  |
+| RewardEnable   | Bool     |Enables(1) or Disables(0) a pre-defined reward logic in the selected trial type|
+| RewardAmount | Float;Float | Reward amount (in milliseconds) to be delivered in the HIGH and LOW conditions, respectively |
+| RewardProbability | Float;Float | Reward probability (0-1) in the HIGH and LOW conditions, respectively |
+| RewardLocation | Float | Location in the corridor that will trigger a reward event |
+| RewardDelay | Float | Temporal delay (in seconds) for reward delivery after RewardLocation has been crossed |
+| LedStimEnable      | Bool     |Enables(1) or Disables(0) a pre-defined Led stimulation delivery logic in the selected trial type|
+| LedStimIndex | Int | Index of the Led stimulation protocol to be used |
+| LedStimLocation | Float | Location in the corridor that will trigger an Led stimulation event |
+| LedStimDelay | Float | Temporal delay (in seconds) for Led stimulation event after LedStimLocation has been crossed |
+| TeleportEnable   | Bool     |Enables(1) or Disables(0) a pre-defined teleport logic in the selected trial type|
+| TeleportFrom   | Float     |Specifies the teleport position trigger. In other words the position that will end the current trial |
+| TeleportTo   | Float     |Specifies the teleport destination. In other words, the initiation position of the next trial |
+| TeleportDelay   | Float     |Temporal delay (in seconds) for the teleport event to trigger after the TeleportFrom position has been crossed|
+| TeleportLock   | Bool     |Specifies whether the position in VR can be update (1) or not (0), during TeleportDelay|
+| TeleportOnLick | Bool | Specifies whether "Lick" events will result (1), or not(0), in teleports to TeleportTo prior to trial conclusion |
+
+]]></Text>
+      </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>__Init__</Name>
         <Workflow>
@@ -655,38 +685,6 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             </Combinator>
                           </Builder>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>DO_Clock</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>DO_Settings</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="SampleRate" Selector="SamplingRate" />
-                            <Property Name="BufferLength" Selector="BufferSize" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>CameraFPS</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="Frequency" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="dsp:FunctionGenerator">
-                            <dsp:BufferLength>100</dsp:BufferLength>
-                            <dsp:Frequency>50</dsp:Frequency>
-                            <dsp:Waveform>Square</dsp:Waveform>
-                            <dsp:SampleRate>1000</dsp:SampleRate>
-                            <dsp:Depth>U8</dsp:Depth>
-                            <dsp:Amplitude>1</dsp:Amplitude>
-                            <dsp:Offset>0</dsp:Offset>
-                            <dsp:Phase>0</dsp:Phase>
-                          </Combinator>
-                        </Expression>
                         <Expression xsi:type="rx:Defer">
                           <Name>Constant</Name>
                           <Workflow>
@@ -773,14 +771,6 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Repeat" />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Zip" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="dsp:Concat">
-                            <dsp:Axis>0</dsp:Axis>
-                          </Combinator>
-                        </Expression>
                         <Expression xsi:type="rx:BehaviorSubject">
                           <Name>DO_Generation</Name>
                         </Expression>
@@ -797,23 +787,15 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Edge From="10" To="11" Label="Source1" />
                         <Edge From="11" To="13" Label="Source1" />
                         <Edge From="12" To="13" Label="Source2" />
-                        <Edge From="14" To="19" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="19" Label="Source2" />
+                        <Edge From="14" To="16" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source2" />
+                        <Edge From="16" To="20" Label="Source1" />
                         <Edge From="17" To="18" Label="Source1" />
-                        <Edge From="18" To="19" Label="Source3" />
-                        <Edge From="19" To="29" Label="Source1" />
-                        <Edge From="20" To="22" Label="Source1" />
-                        <Edge From="21" To="22" Label="Source2" />
-                        <Edge From="22" To="26" Label="Source1" />
-                        <Edge From="23" To="24" Label="Source1" />
-                        <Edge From="24" To="25" Label="Source1" />
-                        <Edge From="25" To="26" Label="Source2" />
-                        <Edge From="26" To="27" Label="Source1" />
-                        <Edge From="27" To="28" Label="Source1" />
-                        <Edge From="28" To="29" Label="Source2" />
-                        <Edge From="29" To="30" Label="Source1" />
-                        <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source2" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="22" To="23" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -993,27 +975,54 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gl:RenderFrame" />
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="SubscribeSubject">
+                      <Name>CameraFPS</Name>
+                    </Builder>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CounterInput">
-                      <p1:SignalSource />
-                      <p1:SampleRate>0</p1:SampleRate>
-                      <p1:ActiveEdge>Rising</p1:ActiveEdge>
-                      <p1:SampleMode>ContinuousSamples</p1:SampleMode>
-                      <p1:BufferSize>1000</p1:BufferSize>
-                      <p1:SamplesPerChannel xsi:nil="true" />
-                      <p1:Channel>Dev1/ctr1</p1:Channel>
-                    </Combinator>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="PropertyMapping">
+                      <PropertyMappings>
+                        <Property Name="Frequency" />
+                      </PropertyMappings>
+                    </Builder>
                   </Expression>
-                  <Expression xsi:type="rx:PublishSubject">
-                    <Name>EncoderPosition</Name>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="p1:CounterOutput">
+                        <p1:TriggerSource />
+                        <p1:Frequency>1</p1:Frequency>
+                        <p1:DutyCycle>0.5</p1:DutyCycle>
+                        <p1:NumberOfSamples xsi:nil="true" />
+                      </Combinator>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="gl:UpdateFrame" />
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="p1:RotaryEncoderInput">
+                        <p1:DecoderType>X1</p1:DecoderType>
+                        <p1:TicksPerRevolution>1000</p1:TicksPerRevolution>
+                        <p1:StartingRadians>0</p1:StartingRadians>
+                        <p1:ResetOnZ>false</p1:ResetOnZ>
+                      </Combinator>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="rx:PublishSubject">
+                      <Name>RotaryEncoderPosition</Name>
+                    </Builder>
                   </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1238,23 +1247,23 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>EnableDisplacementUpdates</Name>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>EncoderPosition</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Difference">
-                <dsp:Order>1</dsp:Order>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>EncoderPosition</Name>
+              </Builder>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Combinator">
-                <Combinator xsi:type="gli:MouseWheel" />
+                <Combinator xsi:type="dsp:Difference">
+                  <dsp:Order>1</dsp:Order>
+                </Combinator>
               </Builder>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="MemberSelector">
-                <Selector>EventArgs.DeltaPrecise</Selector>
-              </Builder>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gli:MouseWheel" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>EventArgs.DeltaPrecise</Selector>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="Gain" />
@@ -1731,36 +1740,6 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>Trial Settings</Name>
-        <Text><![CDATA[# Trial Settings
-
-| Parameter      | Value | Comments |
-| ----------- | ----------- | ----------- |
-| CorridorType      | Int       |Specifies the corridor type to be rendered. ([0,1...]) |
-| EnablePassiveMode      | Bool     |Enables(1) or Disables(0) a pre-defined passive mode logic in the selected trial type|
-| GainPassiveMode      | Float       |Specifies the gain to be used if using a passive viewig mode during the trial |
-| StimATex   | String;String        | Path to the textures to be used in StimA Segment Left and Right Walls, respectively  |
-| StimBTex   | String;String        | Path to the textures to be used in StimB Segment Left and Right Walls, respectively  |
-| StimCTex   | String;String        | Path to the textures to be used in StimC Segment Left and Right Walls, respectively  |
-| RewardEnable   | Bool     |Enables(1) or Disables(0) a pre-defined reward logic in the selected trial type|
-| RewardAmount | Float;Float | Reward amount (in milliseconds) to be delivered in the HIGH and LOW conditions, respectively |
-| RewardProbability | Float;Float | Reward probability (0-1) in the HIGH and LOW conditions, respectively |
-| RewardLocation | Float | Location in the corridor that will trigger a reward event |
-| RewardDelay | Float | Temporal delay (in seconds) for reward delivery after RewardLocation has been crossed |
-| LedStimEnable      | Bool     |Enables(1) or Disables(0) a pre-defined Led stimulation delivery logic in the selected trial type|
-| LedStimIndex | Int | Index of the Led stimulation protocol to be used |
-| LedStimLocation | Float | Location in the corridor that will trigger an Led stimulation event |
-| LedStimDelay | Float | Temporal delay (in seconds) for Led stimulation event after LedStimLocation has been crossed |
-| TeleportEnable   | Bool     |Enables(1) or Disables(0) a pre-defined teleport logic in the selected trial type|
-| TeleportFrom   | Float     |Specifies the teleport position trigger. In other words the position that will end the current trial |
-| TeleportTo   | Float     |Specifies the teleport destination. In other words, the initiation position of the next trial |
-| TeleportDelay   | Float     |Temporal delay (in seconds) for the teleport event to trigger after the TeleportFrom position has been crossed|
-| TeleportLock   | Bool     |Specifies whether the position in VR can be update (1) or not (0), during TeleportDelay|
-| TeleportOnLick | Bool | Specifies whether "Lick" events will result (1), or not(0), in teleports to TeleportTo prior to trial conclusion |
-
-]]></Text>
-      </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="Combinator">
           <Combinator xsi:type="gli:KeyDown">
@@ -1776,8 +1755,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="1" To="2" Label="Source1" />
-      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
     </Edges>
   </Workflow>
