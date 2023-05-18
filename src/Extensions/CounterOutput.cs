@@ -16,12 +16,31 @@ namespace Bonsai.DAQmx
     [Description("Generates voltage signals in one or more DAQmx analog output channels from a sequence of sample buffers.")]
     public class CounterOutput : Source<Unit>
     {
-        private string counterChannel = string.Empty;
-        public string CounterChannel
+
+        private string channel;
+
+        [TypeConverter(typeof(CounterOutputPhysicalChannelConverter))]
+        public string Channel
         {
-            get { return counterChannel; }
-            set { counterChannel = value; }
+            get { return channel; }
+            set { channel = value; }
         }
+
+        class CounterOutputPhysicalChannelConverter : StringConverter
+        {
+            public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+            {
+                return new StandardValuesCollection(DaqSystem.Local.GetPhysicalChannels(
+                    PhysicalChannelTypes.CO,
+                    PhysicalChannelAccess.External));
+            }
+
+            public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+            {
+                return true;
+            }
+        }
+
 
         private string triggerSource = string.Empty;
         public string TriggerSource
@@ -58,7 +77,7 @@ namespace Bonsai.DAQmx
                 task => Observable.Create<Unit>(observer =>
                 {
                     task.COChannels.CreatePulseChannelFrequency(
-                        counterChannel,
+                        channel,
                         "",
                         COPulseFrequencyUnits.Hertz,
                         COPulseIdleState.Low,
