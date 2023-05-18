@@ -41,6 +41,8 @@
 | TeleportDelay   | Float     |Temporal delay (in seconds) for the teleport event to trigger after the TeleportFrom position has been crossed|
 | TeleportLock   | Bool     |Specifies whether the position in VR can be update (1) or not (0), during TeleportDelay|
 | TeleportOnLick | Bool | Specifies whether "Lick" events will result (1), or not(0), in teleports to TeleportTo prior to trial conclusion |
+| TeleportOnLickTo   | Float     |Specifies the teleport destination after a lick |
+| TeleportOnLickRefractory | Float | Minimum period between two teleport events triggered by licking events |
 
 ]]></Text>
       </Expression>
@@ -1602,8 +1604,12 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>LickEvent</Name>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\TeleportOnLick.bonsai">
+                          <TeleportToPosition>0</TeleportToPosition>
+                          <RefractoryPeriod>PT1S</RefractoryPeriod>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
                         </Expression>
                       </Nodes>
                       <Edges>
@@ -1613,6 +1619,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
