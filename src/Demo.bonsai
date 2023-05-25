@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.0-alpha012"
+<WorkflowBuilder Version="2.8.0-alpha015"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
@@ -1416,7 +1416,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>4.70999956</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1612,8 +1612,8 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                           <Name>GroupBySegmentCommands</Name>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
-                          <TextureLeft>Floor</TextureLeft>
-                          <TextureRight>Floor</TextureRight>
+                          <TextureLeftFileName>Assets\Textures\CamiloReward.jpg</TextureLeftFileName>
+                          <TextureRightFileName>Assets\Textures\colorful_dots.jpg</TextureRightFileName>
                           <IsVisible>true</IsVisible>
                           <Start>5</Start>
                           <End>5.5</End>
@@ -1625,8 +1625,8 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
-                          <TextureLeft>Reward</TextureLeft>
-                          <TextureRight>ColorDots</TextureRight>
+                          <TextureLeftFileName>Assets\Textures\null.png</TextureLeftFileName>
+                          <TextureRightFileName>Assets\Textures\null.png</TextureRightFileName>
                           <IsVisible>true</IsVisible>
                           <Start>4</Start>
                           <End>5</End>
@@ -1638,8 +1638,8 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
-                          <TextureLeft>BluePlaid</TextureLeft>
-                          <TextureRight>BluePlaid</TextureRight>
+                          <TextureLeftFileName>Assets\Textures\null.png</TextureLeftFileName>
+                          <TextureRightFileName>Assets\Textures\null.png</TextureRightFileName>
                           <IsVisible>false</IsVisible>
                           <Start>3</Start>
                           <End>4</End>
@@ -1651,8 +1651,8 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
-                          <TextureLeft>ColorDots</TextureLeft>
-                          <TextureRight>Reward</TextureRight>
+                          <TextureLeftFileName>Assets\Textures\null.png</TextureLeftFileName>
+                          <TextureRightFileName>Assets\Textures\null.png</TextureRightFileName>
                           <IsVisible>true</IsVisible>
                           <Start>2</Start>
                           <End>3</End>
@@ -1664,8 +1664,8 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
-                          <TextureLeft>BluePlaid</TextureLeft>
-                          <TextureRight>BluePlaid</TextureRight>
+                          <TextureLeftFileName>Assets\Textures\null.png</TextureLeftFileName>
+                          <TextureRightFileName>Assets\Textures\null.png</TextureRightFileName>
                           <IsVisible>true</IsVisible>
                           <Start>1</Start>
                           <End>2</End>
@@ -1677,8 +1677,8 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai">
-                          <TextureLeft>Reward</TextureLeft>
-                          <TextureRight>ColorDots</TextureRight>
+                          <TextureLeftFileName>Assets\Textures\null.png</TextureLeftFileName>
+                          <TextureRightFileName>Assets\Textures\null.png</TextureRightFileName>
                           <IsVisible>true</IsVisible>
                           <Start>0</Start>
                           <End>1</End>
@@ -1903,7 +1903,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <Text>4.71</Text>
+              <Text>0</Text>
               <Font>Microsoft Sans Serif, 48pt</Font>
               <Alignment>Center</Alignment>
               <LineAlignment>Center</LineAlignment>
