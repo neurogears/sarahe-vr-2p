@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.0-alpha012"
+<WorkflowBuilder Version="2.8.0-alpha015"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -111,6 +111,9 @@
               <Combinator xsi:type="gl:Delay">
                 <gl:DueTime>PT0S</gl:DueTime>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>WallVisibilityEvent</Name>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>RightWall</Name>
@@ -230,11 +233,12 @@
             <Edge From="19" To="21" Label="Source1" />
             <Edge From="20" To="21" Label="Source2" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="21" To="23" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
             <Edge From="22" To="24" Label="Source1" />
-            <Edge From="23" To="24" Label="Source2" />
-            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="23" To="25" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
             <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
