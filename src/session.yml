@@ -1,0 +1,51 @@
+%YAML 1.1
+---
+# yaml-language-server: $schema=schema.json
+
+metadata: This is a session where amazing things will happen.
+
+trials:
+  0: &thisisatrial
+    corridorType: 0
+    ledStimulation:
+      enable: false
+      location: 0
+      delay: 0
+      waveformIndex: 0
+    passiveMode:
+      enable: true
+      gain: 0
+    reward:
+      enable: true
+      location: 0
+      delay: 0
+      amountHigh: 0
+      amountLow: 0
+      probabilityHigh: 1
+      probabilityLow: 1
+    stimulusTextures:
+      stimulusA:
+        leftWall: Assets\Textures\null.png
+        rightWall: Assets\Textures\null.png
+      stimulusB:
+        leftWall: Assets\Textures\null.png
+        rightWall: Assets\Textures\null.png
+      stimulusC:
+        leftWall: Assets\Textures\null.png
+        rightWall: Assets\Textures\null.png
+    teleport:
+      enable: true
+      location: 20
+      destination: 0
+      lockAtLocation: false
+      lockAtLocationDuration: 0
+      enableTeleportOnLick: false
+  1:
+    <<: *thisisatrial
+    corridorType: 1
+    stimulusTextures:
+      stimulusB:
+        leftWall: Assets\Textures\A.png
+        rightWall: Assets\Textures\B.png
+    teleport:
+      location: 30

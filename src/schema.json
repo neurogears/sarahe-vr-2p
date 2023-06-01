@@ -1,0 +1,92 @@
+
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "h...",
+    "type": "object",
+    "properties":{
+        "metadata":{
+            "type": "string"
+        },
+        "trials": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/definitions/trial" }
+        }
+    },
+    "definitions": {
+        "trial": {
+            "type": "object",
+            "properties": {
+                "corridorType": {
+                    "type": "integer",
+                    "default": 0,
+                    "minimum": 0
+                },
+                "passiveMode": {
+                    "type" : "object",
+                    "properties": {
+                        "enable": {"type": "boolean", "default": true},
+                        "gain": {"type": "number", "default": 0}
+                    }
+                },
+                "stimulusTextures": {
+                    "type": "object",
+                    "properties": {
+                        "stimulusA": {
+                            "type": "object",
+                            "properties": {
+                                "leftWall": {"type": "string", "default": "Assets\\Textures\\null.png"},
+                                "rightWall": {"type": "string", "default": "Assets\\Textures\\null.png"}
+                            }
+                        },
+                        "stimulusB": {
+                            "type": "object",
+                            "properties": {
+                                "leftWall": {"type": "string", "default": "Assets\\Textures\\null.png"},
+                                "rightWall": {"type": "string", "default": "Assets\\Textures\\null.png"}
+                            }
+                        },
+                        "stimulusC": {
+                            "type": "object",
+                            "properties": {
+                                "leftWall": {"type": "string", "default": "Assets\\Textures\\null.png"},
+                                "rightWall": {"type": "string", "default": "Assets\\Textures\\null.png"}
+                            }
+                        }
+                    }
+                },
+                "reward": {
+                    "type" : "object",
+                    "properties": {
+                        "enable": {"type": "boolean", "default": true},
+                        "location": {"type": "number", "default": 0},
+                        "delay": {"type": "number", "default": 0, "minimum": 0},
+                        "amountHigh": {"type": "number", "default": 0},
+                        "amountLow": {"type": "number", "default": 0},
+                        "probabilityHigh": {"type": "number", "default": 1, "minimum": 0, "maximum": 1},
+                        "probabilityLow": {"type": "number", "default": 1, "minimum": 0, "maximum": 1}
+                    }
+                },
+                "ledStimulation": {
+                    "type" : "object",
+                    "properties": {
+                        "enable": {"type": "boolean", "default": false},
+                        "location": {"type": "number", "default": 0},
+                        "delay": {"type": "number", "default": 0, "minimum": 0},
+                        "waveformIndex": {"type": "integer", "default": 0, "minimum": 0}
+                    }
+                },
+                "teleport": {
+                    "type" : "object",
+                    "properties": {
+                        "enable": {"type": "boolean", "default": true},
+                        "location": {"type": "number", "default": 10},
+                        "destination": {"type": "number", "default": 0},
+                        "lockAtLocation": {"type": "boolean", "default": false},
+                        "lockAtLocationDuration": {"type": "number", "default": 0, "minimum": 0},
+                        "enableTeleportOnLick": {"type": "boolean", "default": false}
+                    }
+                }
+            }
+        }
+    }
+}
