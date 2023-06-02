@@ -13,7 +13,8 @@
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:mx="clr-namespace:Bonsai.DAQmx;assembly=Bonsai.DAQmx"
                  xmlns:p1="clr-namespace:Bonsai.DAQmx;assembly=Extensions"
-                 xmlns:p2="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:p3="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -94,65 +95,60 @@
             <Expression xsi:type="rx:AsyncSubject">
               <Name>SessionRootPath</Name>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>AI_Data</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
-              <FileName>AnalogInput.bin</FileName>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>DI_Data</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
-              <FileName>DigitalInput.bin</FileName>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RotaryEncoderPosition</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-              <FileName>RotaryEncoder.csv</FileName>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentPosition</Name>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(it.Z as Position)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-              <FileName>VrPosition.csv</FileName>
-            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>LogFrameEvents</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:String">
-                    <rx:Name>LogFrameEvent</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RenderFrameEvent</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>TimeStep.ElapsedRealTime</Selector>
-                  </Expression>
-                  <Expression xsi:type="rx:Accumulate" />
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:ElementIndex" />
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>TimestampLogger</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>LogFrameEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>RenderFrameEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>TimeStep.ElapsedRealTime</Selector>
+                        </Expression>
+                        <Expression xsi:type="rx:Accumulate" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:ElementIndex" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>new(
 Index as Index,
 Value as Time)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>new(
 Item1 as EventName,
 Item2 as Frame)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>FrameEventLogger</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="6" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
-                  <Expression xsi:type="rx:PublishSubject">
-                    <Name>FrameEventLogger</Name>
+                  <Expression xsi:type="Annotation">
+                    <Text><![CDATA[List of all events to be logged using frame number]]></Text>
                   </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>ListFrameEvents</Name>
@@ -202,8 +198,8 @@ Item2 as Frame)</scr:Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
                         </Expression>
-                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
-                          <rx:Name>WallVisibilityEvent</rx:Name>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>WallVisibilityEvent</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="StringProperty">
@@ -213,28 +209,62 @@ Item2 as Frame)</scr:Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>LogFrameEvent</Name>
                         </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="15" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="15" Label="Source2" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="15" Label="Source3" />
                         <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="15" Label="Source4" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source5" />
+                        <Edge From="15" To="16" Label="Source1" />
                       </Edges>
                     </Workflow>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Loggers</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>AI_Data</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
+                    <FileName>AnalogInput.bin</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>DI_Data</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
+                    <FileName>DigitalInput.bin</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RotaryEncoderPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                    <FileName>RotaryEncoder.csv</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(it.Z as Position)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                    <FileName>VrPosition.csv</FileName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>FrameEventLogger</Name>
@@ -244,15 +274,12 @@ Item2 as Frame)</scr:Expression>
                   </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="6" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="0" To="1" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -263,11 +290,6 @@ Item2 as Frame)</scr:Expression>
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -347,6 +369,12 @@ Item2 as RewardLowAmount)</scr:Expression>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
               <Name>RngSeed</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
+              <rx:Name>WallVisibilityEvent</rx:Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:String">
+              <rx:Name>LogFrameEvent</rx:Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -777,9 +805,9 @@ Item2 as RewardLowAmount)</scr:Expression>
                     <LocationY>4.4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
-                    <ColorR>0</ColorR>
-                    <ColorG>0</ColorG>
-                    <ColorB>0</ColorB>
+                    <ColorR>1</ColorR>
+                    <ColorG>1</ColorG>
+                    <ColorB>1</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1659,6 +1687,49 @@ Item3 as RenderElapsedTime)</scr:Expression>
                 <Value>7</Value>
               </Operand>
             </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>Draw</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="num:CreateRandom">
+                      <num:Seed xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p2:CreateContinuousUniform">
+                      <p2:Lower>0</p2:Lower>
+                      <p2:Upper>1</p2:Upper>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p2:Sample" />
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="Probability" />
+                  </Expression>
+                  <Expression xsi:type="GreaterThan">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>0.9</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
             <Expression xsi:type="rx:Condition">
               <Workflow>
                 <Nodes>
@@ -1688,6 +1759,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2026,7 +2098,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
               <Name>TrialType1</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="rx:PublishSubject" TypeArguments="p2:Unit">
+                  <Expression xsi:type="rx:PublishSubject" TypeArguments="p3:Unit">
                     <rx:Name>EndTrial</rx:Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2534,6 +2606,10 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
+              <Name>FrameEventLogger</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
               <Name>RotaryEncoderPosition</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
@@ -2557,8 +2633,15 @@ Frame.Time as Time
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:CameraCapture">
+                <cv:Index>0</cv:Index>
+                <cv:CaptureProperties />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
-              <viz:ColumnCount>2</viz:ColumnCount>
+              <viz:ColumnCount>3</viz:ColumnCount>
               <viz:RowCount>2</viz:RowCount>
               <viz:ColumnStyles />
               <viz:RowStyles />
@@ -2583,15 +2666,19 @@ Frame.Time as Time
             <Edge From="10" To="11" Label="Source5" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="22" Label="Source1" />
+            <Edge From="13" To="26" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="15" To="26" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="22" Label="Source2" />
+            <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="19" To="26" Label="Source3" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source3" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="26" Label="Source4" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source5" />
           </Edges>
         </Workflow>
       </Expression>
