@@ -2,7 +2,11 @@
 ---
 # yaml-language-server: $schema=schema.json
 
-metadata: This is a session where amazing things will happen.
+metadata:
+  rootPath: ".\\local\\data\\"
+  animalId: "Animal001"
+  shuffleTrialOrder: false
+  randomSeed: null
 
 trials:
   0: &thisisatrial

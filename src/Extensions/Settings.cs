@@ -44,7 +44,7 @@ public int CorridorType
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class Json
     {
-        public string Metadata { get; set; }
+        public Metadata Metadata { get; set; }
 
         public System.Collections.Generic.IDictionary<string, Trial> Trials { get; set; }
 
@@ -261,6 +261,44 @@ public bool EnableTeleportOnLick
     get { return enableTeleportOnLick; }
     set { enableTeleportOnLick = value; }
 }
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
+    public partial class Metadata
+    {
+private string rootPath = "";
+public string RootPath
+{
+    get { return rootPath; }
+    set { rootPath = value; }
+}
+
+private string animalId = "";
+public string AnimalId
+{
+    get { return animalId; }
+    set { animalId = value; }
+}
+
+private bool shuffleTrialOrder = false;
+public bool ShuffleTrialOrder
+{
+    get { return shuffleTrialOrder; }
+    set { shuffleTrialOrder = value; }
+}
+
+        public int? RandomSeed { get; set; }
 
 
 
