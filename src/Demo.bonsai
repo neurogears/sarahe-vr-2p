@@ -16,6 +16,7 @@
                  xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:p3="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
+                 xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -78,7 +79,7 @@
             </Expression>
             <Expression xsi:type="PropertySource" TypeArguments="io:GetFiles,sys:String">
               <MemberName>Path</MemberName>
-              <Value>.</Value>
+              <Value>C:\Users\mfhlab\Desktop\Data</Value>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -402,7 +403,7 @@ Item2 as RewardLowAmount)</scr:Expression>
                 <gl:Location xsi:nil="true" />
                 <gl:WindowBorder>Fixed</gl:WindowBorder>
                 <gl:WindowState>Normal</gl:WindowState>
-                <gl:DisplayDevice>Second</gl:DisplayDevice>
+                <gl:DisplayDevice>Primary</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
                 <gl:RenderState />
@@ -2053,7 +2054,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>4.50999928</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2118,7 +2119,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.05</Value>
+                <Value>0.15</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2406,7 +2407,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\Reward.bonsai">
                           <RewardThreshold>5</RewardThreshold>
                           <DelayReward>PT1S</DelayReward>
-                          <RewardAmount>25</RewardAmount>
+                          <RewardAmount>0</RewardAmount>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
@@ -2755,9 +2756,9 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:CameraCapture">
-                <cv:Index>0</cv:Index>
-                <cv:CaptureProperties />
+              <Combinator xsi:type="vid:VideoCaptureDevice">
+                <vid:Index>0</vid:Index>
+                <vid:CaptureProperties />
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
@@ -2768,6 +2769,7 @@ Frame.Time as Time
               <viz:RowStyles />
               <viz:CellSpans />
             </Expression>
+            <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2803,6 +2805,7 @@ Frame.Time as Time
             <Edge From="26" To="29" Label="Source5" />
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source6" />
+            <Edge From="29" To="30" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2847,7 +2850,7 @@ Frame.Time as Time
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <Text>4.51</Text>
+              <Text>0</Text>
               <Font>Microsoft Sans Serif, 48pt</Font>
               <Alignment>Center</Alignment>
               <LineAlignment>Center</LineAlignment>
