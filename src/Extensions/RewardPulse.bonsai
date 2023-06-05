@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.0-alpha012"
+<WorkflowBuilder Version="2.8.0-alpha018"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
@@ -13,10 +13,10 @@
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>DO_Clock</Name>
+              <Name>AO_Clock</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>DO_Settings</Name>
+              <Name>AO_Settings</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>SamplingRate</Selector>
@@ -27,7 +27,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>DO_Settings</Name>
+              <Name>AO_Settings</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>BufferSize</Selector>
@@ -54,13 +54,13 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="dsp:Threshold">
-                <dsp:ThresholdValue>0.1</dsp:ThresholdValue>
+                <dsp:ThresholdValue>0</dsp:ThresholdValue>
                 <dsp:MaxValue>1</dsp:MaxValue>
                 <dsp:ThresholdType>BinaryInv</dsp:ThresholdType>
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>DO_Settings</Name>
+              <Name>AO_Settings</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>NumBuffersPerSecond</Selector>
