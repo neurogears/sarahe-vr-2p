@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.0-alpha015"
+<WorkflowBuilder Version="2.8.0-alpha018"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
@@ -16,12 +16,17 @@
         <Property Name="Value" DisplayName="FileName" />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="StringProperty" />
+        <Combinator xsi:type="StringProperty">
+          <Value>AnalogInput.bin</Value>
+        </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Zip" />
       </Expression>
-      <Expression xsi:type="Format" />
+      <Expression xsi:type="Format">
+        <Format>{0}/{1}</Format>
+        <Selector>Item1,Item2</Selector>
+      </Expression>
       <Expression xsi:type="PropertyMapping">
         <PropertyMappings>
           <Property Name="Path" />
@@ -29,6 +34,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="dsp:MatrixWriter">
+          <dsp:Path>(C:\Users\mfhlab\Desktop\Data/2023-06-05T10-58-21, AnalogInput.bin)</dsp:Path>
           <dsp:Suffix>None</dsp:Suffix>
           <dsp:Overwrite>false</dsp:Overwrite>
           <dsp:Layout>ColumnMajor</dsp:Layout>
