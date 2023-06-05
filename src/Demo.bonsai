@@ -916,9 +916,9 @@ Item2 as RewardLowAmount)</scr:Expression>
                     <LocationY>4.4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
-                    <ColorR>0</ColorR>
-                    <ColorG>0</ColorG>
-                    <ColorB>0</ColorB>
+                    <ColorR>1</ColorR>
+                    <ColorG>1</ColorG>
+                    <ColorB>1</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1038,11 +1038,19 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                           <Builder xsi:type="Combinator">
                             <Combinator xsi:type="mx:AnalogOutput">
                               <mx:SignalSource />
-                              <mx:SampleRate>0</mx:SampleRate>
+                              <mx:SampleRate>1000</mx:SampleRate>
                               <mx:ActiveEdge>Rising</mx:ActiveEdge>
                               <mx:SampleMode>FiniteSamples</mx:SampleMode>
-                              <mx:BufferSize>1000</mx:BufferSize>
-                              <mx:Channels />
+                              <mx:BufferSize>100</mx:BufferSize>
+                              <mx:Channels>
+                                <mx:AnalogOutputChannelConfiguration>
+                                  <mx:ChannelName>OptoStim</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ao0</mx:PhysicalChannel>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogOutputChannelConfiguration>
+                              </mx:Channels>
                             </Combinator>
                           </Builder>
                         </Expression>
@@ -1262,20 +1270,15 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                           <Builder xsi:type="Combinator">
                             <Combinator xsi:type="mx:DigitalOutput">
                               <mx:SignalSource />
-                              <mx:SampleRate>0</mx:SampleRate>
+                              <mx:SampleRate>1000</mx:SampleRate>
                               <mx:ActiveEdge>Rising</mx:ActiveEdge>
                               <mx:SampleMode>ContinuousSamples</mx:SampleMode>
-                              <mx:BufferSize>1000</mx:BufferSize>
+                              <mx:BufferSize>100</mx:BufferSize>
                               <mx:Channels>
-                                <mx:DigitalOutputChannelConfiguration>
-                                  <mx:ChannelName>CameraTrigger</mx:ChannelName>
-                                  <mx:Grouping>OneChannelForEachLine</mx:Grouping>
-                                  <mx:Lines />
-                                </mx:DigitalOutputChannelConfiguration>
                                 <mx:DigitalOutputChannelConfiguration>
                                   <mx:ChannelName>Solenoid</mx:ChannelName>
                                   <mx:Grouping>OneChannelForEachLine</mx:Grouping>
-                                  <mx:Lines />
+                                  <mx:Lines>Dev1/port1/line0</mx:Lines>
                                 </mx:DigitalOutputChannelConfiguration>
                               </mx:Channels>
                             </Combinator>
@@ -1464,12 +1467,29 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                           <Builder xsi:type="Combinator">
                             <Combinator xsi:type="mx:AnalogInput">
                               <mx:SignalSource />
-                              <mx:SampleRate>0</mx:SampleRate>
+                              <mx:SampleRate>1000</mx:SampleRate>
                               <mx:ActiveEdge>Rising</mx:ActiveEdge>
                               <mx:SampleMode>ContinuousSamples</mx:SampleMode>
-                              <mx:BufferSize>1000</mx:BufferSize>
+                              <mx:BufferSize>10</mx:BufferSize>
                               <mx:SamplesPerChannel xsi:nil="true" />
-                              <mx:Channels />
+                              <mx:Channels>
+                                <mx:AnalogInputChannelConfiguration>
+                                  <mx:ChannelName>LickSensor</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ai0</mx:PhysicalChannel>
+                                  <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogInputChannelConfiguration>
+                                <mx:AnalogInputChannelConfiguration>
+                                  <mx:ChannelName>CopyOptoStim</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ai1</mx:PhysicalChannel>
+                                  <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogInputChannelConfiguration>
+                              </mx:Channels>
                             </Combinator>
                           </Builder>
                         </Expression>
@@ -1549,7 +1569,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>10</Value>
+                            <Value>100</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -1591,16 +1611,26 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             <Property Name="BufferSize" />
                           </PropertyMappings>
                         </Expression>
+                        <Expression xsi:type="Annotation">
+                          <Name>Notes</Name>
+                          <Text><![CDATA[The whole Digital Input port is acquired as a single byte per timepoint]]></Text>
+                        </Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="Combinator">
                             <Combinator xsi:type="mx:DigitalInput">
                               <mx:SignalSource />
-                              <mx:SampleRate>0</mx:SampleRate>
+                              <mx:SampleRate>1000</mx:SampleRate>
                               <mx:ActiveEdge>Rising</mx:ActiveEdge>
                               <mx:SampleMode>ContinuousSamples</mx:SampleMode>
-                              <mx:BufferSize>1000</mx:BufferSize>
+                              <mx:BufferSize>100</mx:BufferSize>
                               <mx:SamplesPerChannel xsi:nil="true" />
-                              <mx:Channels />
+                              <mx:Channels>
+                                <mx:DigitalInputChannelConfiguration>
+                                  <mx:ChannelName>DigitalInputs</mx:ChannelName>
+                                  <mx:Grouping>OneChannelForEachLine</mx:Grouping>
+                                  <mx:Lines>Dev1/port0/line0:7</mx:Lines>
+                                </mx:DigitalInputChannelConfiguration>
+                              </mx:Channels>
                             </Combinator>
                           </Builder>
                         </Expression>
@@ -1632,12 +1662,13 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="12" Label="Source1" />
+                        <Edge From="8" To="13" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source2" />
-                        <Edge From="12" To="13" Label="Source1" />
+                        <Edge From="11" To="13" Label="Source2" />
+                        <Edge From="12" To="13" Label="Source3" />
                         <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1653,15 +1684,14 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             <Property Name="Frequency" />
                           </PropertyMappings>
                         </Expression>
-                        <Expression xsi:type="Disable">
-                          <Builder xsi:type="Combinator">
-                            <Combinator xsi:type="p1:CounterOutput">
-                              <p1:TriggerSource />
-                              <p1:Frequency>1</p1:Frequency>
-                              <p1:DutyCycle>0.5</p1:DutyCycle>
-                              <p1:NumberOfSamples xsi:nil="true" />
-                            </Combinator>
-                          </Builder>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:CounterOutput">
+                            <p1:Channel>Dev1/ctr1</p1:Channel>
+                            <p1:TriggerSource />
+                            <p1:Frequency>50</p1:Frequency>
+                            <p1:DutyCycle>0.5</p1:DutyCycle>
+                            <p1:NumberOfSamples xsi:nil="true" />
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="Unit" />
                         <Expression xsi:type="WorkflowOutput" />
@@ -1688,20 +1718,21 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                           <Selector>Value.TimeStep.ElapsedRealTime</Selector>
                         </Expression>
                         <Expression xsi:type="rx:Accumulate" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:RotaryEncoderInput">
+                            <p1:Channel>Dev1/ctr0</p1:Channel>
+                            <p1:DecoderType>X1</p1:DecoderType>
+                            <p1:TicksPerRevolution>1000</p1:TicksPerRevolution>
+                            <p1:StartingRadians>0</p1:StartingRadians>
+                            <p1:ResetOnZ>false</p1:ResetOnZ>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="Combinator">
-                            <Combinator xsi:type="p1:RotaryEncoderInput">
-                              <p1:DecoderType>X1</p1:DecoderType>
-                              <p1:TicksPerRevolution>1000</p1:TicksPerRevolution>
-                              <p1:StartingRadians>0</p1:StartingRadians>
-                              <p1:ResetOnZ>false</p1:ResetOnZ>
+                            <Combinator xsi:type="IntProperty">
+                              <Value>0</Value>
                             </Combinator>
                           </Builder>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="IntProperty">
-                            <Value>0</Value>
-                          </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Index</Selector>
@@ -1764,118 +1795,137 @@ Item3 as RenderElapsedTime)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>AI_Data</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:SelectChannels">
-                <dsp:Channels>
-                  <dsp:int>0</dsp:int>
-                </dsp:Channels>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:PublishSubject">
-              <Name>LickSensor</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:ConvertScale">
-                <dsp:Depth>F32</dsp:Depth>
-                <dsp:Scale>1</dsp:Scale>
-                <dsp:Shift>0</dsp:Shift>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Threshold">
-                <dsp:ThresholdValue>0</dsp:ThresholdValue>
-                <dsp:MaxValue>1</dsp:MaxValue>
-                <dsp:ThresholdType>Binary</dsp:ThresholdType>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Sum" />
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Val0</Selector>
-            </Expression>
-            <Expression xsi:type="GreaterThan">
-              <Operand xsi:type="DoubleProperty">
-                <Value>7</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="rx:SelectMany">
-              <Name>Draw</Name>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>PostProcessing</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="num:CreateRandom">
-                      <num:Seed xsi:nil="true" />
-                    </Combinator>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>LickSensor</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>AI_Data</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:SelectChannels">
+                            <dsp:Channels>
+                              <dsp:int>0</dsp:int>
+                            </dsp:Channels>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>LickSensor</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>LickSensor</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:ConvertScale">
+                            <dsp:Depth>F32</dsp:Depth>
+                            <dsp:Scale>1</dsp:Scale>
+                            <dsp:Shift>0</dsp:Shift>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:Threshold">
+                            <dsp:ThresholdValue>0</dsp:ThresholdValue>
+                            <dsp:MaxValue>1</dsp:MaxValue>
+                            <dsp:ThresholdType>Binary</dsp:ThresholdType>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:Sum" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Val0</Selector>
+                        </Expression>
+                        <Expression xsi:type="GreaterThan">
+                          <Operand xsi:type="DoubleProperty">
+                            <Value>7</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Name>Draw</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="num:CreateRandom">
+                                  <num:Seed xsi:nil="true" />
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p2:CreateContinuousUniform">
+                                  <p2:Lower>0</p2:Lower>
+                                  <p2:Upper>1</p2:Upper>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p2:Sample" />
+                              </Expression>
+                              <Expression xsi:type="ExternalizedMapping">
+                                <Property Name="Value" DisplayName="Probability" />
+                              </Expression>
+                              <Expression xsi:type="GreaterThan">
+                                <Operand xsi:type="DoubleProperty">
+                                  <Value>0.9</Value>
+                                </Operand>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="4" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source2" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="rx:Condition">
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="Unit" />
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>LickEvent</Name>
+                        </Expression>
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:CreateContinuousUniform">
-                      <p2:Lower>0</p2:Lower>
-                      <p2:Upper>1</p2:Upper>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:Sample" />
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Probability" />
-                  </Expression>
-                  <Expression xsi:type="GreaterThan">
-                    <Operand xsi:type="DoubleProperty">
-                      <Value>0.9</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="4" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                </Edges>
+                <Edges />
               </Workflow>
-            </Expression>
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="Unit" />
-            <Expression xsi:type="rx:PublishSubject">
-              <Name>LickEvent</Name>
             </Expression>
           </Nodes>
-          <Edges>
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-          </Edges>
+          <Edges />
         </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -2407,7 +2457,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\Reward.bonsai">
                           <RewardThreshold>5</RewardThreshold>
                           <DelayReward>PT1S</DelayReward>
-                          <RewardAmount>0</RewardAmount>
+                          <RewardAmount>25</RewardAmount>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
