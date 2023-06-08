@@ -12,12 +12,12 @@ namespace AutomaticGenerators
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class Trial
     {
-private int corridorType = 0;
-public int CorridorType
-{
-    get { return corridorType; }
-    set { corridorType = value; }
-}
+		private int corridorType = 0;
+		public int CorridorType
+		{
+			get { return corridorType; }
+			set { corridorType = value; }
+		}
 
         public PassiveMode PassiveMode { get; set; }
 
@@ -63,19 +63,19 @@ public int CorridorType
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class PassiveMode
     {
-private bool enable = true;
-public bool Enable
-{
-    get { return enable; }
-    set { enable = value; }
-}
+		private bool enable = true;
+		public bool Enable
+		{
+			get { return enable; }
+			set { enable = value; }
+		}
 
-private double gain = 0D;
-public double Gain
-{
-    get { return gain; }
-    set { gain = value; }
-}
+		private double gain = 0D;
+		public double Gain
+		{
+			get { return gain; }
+			set { gain = value; }
+		}
 
 
 
@@ -113,54 +113,54 @@ public double Gain
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class Reward
     {
-private bool enable = true;
-public bool Enable
-{
-    get { return enable; }
-    set { enable = value; }
-}
+		private bool enable = true;
+		public bool Enable
+		{
+			get { return enable; }
+			set { enable = value; }
+		}
 
-private double location = 0D;
-public double Location
-{
-    get { return location; }
-    set { location = value; }
-}
+		private double location = 0D;
+		public double Location
+		{
+			get { return location; }
+			set { location = value; }
+		}
 
-private double delay = 0D;
-public double Delay
-{
-    get { return delay; }
-    set { delay = value; }
-}
+		private double delay = 0D;
+		public double Delay
+		{
+			get { return delay; }
+			set { delay = value; }
+		}
 
-private double amountHigh = 0D;
-public double AmountHigh
-{
-    get { return amountHigh; }
-    set { amountHigh = value; }
-}
+		private double amountHigh = 0D;
+		public double AmountHigh
+		{
+			get { return amountHigh; }
+			set { amountHigh = value; }
+		}
 
-private double amountLow = 0D;
-public double AmountLow
-{
-    get { return amountLow; }
-    set { amountLow = value; }
-}
+		private double amountLow = 0D;
+		public double AmountLow
+		{
+			get { return amountLow; }
+			set { amountLow = value; }
+		}
 
-private double probabilityHigh = 1D;
-public double ProbabilityHigh
-{
-    get { return probabilityHigh; }
-    set { probabilityHigh = value; }
-}
+		private double probabilityHigh = 1D;
+		public double ProbabilityHigh
+		{
+			get { return probabilityHigh; }
+			set { probabilityHigh = value; }
+		}
 
-private double probabilityLow = 1D;
-public double ProbabilityLow
-{
-    get { return probabilityLow; }
-    set { probabilityLow = value; }
-}
+		private double probabilityLow = 1D;
+		public double ProbabilityLow
+		{
+			get { return probabilityLow; }
+			set { probabilityLow = value; }
+		}
 
 
 
@@ -177,33 +177,33 @@ public double ProbabilityLow
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class LedStimulation
     {
-private bool enable = false;
-public bool Enable
-{
-    get { return enable; }
-    set { enable = value; }
-}
+		private bool enable = false;
+		public bool Enable
+		{
+			get { return enable; }
+			set { enable = value; }
+		}
 
-private double location = 0D;
-public double Location
-{
-    get { return location; }
-    set { location = value; }
-}
+		private double location = 0D;
+		public double Location
+		{
+			get { return location; }
+			set { location = value; }
+		}
 
-private double delay = 0D;
-public double Delay
-{
-    get { return delay; }
-    set { delay = value; }
-}
+		private double delay = 0D;
+		public double Delay
+		{
+			get { return delay; }
+			set { delay = value; }
+		}
 
-private int waveformIndex = 0;
-public int WaveformIndex
-{
-    get { return waveformIndex; }
-    set { waveformIndex = value; }
-}
+		private int waveformIndex = 0;
+		public int WaveformIndex
+		{
+			get { return waveformIndex; }
+			set { waveformIndex = value; }
+		}
 
 
 
@@ -220,47 +220,47 @@ public int WaveformIndex
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class Teleport
     {
-private bool enable = true;
-public bool Enable
-{
-    get { return enable; }
-    set { enable = value; }
-}
+		private bool enable = true;
+		public bool Enable
+		{
+			get { return enable; }
+			set { enable = value; }
+		}
 
-private double location = 10D;
-public double Location
-{
-    get { return location; }
-    set { location = value; }
-}
+		private double location = 10D;
+		public double Location
+		{
+			get { return location; }
+			set { location = value; }
+		}
 
-private double destination = 0D;
-public double Destination
-{
-    get { return destination; }
-    set { destination = value; }
-}
+		private double destination = 0D;
+		public double Destination
+		{
+			get { return destination; }
+			set { destination = value; }
+		}
 
-private bool lockAtLocation = false;
-public bool LockAtLocation
-{
-    get { return lockAtLocation; }
-    set { lockAtLocation = value; }
-}
+		private bool lockAtLocation = false;
+		public bool LockAtLocation
+		{
+			get { return lockAtLocation; }
+			set { lockAtLocation = value; }
+		}
 
-private double lockAtLocationDuration = 0D;
-public double LockAtLocationDuration
-{
-    get { return lockAtLocationDuration; }
-    set { lockAtLocationDuration = value; }
-}
+		private double lockAtLocationDuration = 0D;
+		public double LockAtLocationDuration
+		{
+			get { return lockAtLocationDuration; }
+			set { lockAtLocationDuration = value; }
+		}
 
-private bool enableTeleportOnLick = false;
-public bool EnableTeleportOnLick
-{
-    get { return enableTeleportOnLick; }
-    set { enableTeleportOnLick = value; }
-}
+		private bool enableTeleportOnLick = false;
+		public bool EnableTeleportOnLick
+		{
+			get { return enableTeleportOnLick; }
+			set { enableTeleportOnLick = value; }
+		}
 
 
 
@@ -277,26 +277,26 @@ public bool EnableTeleportOnLick
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class Metadata
     {
-private string rootPath = "";
-public string RootPath
-{
-    get { return rootPath; }
-    set { rootPath = value; }
-}
+		private string rootPath = "";
+		public string RootPath
+		{
+			get { return rootPath; }
+			set { rootPath = value; }
+		}
 
-private string animalId = "";
-public string AnimalId
-{
-    get { return animalId; }
-    set { animalId = value; }
-}
+		private string animalId = "";
+		public string AnimalId
+		{
+			get { return animalId; }
+			set { animalId = value; }
+		}
 
-private bool shuffleTrialOrder = false;
-public bool ShuffleTrialOrder
-{
-    get { return shuffleTrialOrder; }
-    set { shuffleTrialOrder = value; }
-}
+		private bool shuffleTrialOrder = false;
+		public bool ShuffleTrialOrder
+		{
+			get { return shuffleTrialOrder; }
+			set { shuffleTrialOrder = value; }
+		}
 
         public int? RandomSeed { get; set; }
 
@@ -315,19 +315,19 @@ public bool ShuffleTrialOrder
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class StimulusA
     {
-private string leftWall = "Assets\\Textures\\null.png";
-public string LeftWall
-{
-    get { return leftWall; }
-    set { leftWall = value; }
-}
+		private string leftWall = "Assets\\Textures\\null.png";
+		public string LeftWall
+		{
+			get { return leftWall; }
+			set { leftWall = value; }
+		}
 
-private string rightWall = "Assets\\Textures\\null.png";
-public string RightWall
-{
-    get { return rightWall; }
-    set { rightWall = value; }
-}
+		private string rightWall = "Assets\\Textures\\null.png";
+		public string RightWall
+		{
+			get { return rightWall; }
+			set { rightWall = value; }
+		}
 
 
 
@@ -344,19 +344,19 @@ public string RightWall
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class StimulusB
     {
-private string leftWall = "Assets\\Textures\\null.png";
-public string LeftWall
-{
-    get { return leftWall; }
-    set { leftWall = value; }
-}
+		private string leftWall = "Assets\\Textures\\null.png";
+		public string LeftWall
+		{
+			get { return leftWall; }
+			set { leftWall = value; }
+		}
 
-private string rightWall = "Assets\\Textures\\null.png";
-public string RightWall
-{
-    get { return rightWall; }
-    set { rightWall = value; }
-}
+		private string rightWall = "Assets\\Textures\\null.png";
+		public string RightWall
+		{
+			get { return rightWall; }
+			set { rightWall = value; }
+		}
 
 
 
@@ -373,19 +373,19 @@ public string RightWall
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
     public partial class StimulusC
     {
-private string leftWall = "Assets\\Textures\\null.png";
-public string LeftWall
-{
-    get { return leftWall; }
-    set { leftWall = value; }
-}
+		private string leftWall = "Assets\\Textures\\null.png";
+		public string LeftWall
+		{
+			get { return leftWall; }
+			set { leftWall = value; }
+		}
 
-private string rightWall = "Assets\\Textures\\null.png";
-public string RightWall
-{
-    get { return rightWall; }
-    set { rightWall = value; }
-}
+		private string rightWall = "Assets\\Textures\\null.png";
+		public string RightWall
+		{
+			get { return rightWall; }
+			set { rightWall = value; }
+		}
 
 
 

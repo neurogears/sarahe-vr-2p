@@ -26,6 +26,7 @@ public class LoadSettings
             using (var reader = new StreamReader(Path))
             {
                 var parser = new MergingParser(new Parser(reader));
+                
                 var deserializer = new DeserializerBuilder()
                     .WithNamingConvention(CamelCaseNamingConvention.Instance)
                     .Build();
