@@ -30,7 +30,6 @@ public class BuildTrialsFromBlock
                 throw new Exception("No blocks or trials defined in the .yml file.");
             }
             var trials = new List<Trial>();
-            var j = 0;
             foreach (var block in blocks){
                 if (block.TrialProbability.Count() != value.Trials.Count()){
                     throw new Exception("Number of trials in probability array does not match number of trials defined in the .yml file.");
