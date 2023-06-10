@@ -352,11 +352,11 @@ namespace AutomaticGenerators
     {
         public System.Collections.Generic.IList<CorridorSegment> CorridorSegments { get; set; }
 
-		private int corridorType = 0;
-		public int CorridorType
+		private string trialTypeLabel = "";
+		public string TrialTypeLabel
 		{
-			get { return corridorType; }
-			set { corridorType = value; }
+			get { return trialTypeLabel; }
+			set { trialTypeLabel = value; }
 		}
 
         public System.Collections.Generic.IList<FloorSegment> FloorSegments { get; set; }

@@ -25,7 +25,7 @@ namespace AutomaticGenerators
                 var value = new Trial
                 {
 					CorridorSegments = CorridorSegments,
-					CorridorType = CorridorType,
+					TrialTypeLabel = TrialTypeLabel,
 					FloorSegments = FloorSegments,
 					OptoStim = OptoStim,
 					PassiveMode = PassiveMode,

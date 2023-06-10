@@ -10,14 +10,190 @@ metadata:
     mode: block
     blocks:
       [
-        { size: 40, tailSize: 0, trialProbability: [2, 3, 5, 10] },
-        { size: 40, tailSize: 5, trialProbability: [2, 3, 5, 10] },
-        { size: 40, tailSize: 5, trialProbability: [2, 3, 5, 10] },
+        { size: 40, tailSize: 0, trialProbability: [2, 3, 5] },
+        { size: 40, tailSize: 5, trialProbability: [2, 3, 5] },
+        { size: 40, tailSize: 5, trialProbability: [2, 3, 5] },
       ]
 trials:
   [
     {
-      corridorType: 0,
+      trialTypeLabel: "TrialType1",
+      reward:
+        [
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 0.5,
+            location: 5,
+            delay: 0,
+          },
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 0.5,
+            location: 5,
+            delay: 0,
+          },
+        ],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 6,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.5,
+            destination: 0,
+          },
+          {
+            lockAtLocation: false,
+            location: 20,
+            endTrialOnTeleport: false,
+            lockAtLocationDuration: 0,
+            destination: 0
+          },
+        ],
+      teleportOnLick:
+        [
+          {
+            destination: 0,
+            locationStart: 0,
+            locationEnd: 10,
+            refractoryDuration: 0,
+            maxRepeats: null
+          }
+        ],
+      optoStim:
+        [
+          { delay: 0, location: 3, waveformIndex: 0 },
+          { delay: 0, location: 2, waveformIndex: 0 },
+        ],
+      passiveMode:
+        [
+          { gain: 0.3, locationStart: 3, locationEnd: 4 },
+          { gain: 0.4, locationStart: 5, locationEnd: 6 },
+        ],
+      corridorSegments:
+        [
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 2,
+            textureRight: Assets\\Textures\\CamiloReward.jpg,
+            textureLeft: Assets\\Textures\\CamiloReward.jpg,
+          },
+          {
+            name: StimulusA,
+            initialVisibility: false,
+            positionStart: 2,
+            positionEnd: 3,
+            textureRight: Assets\\Textures\\plaid_blue.png,
+            textureLeft: Assets\\Textures\\plaid_blue.png,
+            stimControl:
+              { location: 2, delay: 0, leftValue: true, rightValue: true },
+          },
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 3,
+            texture: Assets\\Textures\\Floor.png,
+          },
+        ],
+    },
+    {
+      trialTypeLabel: "TrialType2",
+      reward:
+        [
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 0.5,
+            location: 5,
+            delay: 0,
+          },
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 0.5,
+            location: 5,
+            delay: 0,
+          },
+        ],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 6,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.5,
+            destination: 0,
+          },
+          {
+            lockAtLocation: false,
+            location: 20,
+            endTrialOnTeleport: false,
+            lockAtLocationDuration: 0,
+            destination: 0
+          },
+        ],
+      teleportOnLick:
+        [
+          {
+            destination: 0,
+            locationStart: 0,
+            locationEnd: 10,
+            refractoryDuration: 0,
+            maxRepeats: null
+          }
+        ],
+      optoStim:
+        [
+          { delay: 0, location: 3, waveformIndex: 0 },
+          { delay: 0, location: 2, waveformIndex: 0 },
+        ],
+      passiveMode:
+        [
+          { gain: 0.3, locationStart: 3, locationEnd: 4 },
+          { gain: 0.4, locationStart: 5, locationEnd: 6 },
+        ],
+      corridorSegments:
+        [
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 2,
+            textureRight: Assets\\Textures\\CamiloReward.jpg,
+            textureLeft: Assets\\Textures\\CamiloReward.jpg,
+          },
+          {
+            name: StimulusA,
+            initialVisibility: false,
+            positionStart: 2,
+            positionEnd: 3,
+            textureRight: Assets\\Textures\\plaid_blue.png,
+            textureLeft: Assets\\Textures\\plaid_blue.png,
+            stimControl:
+              { location: 2, delay: 0, leftValue: true, rightValue: true },
+          },
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 3,
+            texture: Assets\\Textures\\Floor.png,
+          },
+        ],
+    },
+    {
+      trialTypeLabel: "TrialType3",
       reward:
         [
           {

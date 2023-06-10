@@ -230,10 +230,9 @@
                     },
                     "type": "array"
                 },
-                "corridorType": {
-                    "default": 0,
-                    "minimum": 0,
-                    "type": "integer"
+                "trialTypeLabel": {
+                    "default": "",
+                    "type": "string"
                 },
                 "floorSegments": {
                     "items": {
