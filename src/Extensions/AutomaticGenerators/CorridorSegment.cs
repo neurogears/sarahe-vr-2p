@@ -16,21 +16,21 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class Reward
+    public partial class CorridorSegment
     {
-        public IObservable<Reward> Process()
+        public IObservable<CorridorSegment> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new Reward
+                var value = new CorridorSegment
                 {
-					Enable = Enable,
-					Location = Location,
-					Delay = Delay,
-					AmountHigh = AmountHigh,
-					AmountLow = AmountLow,
-					ProbabilityHigh = ProbabilityHigh,
-					ProbabilityLow = ProbabilityLow,
+					InitialVisibility = InitialVisibility,
+					Name = Name,
+					PositionEnd = PositionEnd,
+					PositionStart = PositionStart,
+					StimControl = StimControl,
+					TextureLeft = TextureLeft,
+					TextureRight = TextureRight,
 
                 };
                 return Observable.Return(value);

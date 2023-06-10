@@ -16,21 +16,17 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class Trial
+    public partial class OptoStimProtocol
     {
-        public IObservable<Trial> Process()
+        public IObservable<OptoStimProtocol> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new Trial
+                var value = new OptoStimProtocol
                 {
-					CorridorSegments = CorridorSegments,
-					CorridorType = CorridorType,
-					FloorSegments = FloorSegments,
-					OptoStim = OptoStim,
-					PassiveMode = PassiveMode,
-					Reward = Reward,
-					Teleport = Teleport,
+					Delay = Delay,
+					Location = Location,
+					WaveformIndex = WaveformIndex,
 
                 };
                 return Observable.Return(value);

@@ -16,20 +16,17 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class Teleport
+    public partial class PassiveModeProtocol
     {
-        public IObservable<Teleport> Process()
+        public IObservable<PassiveModeProtocol> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new Teleport
+                var value = new PassiveModeProtocol
                 {
-					Enable = Enable,
-					Location = Location,
-					Destination = Destination,
-					LockAtLocation = LockAtLocation,
-					LockAtLocationDuration = LockAtLocationDuration,
-					EnableTeleportOnLick = EnableTeleportOnLick,
+					Gain = Gain,
+					LocationEnd = LocationEnd,
+					LocationStart = LocationStart,
 
                 };
                 return Observable.Return(value);

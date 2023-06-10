@@ -16,18 +16,19 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class LedStimulation
+    public partial class RewardProtocol
     {
-        public IObservable<LedStimulation> Process()
+        public IObservable<RewardProtocol> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new LedStimulation
+                var value = new RewardProtocol
                 {
-					Enable = Enable,
-					Location = Location,
+					AmountHigh = AmountHigh,
+					AmountLow = AmountLow,
 					Delay = Delay,
-					WaveformIndex = WaveformIndex,
+					Location = Location,
+					ProbabilityHigh = ProbabilityHigh,
 
                 };
                 return Observable.Return(value);

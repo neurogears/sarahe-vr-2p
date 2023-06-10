@@ -16,16 +16,19 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class StimulusB
+    public partial class FloorSegment
     {
-        public IObservable<StimulusB> Process()
+        public IObservable<FloorSegment> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new StimulusB
+                var value = new FloorSegment
                 {
-					LeftWall = LeftWall,
-					RightWall = RightWall,
+					InitialVisibility = InitialVisibility,
+					Name = Name,
+					PositionEnd = PositionEnd,
+					PositionStart = PositionStart,
+					Texture = Texture,
 
                 };
                 return Observable.Return(value);

@@ -1,109 +1,301 @@
 {
-    "$schema": "https://json-schema.org/draft-07/schema",
     "$id": "h...",
-    "type": "object",
-    "properties":{
-        "metadata":{
-            "type": "object",
-			"properties": {
-                "rootPath": {
-                    "type": "string",
-                    "default": ""
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "definitions": {
+        "block": {
+            "properties": {
+                "size": {
+                    "default": 40,
+                    "type": "integer"
                 },
-				"animalId": {
-                    "type": "string",
-                    "default": ""
+                "tailSize": {
+                    "default": 0,
+                    "minimum": 0,
+                    "type": "integer"
                 },
-				"shuffleTrialOrder": {
-                    "type": "boolean",
-                    "default": false
+                "trialProbability": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "corridorSegment": {
+            "properties": {
+                "initialVisibility": {
+                    "default": true,
+                    "type": "boolean"
                 },
-				"randomSeed": {
-                    "type": ["integer", "null"],
-                    "default": null
+                "name": {
+                    "default": null,
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "positionEnd": {
+                    "default": 1,
+                    "type": "number"
+                },
+                "positionStart": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "stimControl": {
+                    "default": null,
+                    "properties": {
+                        "delay": {
+                            "default": 0,
+                            "minimum": 0,
+                            "type": "number"
+                        },
+                        "leftValue": {
+                            "default": true,
+                            "type": "boolean"
+                        },
+                        "location": {
+                            "default": 0,
+                            "type": "number"
+                        },
+                        "rightValue": {
+                            "default": true,
+                            "type": "boolean"
+                        }
+                    },
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "textureLeft": {
+                    "default": "Assets\\Textures\\null.png",
+                    "type": "string"
+                },
+                "textureRight": {
+                    "default": "Assets\\Textures\\null.png",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "floorSegment": {
+            "properties": {
+                "initialVisibility": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "name": {
+                    "default": null,
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "positionEnd": {
+                    "default": 1,
+                    "type": "number"
+                },
+                "positionStart": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "texture": {
+                    "default": "Assets\\Textures\\null.png",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "optoStimProtocol": {
+            "properties": {
+                "delay": {
+                    "default": 0,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "location": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "waveformIndex": {
+                    "default": 0,
+                    "minimum": 0,
+                    "type": "integer"
                 }
             }
         },
-        "trials": {
-            "type": "object",
-            "additionalProperties": { "$ref": "#/definitions/trial" }
-        }
-    },
-    "definitions": {
-        "trial": {
-            "type": "object",
+        "passiveModeProtocol": {
             "properties": {
-                "corridorType": {
-                    "type": "integer",
+                "gain": {
                     "default": 0,
-                    "minimum": 0
+                    "type": "number"
+                },
+                "locationEnd": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "locationStart": {
+                    "default": 0,
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "rewardProtocol": {
+            "properties": {
+                "amountHigh": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "amountLow": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "delay": {
+                    "default": 0,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "location": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "probabilityHigh": {
+                    "default": 1,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "teleportProtocol": {
+            "properties": {
+                "destination": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "endTrialOnTeleport": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "location": {
+                    "default": 10,
+                    "type": "number"
+                },
+                "lockAtLocation": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "lockAtLocationDuration": {
+                    "default": 0,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "teleportOnLick": {
+                    "default": false,
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "trial": {
+            "properties": {
+                "corridorSegments": {
+                    "items": {
+                        "$ref": "#/definitions/corridorSegment"
+                    },
+                    "type": "array"
+                },
+                "corridorType": {
+                    "default": 0,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "floorSegments": {
+                    "items": {
+                        "$ref": "#/definitions/floorSegment"
+                    },
+                    "type": "array"
+                },
+                "optoStim": {
+                    "items": {
+                        "$ref": "#/definitions/optoStimProtocol"
+                    },
+                    "type": "array"
                 },
                 "passiveMode": {
-                    "type" : "object",
-                    "properties": {
-                        "enable": {"type": "boolean", "default": true},
-                        "gain": {"type": "number", "default": 0}
-                    }
-                },
-                "stimulusTextures": {
-                    "type": "object",
-                    "properties": {
-                        "stimulusA": {
-                            "type": "object",
-                            "properties": {
-                                "leftWall": {"type": "string", "default": "Assets\\Textures\\null.png"},
-                                "rightWall": {"type": "string", "default": "Assets\\Textures\\null.png"}
-                            }
-                        },
-                        "stimulusB": {
-                            "type": "object",
-                            "properties": {
-                                "leftWall": {"type": "string", "default": "Assets\\Textures\\null.png"},
-                                "rightWall": {"type": "string", "default": "Assets\\Textures\\null.png"}
-                            }
-                        },
-                        "stimulusC": {
-                            "type": "object",
-                            "properties": {
-                                "leftWall": {"type": "string", "default": "Assets\\Textures\\null.png"},
-                                "rightWall": {"type": "string", "default": "Assets\\Textures\\null.png"}
-                            }
-                        }
-                    }
+                    "items": {
+                        "$ref": "#/definitions/passiveModeProtocol"
+                    },
+                    "type": "array"
                 },
                 "reward": {
-                    "type" : "object",
-                    "properties": {
-                        "enable": {"type": "boolean", "default": true},
-                        "location": {"type": "number", "default": 0},
-                        "delay": {"type": "number", "default": 0, "minimum": 0},
-                        "amountHigh": {"type": "number", "default": 0},
-                        "amountLow": {"type": "number", "default": 0},
-                        "probabilityHigh": {"type": "number", "default": 1, "minimum": 0, "maximum": 1},
-                        "probabilityLow": {"type": "number", "default": 1, "minimum": 0, "maximum": 1}
-                    }
-                },
-                "ledStimulation": {
-                    "type" : "object",
-                    "properties": {
-                        "enable": {"type": "boolean", "default": false},
-                        "location": {"type": "number", "default": 0},
-                        "delay": {"type": "number", "default": 0, "minimum": 0},
-                        "waveformIndex": {"type": "integer", "default": 0, "minimum": 0}
-                    }
+                    "items": {
+                        "$ref": "#/definitions/rewardProtocol"
+                    },
+                    "type": "array"
                 },
                 "teleport": {
-                    "type" : "object",
-                    "properties": {
-                        "enable": {"type": "boolean", "default": true},
-                        "location": {"type": "number", "default": 10},
-                        "destination": {"type": "number", "default": 0},
-                        "lockAtLocation": {"type": "boolean", "default": false},
-                        "lockAtLocationDuration": {"type": "number", "default": 0, "minimum": 0},
-                        "enableTeleportOnLick": {"type": "boolean", "default": false}
-                    }
+                    "items": {
+                        "$ref": "#/definitions/teleportProtocol"
+                    },
+                    "type": "array"
                 }
-            }
+            },
+            "type": "object"
         }
-    }
+    },
+    "properties": {
+        "metadata": {
+            "properties": {
+                "animalId": {
+                    "default": "",
+                    "type": "string"
+                },
+                "randomSeed": {
+                    "default": null,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "rootPath": {
+                    "default": "",
+                    "type": "string"
+                },
+                "trialOrder": {
+                    "properties": {
+                        "blocks": {
+                            "items": {
+                                "$ref": "#/definitions/block"
+                            },
+                            "type": "array"
+                        },
+                        "mode": {
+                            "default": "list",
+                            "enum": [
+                                "list",
+                                "shuffle",
+                                "block"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "trials": {
+            "items": {
+                "$ref": "#/definitions/trial"
+            },
+            "type": "array"
+        }
+    },
+    "title": "CorridorSession",
+    "type": "object"
 }

@@ -9,25 +9,23 @@ namespace AutomaticGenerators
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class Trial
+    public partial class Block
     {
-		private int corridorType = 0;
-		public int CorridorType
+		private int size = 40;
+		public int Size
 		{
-			get { return corridorType; }
-			set { corridorType = value; }
+			get { return size; }
+			set { size = value; }
 		}
 
-        public PassiveMode PassiveMode { get; set; }
+		private int tailSize = 0;
+		public int TailSize
+		{
+			get { return tailSize; }
+			set { tailSize = value; }
+		}
 
-        public StimulusTextures StimulusTextures { get; set; }
-
-        public Reward Reward { get; set; }
-
-        public LedStimulation LedStimulation { get; set; }
-
-        public Teleport Teleport { get; set; }
+        public System.Collections.Generic.IList<double> TrialProbability { get; set; }
 
 
 
@@ -41,12 +39,46 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class Json
+    public partial class CorridorSegment
     {
-        public Metadata Metadata { get; set; }
+		private bool initialVisibility = true;
+		public bool InitialVisibility
+		{
+			get { return initialVisibility; }
+			set { initialVisibility = value; }
+		}
 
-        public System.Collections.Generic.IDictionary<string, Trial> Trials { get; set; }
+        public string Name { get; set; }
+
+		private double positionEnd = 1D;
+		public double PositionEnd
+		{
+			get { return positionEnd; }
+			set { positionEnd = value; }
+		}
+
+		private double positionStart = 0D;
+		public double PositionStart
+		{
+			get { return positionStart; }
+			set { positionStart = value; }
+		}
+
+        public StimControl StimControl { get; set; }
+
+		private string textureLeft = "Assets\\Textures\\null.png";
+		public string TextureLeft
+		{
+			get { return textureLeft; }
+			set { textureLeft = value; }
+		}
+
+		private string textureRight = "Assets\\Textures\\null.png";
+		public string TextureRight
+		{
+			get { return textureRight; }
+			set { textureRight = value; }
+		}
 
 
 
@@ -60,21 +92,36 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class PassiveMode
+    public partial class FloorSegment
     {
-		private bool enable = true;
-		public bool Enable
+		private bool initialVisibility = true;
+		public bool InitialVisibility
 		{
-			get { return enable; }
-			set { enable = value; }
+			get { return initialVisibility; }
+			set { initialVisibility = value; }
 		}
 
-		private double gain = 0D;
-		public double Gain
+        public string Name { get; set; }
+
+		private double positionEnd = 1D;
+		public double PositionEnd
 		{
-			get { return gain; }
-			set { gain = value; }
+			get { return positionEnd; }
+			set { positionEnd = value; }
+		}
+
+		private double positionStart = 0D;
+		public double PositionStart
+		{
+			get { return positionStart; }
+			set { positionStart = value; }
+		}
+
+		private string texture = "Assets\\Textures\\null.png";
+		public string Texture
+		{
+			get { return texture; }
+			set { texture = value; }
 		}
 
 
@@ -89,44 +136,8 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class StimulusTextures
+    public partial class OptoStimProtocol
     {
-        public StimulusA StimulusA { get; set; }
-
-        public StimulusB StimulusB { get; set; }
-
-        public StimulusC StimulusC { get; set; }
-
-
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class Reward
-    {
-		private bool enable = true;
-		public bool Enable
-		{
-			get { return enable; }
-			set { enable = value; }
-		}
-
-		private double location = 0D;
-		public double Location
-		{
-			get { return location; }
-			set { location = value; }
-		}
-
 		private double delay = 0D;
 		public double Delay
 		{
@@ -134,68 +145,11 @@ namespace AutomaticGenerators
 			set { delay = value; }
 		}
 
-		private double amountHigh = 0D;
-		public double AmountHigh
-		{
-			get { return amountHigh; }
-			set { amountHigh = value; }
-		}
-
-		private double amountLow = 0D;
-		public double AmountLow
-		{
-			get { return amountLow; }
-			set { amountLow = value; }
-		}
-
-		private double probabilityHigh = 1D;
-		public double ProbabilityHigh
-		{
-			get { return probabilityHigh; }
-			set { probabilityHigh = value; }
-		}
-
-		private double probabilityLow = 1D;
-		public double ProbabilityLow
-		{
-			get { return probabilityLow; }
-			set { probabilityLow = value; }
-		}
-
-
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class LedStimulation
-    {
-		private bool enable = false;
-		public bool Enable
-		{
-			get { return enable; }
-			set { enable = value; }
-		}
-
 		private double location = 0D;
 		public double Location
 		{
 			get { return location; }
 			set { location = value; }
-		}
-
-		private double delay = 0D;
-		public double Delay
-		{
-			get { return delay; }
-			set { delay = value; }
 		}
 
 		private int waveformIndex = 0;
@@ -217,14 +171,104 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class Teleport
+    public partial class PassiveModeProtocol
     {
-		private bool enable = true;
-		public bool Enable
+		private double gain = 0D;
+		public double Gain
 		{
-			get { return enable; }
-			set { enable = value; }
+			get { return gain; }
+			set { gain = value; }
+		}
+
+		private double locationEnd = 0D;
+		public double LocationEnd
+		{
+			get { return locationEnd; }
+			set { locationEnd = value; }
+		}
+
+		private double locationStart = 0D;
+		public double LocationStart
+		{
+			get { return locationStart; }
+			set { locationStart = value; }
+		}
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class RewardProtocol
+    {
+		private double amountHigh = 0D;
+		public double AmountHigh
+		{
+			get { return amountHigh; }
+			set { amountHigh = value; }
+		}
+
+		private double amountLow = 0D;
+		public double AmountLow
+		{
+			get { return amountLow; }
+			set { amountLow = value; }
+		}
+
+		private double delay = 0D;
+		public double Delay
+		{
+			get { return delay; }
+			set { delay = value; }
+		}
+
+		private double location = 0D;
+		public double Location
+		{
+			get { return location; }
+			set { location = value; }
+		}
+
+		private double probabilityHigh = 1D;
+		public double ProbabilityHigh
+		{
+			get { return probabilityHigh; }
+			set { probabilityHigh = value; }
+		}
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class TeleportProtocol
+    {
+		private double destination = 0D;
+		public double Destination
+		{
+			get { return destination; }
+			set { destination = value; }
+		}
+
+		private bool endTrialOnTeleport = true;
+		public bool EndTrialOnTeleport
+		{
+			get { return endTrialOnTeleport; }
+			set { endTrialOnTeleport = value; }
 		}
 
 		private double location = 10D;
@@ -232,13 +276,6 @@ namespace AutomaticGenerators
 		{
 			get { return location; }
 			set { location = value; }
-		}
-
-		private double destination = 0D;
-		public double Destination
-		{
-			get { return destination; }
-			set { destination = value; }
 		}
 
 		private bool lockAtLocation = false;
@@ -255,11 +292,11 @@ namespace AutomaticGenerators
 			set { lockAtLocationDuration = value; }
 		}
 
-		private bool enableTeleportOnLick = false;
-		public bool EnableTeleportOnLick
+		private bool teleportOnLick = false;
+		public bool TeleportOnLick
 		{
-			get { return enableTeleportOnLick; }
-			set { enableTeleportOnLick = value; }
+			get { return teleportOnLick; }
+			set { teleportOnLick = value; }
 		}
 
 
@@ -274,16 +311,101 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class Metadata
+    public partial class Trial
     {
-		private string rootPath = "";
-		public string RootPath
+        public System.Collections.Generic.IList<CorridorSegment> CorridorSegments { get; set; }
+
+		private int corridorType = 0;
+		public int CorridorType
 		{
-			get { return rootPath; }
-			set { rootPath = value; }
+			get { return corridorType; }
+			set { corridorType = value; }
 		}
 
+        public System.Collections.Generic.IList<FloorSegment> FloorSegments { get; set; }
+
+        public System.Collections.Generic.IList<OptoStimProtocol> OptoStim { get; set; }
+
+        public System.Collections.Generic.IList<PassiveModeProtocol> PassiveMode { get; set; }
+
+        public System.Collections.Generic.IList<RewardProtocol> Reward { get; set; }
+
+        public System.Collections.Generic.IList<TeleportProtocol> Teleport { get; set; }
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class CorridorSession
+    {
+        public Metadata Metadata { get; set; }
+
+        public System.Collections.Generic.IList<Trial> Trials { get; set; }
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class StimControl
+    {
+		private double delay = 0D;
+		public double Delay
+		{
+			get { return delay; }
+			set { delay = value; }
+		}
+
+		private bool leftValue = true;
+		public bool LeftValue
+		{
+			get { return leftValue; }
+			set { leftValue = value; }
+		}
+
+		private double location = 0D;
+		public double Location
+		{
+			get { return location; }
+			set { location = value; }
+		}
+
+		private bool rightValue = true;
+		public bool RightValue
+		{
+			get { return rightValue; }
+			set { rightValue = value; }
+		}
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class Metadata
+    {
 		private string animalId = "";
 		public string AnimalId
 		{
@@ -291,43 +413,16 @@ namespace AutomaticGenerators
 			set { animalId = value; }
 		}
 
-		private bool shuffleTrialOrder = false;
-		public bool ShuffleTrialOrder
-		{
-			get { return shuffleTrialOrder; }
-			set { shuffleTrialOrder = value; }
-		}
-
         public int? RandomSeed { get; set; }
 
-
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class StimulusA
-    {
-		private string leftWall = "Assets\\Textures\\null.png";
-		public string LeftWall
+		private string rootPath = "";
+		public string RootPath
 		{
-			get { return leftWall; }
-			set { leftWall = value; }
+			get { return rootPath; }
+			set { rootPath = value; }
 		}
 
-		private string rightWall = "Assets\\Textures\\null.png";
-		public string RightWall
-		{
-			get { return rightWall; }
-			set { rightWall = value; }
-		}
+        public TrialOrder TrialOrder { get; set; }
 
 
 
@@ -341,21 +436,15 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class StimulusB
+    public partial class TrialOrder
     {
-		private string leftWall = "Assets\\Textures\\null.png";
-		public string LeftWall
-		{
-			get { return leftWall; }
-			set { leftWall = value; }
-		}
+        public System.Collections.Generic.IList<Block> Blocks { get; set; }
 
-		private string rightWall = "Assets\\Textures\\null.png";
-		public string RightWall
+		private TrialOrderMode mode = AutomaticGenerators.TrialOrderMode.List;
+		public TrialOrderMode Mode
 		{
-			get { return rightWall; }
-			set { rightWall = value; }
+			get { return mode; }
+			set { mode = value; }
 		}
 
 
@@ -370,32 +459,17 @@ namespace AutomaticGenerators
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class StimulusC
+    public enum TrialOrderMode
     {
-		private string leftWall = "Assets\\Textures\\null.png";
-		public string LeftWall
-		{
-			get { return leftWall; }
-			set { leftWall = value; }
-		}
 
-		private string rightWall = "Assets\\Textures\\null.png";
-		public string RightWall
-		{
-			get { return rightWall; }
-			set { rightWall = value; }
-		}
+        List = 0,
 
 
+        Shuffle = 1,
 
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
 
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
+        Block = 2,
+
 
     }
 }

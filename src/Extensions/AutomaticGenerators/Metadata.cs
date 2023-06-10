@@ -24,10 +24,10 @@ namespace AutomaticGenerators
             {
                 var value = new Metadata
                 {
-					RootPath = RootPath,
 					AnimalId = AnimalId,
-					ShuffleTrialOrder = ShuffleTrialOrder,
 					RandomSeed = RandomSeed,
+					RootPath = RootPath,
+					TrialOrder = TrialOrder,
 
                 };
                 return Observable.Return(value);

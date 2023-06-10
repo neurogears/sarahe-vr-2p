@@ -16,16 +16,17 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class PassiveMode
+    public partial class Block
     {
-        public IObservable<PassiveMode> Process()
+        public IObservable<Block> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new PassiveMode
+                var value = new Block
                 {
-					Enable = Enable,
-					Gain = Gain,
+					Size = Size,
+					TailSize = TailSize,
+					TrialProbability = TrialProbability,
 
                 };
                 return Observable.Return(value);

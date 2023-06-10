@@ -18,19 +18,19 @@ public class LoadSettings
     [Editor("Bonsai.Design.OpenFileNameEditor, Bonsai.Design", DesignTypes.UITypeEditor)]
     public string Path { get; set;}
 
-    public IObservable<Json> Process()
+    public IObservable<CorridorSession> Process()
     {
         return Observable.Defer(() =>
         {
-            Json settings;
+            CorridorSession settings;
             using (var reader = new StreamReader(Path))
             {
                 var parser = new MergingParser(new Parser(reader));
-                
+
                 var deserializer = new DeserializerBuilder()
                     .WithNamingConvention(CamelCaseNamingConvention.Instance)
                     .Build();
-                settings =  deserializer.Deserialize<Json>(parser);
+                settings =  deserializer.Deserialize<CorridorSession>(parser);
             }
             return Observable.Return(settings);
         });

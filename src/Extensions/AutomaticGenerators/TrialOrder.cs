@@ -16,16 +16,16 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class StimulusA
+    public partial class TrialOrder
     {
-        public IObservable<StimulusA> Process()
+        public IObservable<TrialOrder> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new StimulusA
+                var value = new TrialOrder
                 {
-					LeftWall = LeftWall,
-					RightWall = RightWall,
+					Blocks = Blocks,
+					Mode = Mode,
 
                 };
                 return Observable.Return(value);

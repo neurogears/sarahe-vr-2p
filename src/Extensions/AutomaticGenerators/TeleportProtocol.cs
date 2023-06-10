@@ -16,17 +16,20 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class StimulusTextures
+    public partial class TeleportProtocol
     {
-        public IObservable<StimulusTextures> Process()
+        public IObservable<TeleportProtocol> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new StimulusTextures
+                var value = new TeleportProtocol
                 {
-					StimulusA = StimulusA,
-					StimulusB = StimulusB,
-					StimulusC = StimulusC,
+					Destination = Destination,
+					EndTrialOnTeleport = EndTrialOnTeleport,
+					Location = Location,
+					LockAtLocation = LockAtLocation,
+					LockAtLocationDuration = LockAtLocationDuration,
+					TeleportOnLick = TeleportOnLick,
 
                 };
                 return Observable.Return(value);

@@ -16,16 +16,18 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class StimulusC
+    public partial class StimControl
     {
-        public IObservable<StimulusC> Process()
+        public IObservable<StimControl> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new StimulusC
+                var value = new StimControl
                 {
-					LeftWall = LeftWall,
-					RightWall = RightWall,
+					Delay = Delay,
+					LeftValue = LeftValue,
+					Location = Location,
+					RightValue = RightValue,
 
                 };
                 return Observable.Return(value);

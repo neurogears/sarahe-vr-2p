@@ -16,13 +16,13 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class Json
+    public partial class CorridorSession
     {
-        public IObservable<Json> Process()
+        public IObservable<CorridorSession> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new Json
+                var value = new CorridorSession
                 {
 					Metadata = Metadata,
 					Trials = Trials,
