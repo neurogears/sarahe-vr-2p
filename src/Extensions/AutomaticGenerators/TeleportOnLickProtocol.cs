@@ -16,19 +16,19 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class TeleportProtocol
+    public partial class TeleportOnLickProtocol
     {
-        public IObservable<TeleportProtocol> Process()
+        public IObservable<TeleportOnLickProtocol> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new TeleportProtocol
+                var value = new TeleportOnLickProtocol
                 {
 					Destination = Destination,
-					EndTrialOnTeleport = EndTrialOnTeleport,
-					Location = Location,
-					LockAtLocation = LockAtLocation,
-					LockAtLocationDuration = LockAtLocationDuration,
+					LocationStart = LocationStart,
+					LocationEnd = LocationEnd,
+					MaxRepeats = MaxRepeats,
+					RefractoryDuration = RefractoryDuration,
 
                 };
                 return Observable.Return(value);

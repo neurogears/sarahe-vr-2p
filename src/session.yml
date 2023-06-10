@@ -49,9 +49,18 @@ trials:
             location: 20,
             endTrialOnTeleport: false,
             lockAtLocationDuration: 0,
-            destination: 0,
-            teleportOnLick: true,
+            destination: 0
           },
+        ],
+      teleportOnLick:
+        [
+          {
+            destination: 0,
+            locationStart: 0,
+            locationEnd: 10,
+            refractoryDuration: 0,
+            maxRepeats: null
+          }
         ],
       optoStim:
         [
@@ -78,8 +87,8 @@ trials:
             initialVisibility: false,
             positionStart: 2,
             positionEnd: 3,
-            textureRight: Assets\\Textures\\plaid_blue.jpg,
-            textureLeft: Assets\\Textures\\plaid_blue.jpg,
+            textureRight: Assets\\Textures\\plaid_blue.png,
+            textureLeft: Assets\\Textures\\plaid_blue.png,
             stimControl:
               { location: 2, delay: 0, leftValue: true, rightValue: true },
           },
@@ -91,7 +100,7 @@ trials:
             initialVisibility: true,
             positionStart: 0,
             positionEnd: 3,
-            texture: Assets\\Textures\\Floor.jpg,
+            texture: Assets\\Textures\\Floor.png,
           },
         ],
     },

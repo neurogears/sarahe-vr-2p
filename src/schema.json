@@ -193,10 +193,31 @@
                     "default": 0,
                     "minimum": 0,
                     "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "teleportOnLickProtocol": {
+            "properties": {
+                "destination": {
+                    "default": 0,
+                    "type": "number"
                 },
-                "teleportOnLick": {
-                    "default": false,
-                    "type": "boolean"
+                "locationStart": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "locationEnd": {
+                    "default": 10,
+                    "type": "number"
+                },
+                "maxRepeats": {
+                    "default": null,
+                    "type": ["null", "integer"]
+                },
+                "refractoryDuration": {
+                    "default": 0,
+                    "type": ["number"]
                 }
             },
             "type": "object"
@@ -241,6 +262,12 @@
                 "teleport": {
                     "items": {
                         "$ref": "#/definitions/teleportProtocol"
+                    },
+                    "type": "array"
+                },
+                "teleportOnLick": {
+                    "items": {
+                        "$ref": "#/definitions/teleportOnLickProtocol"
                     },
                     "type": "array"
                 }

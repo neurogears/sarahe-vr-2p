@@ -1,79 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.7.3"
+<WorkflowBuilder Version="2.8.0-alpha018"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
-                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="TextureFloor" />
-        <Property Name="IsVisible" />
-        <Property Name="Start" />
-        <Property Name="End" />
-        <Property Name="Name" />
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source1</Name>
       </Expression>
-      <Expression xsi:type="rx:Defer">
+      <Expression xsi:type="rx:CreateObservable">
         <Name>DrawFloorSegment</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="TextureFloor" />
-            </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="gl:BindTexture,sys:String">
-              <MemberName>TextureName</MemberName>
-              <Value />
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="IsVisible" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>true</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Start" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="End" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Name" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>Floor</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-it.Item1 as Name,
-it.Item2 as Visible,
-it.Item3.Item1 as Start,
-it.Item3.Item2 as Stop,
-it.Item3.Item2 - it.Item3.Item1 as Length,
-(0.5 * (it.Item3.Item2 - it.Item3.Item1)) + it.Item3.Item1  as Center,
-new(
-  it.Item4 as Floor) as Textures)</scr:Expression>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -82,6 +24,38 @@ new(
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
               <Name>SegmentSpecs</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SegmentSpecs</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Texture</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FileName" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:LoadImage">
+                <gl:Width xsi:nil="true" />
+                <gl:Height xsi:nil="true" />
+                <gl:InternalFormat>Rgba</gl:InternalFormat>
+                <gl:WrapS>Repeat</gl:WrapS>
+                <gl:WrapT>Repeat</gl:WrapT>
+                <gl:MinFilter>Linear</gl:MinFilter>
+                <gl:MagFilter>Linear</gl:MagFilter>
+                <gl:ColorType>Unchanged</gl:ColorType>
+                <gl:FlipMode>Vertical</gl:FlipMode>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>ThisTexture</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Draw3DStim</Name>
@@ -93,7 +67,13 @@ new(
               <Name>SegmentSpecs</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>CorridorSpecs</Name>
+              <Name>SegmentSpecs</Name>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+it.PositionEnd - it.PositionStart as Length,
+0.5 * (it.PositionEnd - it.PositionStart) + it.PositionStart as Center
+)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
@@ -101,8 +81,9 @@ new(
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
 it.Item1 as Draw,
-it.Item3 as CorridorSpecs,
-it.Item4 as SegmentSpecs)
+it.Item2 as CorridorSpecs,
+it.Item3 as SegmentSpecs,
+it.Item4 as PostSegmentSpecs)
 </scr:Expression>
             </Expression>
             <Expression xsi:type="rx:Condition">
@@ -113,7 +94,7 @@ it.Item4 as SegmentSpecs)
                     <Name>Source1</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>SegmentSpecs.Visible</Selector>
+                    <Selector>SegmentSpecs.InitialVisibility</Selector>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -132,23 +113,51 @@ it.Item4 as SegmentSpecs)
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
             </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="TextureName" Selector="Item2.SegmentSpecs.Textures.Floor" />
-              </PropertyMappings>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>BindTexture</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThisTexture</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:BindTexture">
+                      <gl:TextureSlot>Texture0</gl:TextureSlot>
+                      <gl:ShaderName>TexturedModel</gl:ShaderName>
+                      <gl:TextureName />
+                      <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:BindTexture">
-                <gl:TextureSlot>Texture0</gl:TextureSlot>
-                <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>Floor</gl:TextureName>
-                <gl:TextureTarget>Texture2D</gl:TextureTarget>
-              </Combinator>
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2</Selector>
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="TranslationZ" Selector="Item2.SegmentSpecs.Center" />
-                <Property Name="ScaleY" Selector="Item2.SegmentSpecs.Length" />
+                <Property Name="TranslationZ" Selector="Item2.PostSegmentSpecs.Center" />
+                <Property Name="ScaleY" Selector="Item2.PostSegmentSpecs.Length" />
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
@@ -156,10 +165,12 @@ it.Item4 as SegmentSpecs)
               <TranslationX>0</TranslationX>
               <TranslationY>0</TranslationY>
               <TranslationZ>3</TranslationZ>
+              <RotationZ>0</RotationZ>
+              <RotationY>0</RotationY>
+              <RotationX>90</RotationX>
               <ScaleX>1</ScaleX>
               <ScaleY>-6</ScaleY>
               <ScaleZ>1</ScaleZ>
-              <MeshName>Plane</MeshName>
               <Ambient>
                 <X>1</X>
                 <Y>1</Y>
@@ -176,40 +187,34 @@ it.Item4 as SegmentSpecs)
                 <Z>0</Z>
               </Specular>
               <SpecularExponent>1</SpecularExponent>
-              <RotationZ>0</RotationZ>
-              <RotationY>0</RotationY>
-              <RotationX>90</RotationX>
+              <MeshName>Plane</MeshName>
             </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="11" Label="Source4" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="11" Label="Source2" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="8" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="11" Label="Source3" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="14" Label="Source1" />
+            <Edge From="10" To="14" Label="Source2" />
+            <Edge From="11" To="14" Label="Source3" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="15" To="19" Label="Source1" />
+            <Edge From="13" To="14" Label="Source4" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
             <Edge From="16" To="19" Label="Source2" />
-            <Edge From="17" To="19" Label="Source4" />
-            <Edge From="18" To="19" Label="Source3" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
+            <Edge From="19" To="21" Label="Source2" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="21" To="24" Label="Source2" />
             <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

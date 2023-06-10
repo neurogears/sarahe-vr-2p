@@ -31,6 +31,7 @@ namespace AutomaticGenerators
 					PassiveMode = PassiveMode,
 					Reward = Reward,
 					Teleport = Teleport,
+					TeleportOnLick = TeleportOnLick,
 
                 };
                 return Observable.Return(value);

@@ -292,11 +292,48 @@ namespace AutomaticGenerators
 			set { lockAtLocationDuration = value; }
 		}
 
-		private bool teleportOnLick = false;
-		public bool TeleportOnLick
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class TeleportOnLickProtocol
+    {
+		private double destination = 0D;
+		public double Destination
 		{
-			get { return teleportOnLick; }
-			set { teleportOnLick = value; }
+			get { return destination; }
+			set { destination = value; }
+		}
+
+		private double locationStart = 0D;
+		public double LocationStart
+		{
+			get { return locationStart; }
+			set { locationStart = value; }
+		}
+
+		private double locationEnd = 10D;
+		public double LocationEnd
+		{
+			get { return locationEnd; }
+			set { locationEnd = value; }
+		}
+
+        public int? MaxRepeats { get; set; }
+
+		private double refractoryDuration = 0D;
+		public double RefractoryDuration
+		{
+			get { return refractoryDuration; }
+			set { refractoryDuration = value; }
 		}
 
 
@@ -331,6 +368,8 @@ namespace AutomaticGenerators
         public System.Collections.Generic.IList<RewardProtocol> Reward { get; set; }
 
         public System.Collections.Generic.IList<TeleportProtocol> Teleport { get; set; }
+
+        public System.Collections.Generic.IList<TeleportOnLickProtocol> TeleportOnLick { get; set; }
 
 
 
