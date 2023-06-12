@@ -11,7 +11,7 @@ metadata:
     blocks:
       [
         { size: 40, tailSize: 0, trialProbability: [2, 3, 5] },
-        { size: 40, tailSize: 5, trialProbability: [2, 3, 5] },
+        { size: 40, tailSize: 5, trialProbability: [0.2, .3, 0.5] },
         { size: 40, tailSize: 5, trialProbability: [2, 3, 5] },
       ]
 trials:
@@ -27,14 +27,7 @@ trials:
             probabilityHigh: 0.5,
             location: 5,
             delay: 0,
-          },
-          {
-            amountHigh: 5,
-            amountLow: 1,
-            probabilityHigh: 0.5,
-            location: 5,
-            delay: 0,
-          },
+          }
         ],
       teleport:
         [
@@ -44,14 +37,7 @@ trials:
             endTrialOnTeleport: true,
             lockAtLocationDuration: 0.5,
             destination: 0,
-          },
-          {
-            lockAtLocation: false,
-            location: 20,
-            endTrialOnTeleport: false,
-            lockAtLocationDuration: 0,
-            destination: 0
-          },
+          }
         ],
       teleportOnLick:
         [
@@ -66,7 +52,6 @@ trials:
       optoStim:
         [
           { delay: 0, location: 3, waveformIndex: 0 },
-          { delay: 0, location: 2, waveformIndex: 0 },
         ],
       passiveMode:
         [
@@ -100,15 +85,24 @@ trials:
             name: Floor,
             initialVisibility: true,
             positionStart: 0,
-            positionEnd: 3,
+            positionEnd: 10,
             texture: Assets\\Textures\\Floor.png,
           },
         ],
     },
     {<<: *fullTrialDefinition,
-      trialTypeLabel: "TrialType2"},
+      trialTypeLabel: "TrialType2",
+      reward:
+        [
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 0.8,
+            location: 5,
+            delay: 0,
+          }
+        ]
+        },
     {<<: *fullTrialDefinition,
       trialTypeLabel: "TrialType3"},
-    {<<: *fullTrialDefinition,
-      trialTypeLabel: "TrialType4"},
   ]
