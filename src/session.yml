@@ -14,6 +14,7 @@ metadata:
         { size: 40, tailSize: 5, trialProbability: [0.2, .3, 0.5] },
         { size: 40, tailSize: 5, trialProbability: [2, 3, 5] },
       ]
+  rewardCalibration: {slope: 0.01, intercept: 0}
 trials:
   [
     &fullTrialDefinition

@@ -255,6 +255,50 @@ namespace AutomaticGenerators
 
     }
 
+    public partial class TeleportOnLickProtocol
+    {
+		private double destination = 0D;
+		public double Destination
+		{
+			get { return destination; }
+			set { destination = value; }
+		}
+
+		private double locationEnd = 10D;
+		public double LocationEnd
+		{
+			get { return locationEnd; }
+			set { locationEnd = value; }
+		}
+
+		private double locationStart = 0D;
+		public double LocationStart
+		{
+			get { return locationStart; }
+			set { locationStart = value; }
+		}
+
+        public int? MaxRepeats { get; set; }
+
+		private double refractoryDuration = 0D;
+		public double RefractoryDuration
+		{
+			get { return refractoryDuration; }
+			set { refractoryDuration = value; }
+		}
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
     public partial class TeleportProtocol
     {
 		private double destination = 0D;
@@ -304,60 +348,9 @@ namespace AutomaticGenerators
 
     }
 
-    public partial class TeleportOnLickProtocol
-    {
-		private double destination = 0D;
-		public double Destination
-		{
-			get { return destination; }
-			set { destination = value; }
-		}
-
-		private double locationStart = 0D;
-		public double LocationStart
-		{
-			get { return locationStart; }
-			set { locationStart = value; }
-		}
-
-		private double locationEnd = 10D;
-		public double LocationEnd
-		{
-			get { return locationEnd; }
-			set { locationEnd = value; }
-		}
-
-        public int? MaxRepeats { get; set; }
-
-		private double refractoryDuration = 0D;
-		public double RefractoryDuration
-		{
-			get { return refractoryDuration; }
-			set { refractoryDuration = value; }
-		}
-
-
-
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
-
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     public partial class Trial
     {
         public System.Collections.Generic.IList<CorridorSegment> CorridorSegments { get; set; }
-
-		private string trialTypeLabel = "";
-		public string TrialTypeLabel
-		{
-			get { return trialTypeLabel; }
-			set { trialTypeLabel = value; }
-		}
 
         public System.Collections.Generic.IList<FloorSegment> FloorSegments { get; set; }
 
@@ -370,6 +363,13 @@ namespace AutomaticGenerators
         public System.Collections.Generic.IList<TeleportProtocol> Teleport { get; set; }
 
         public System.Collections.Generic.IList<TeleportOnLickProtocol> TeleportOnLick { get; set; }
+
+		private string trialTypeLabel = "";
+		public string TrialTypeLabel
+		{
+			get { return trialTypeLabel; }
+			set { trialTypeLabel = value; }
+		}
 
 
 
@@ -454,6 +454,8 @@ namespace AutomaticGenerators
 
         public int? RandomSeed { get; set; }
 
+        public RewardCalibration RewardCalibration { get; set; }
+
 		private string rootPath = "";
 		public string RootPath
 		{
@@ -462,6 +464,34 @@ namespace AutomaticGenerators
 		}
 
         public TrialOrder TrialOrder { get; set; }
+
+
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    public partial class RewardCalibration
+    {
+		private double intercept = 0D;
+		public double Intercept
+		{
+			get { return intercept; }
+			set { intercept = value; }
+		}
+
+		private double slope = 1D;
+		public double Slope
+		{
+			get { return slope; }
+			set { slope = value; }
+		}
 
 
 

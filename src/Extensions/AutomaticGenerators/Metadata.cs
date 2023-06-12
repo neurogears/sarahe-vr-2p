@@ -26,6 +26,7 @@ namespace AutomaticGenerators
                 {
 					AnimalId = AnimalId,
 					RandomSeed = RandomSeed,
+					RewardCalibration = RewardCalibration,
 					RootPath = RootPath,
 					TrialOrder = TrialOrder,
 

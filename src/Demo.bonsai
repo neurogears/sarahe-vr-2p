@@ -591,8 +591,8 @@ Item2 as Frame)</scr:Expression>
           <Nodes>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateWindow">
-                <gl:Width>5120</gl:Width>
-                <gl:Height>1440</gl:Height>
+                <gl:Width>500</gl:Width>
+                <gl:Height>500</gl:Height>
                 <gl:VSync>Off</gl:VSync>
                 <gl:SwapSync>false</gl:SwapSync>
                 <gl:ClearColor>Gray</gl:ClearColor>
@@ -600,7 +600,7 @@ Item2 as Frame)</scr:Expression>
                 <gl:CursorVisible>true</gl:CursorVisible>
                 <gl:Location xsi:nil="true" />
                 <gl:WindowBorder>Hidden</gl:WindowBorder>
-                <gl:WindowState>Fullscreen</gl:WindowState>
+                <gl:WindowState>Minimized</gl:WindowState>
                 <gl:DisplayDevice>Second</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
@@ -629,60 +629,7 @@ Item2 as Frame)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.BonVisionResources.bonsai" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:TextureResources">
-                <gl:Textures>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>BluePlaid</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Assets\Textures\plaid_blue.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>ColorDots</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Assets\Textures\Camilo.jpg</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>Reward</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Assets\Textures\CamiloReward.jpg</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>Floor</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Assets\Textures\Floor.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                </gl:Textures>
+                <gl:Textures />
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1238,30 +1185,32 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>AO_Generation</Name>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="mx:AnalogOutput">
-                            <mx:SignalSource />
-                            <mx:SampleRate>30000</mx:SampleRate>
-                            <mx:ActiveEdge>Rising</mx:ActiveEdge>
-                            <mx:SampleMode>FiniteSamples</mx:SampleMode>
-                            <mx:BufferSize>3000</mx:BufferSize>
-                            <mx:Channels>
-                              <mx:AnalogOutputChannelConfiguration>
-                                <mx:ChannelName>OptoStim</mx:ChannelName>
-                                <mx:MinimumValue>-10</mx:MinimumValue>
-                                <mx:MaximumValue>10</mx:MaximumValue>
-                                <mx:PhysicalChannel>Dev1/ao0</mx:PhysicalChannel>
-                                <mx:VoltageUnits>Volts</mx:VoltageUnits>
-                              </mx:AnalogOutputChannelConfiguration>
-                              <mx:AnalogOutputChannelConfiguration>
-                                <mx:ChannelName>Reward</mx:ChannelName>
-                                <mx:MinimumValue>-10</mx:MinimumValue>
-                                <mx:MaximumValue>10</mx:MaximumValue>
-                                <mx:PhysicalChannel>Dev1/ao1</mx:PhysicalChannel>
-                                <mx:VoltageUnits>Volts</mx:VoltageUnits>
-                              </mx:AnalogOutputChannelConfiguration>
-                            </mx:Channels>
-                          </Combinator>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="Combinator">
+                            <Combinator xsi:type="mx:AnalogOutput">
+                              <mx:SignalSource />
+                              <mx:SampleRate>30000</mx:SampleRate>
+                              <mx:ActiveEdge>Rising</mx:ActiveEdge>
+                              <mx:SampleMode>FiniteSamples</mx:SampleMode>
+                              <mx:BufferSize>3000</mx:BufferSize>
+                              <mx:Channels>
+                                <mx:AnalogOutputChannelConfiguration>
+                                  <mx:ChannelName>OptoStim</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ao0</mx:PhysicalChannel>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogOutputChannelConfiguration>
+                                <mx:AnalogOutputChannelConfiguration>
+                                  <mx:ChannelName>Reward</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ao1</mx:PhysicalChannel>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogOutputChannelConfiguration>
+                              </mx:Channels>
+                            </Combinator>
+                          </Builder>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\PulseGenerator.bonsai">
                           <SampleRate>1000</SampleRate>
@@ -1365,6 +1314,19 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                               <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Int32">
                                 <rx:Name>CurrentRewardAmount</rx:Name>
                               </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>SessionSettings</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Metadata.RewardCalibration</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Name>CalibrateValve</scr:Name>
+                                <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
+                              </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
                                   <Property Name="ValveTimeOn" />
@@ -1384,12 +1346,16 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             <Edges>
                               <Edge From="0" To="2" Label="Source1" />
                               <Edge From="1" To="2" Label="Source2" />
-                              <Edge From="2" To="6" Label="Source1" />
-                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="2" To="10" Label="Source1" />
+                              <Edge From="3" To="6" Label="Source1" />
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source2" />
                               <Edge From="6" To="7" Label="Source1" />
                               <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source2" />
+                              <Edge From="10" To="11" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1519,6 +1485,25 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>GiveOptoStim</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="wie:KeyDown">
+                            <wie:Filter>W</wie:Filter>
+                            <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\RewardPulse.bonsai">
+                                <ValveTimeOn>0.005</ValveTimeOn>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
@@ -1546,6 +1531,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Edge From="26" To="27" Label="Source1" />
                         <Edge From="28" To="29" Label="Source1" />
                         <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="32" To="33" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1586,67 +1572,6 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="rx:AsyncSubject">
                           <Name>AI_Settings</Name>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>AI_Settings</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>SamplingRate</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="SampleRate" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>AI_Settings</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>BufferSize</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="BufferSize" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="mx:AnalogInput">
-                            <mx:SignalSource />
-                            <mx:SampleRate>1000</mx:SampleRate>
-                            <mx:ActiveEdge>Rising</mx:ActiveEdge>
-                            <mx:SampleMode>ContinuousSamples</mx:SampleMode>
-                            <mx:BufferSize>10</mx:BufferSize>
-                            <mx:SamplesPerChannel xsi:nil="true" />
-                            <mx:Channels>
-                              <mx:AnalogInputChannelConfiguration>
-                                <mx:ChannelName>LickSensor</mx:ChannelName>
-                                <mx:MinimumValue>-10</mx:MinimumValue>
-                                <mx:MaximumValue>10</mx:MaximumValue>
-                                <mx:PhysicalChannel>Dev1/ai1</mx:PhysicalChannel>
-                                <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
-                                <mx:VoltageUnits>Volts</mx:VoltageUnits>
-                              </mx:AnalogInputChannelConfiguration>
-                              <mx:AnalogInputChannelConfiguration>
-                                <mx:ChannelName>Photodiode</mx:ChannelName>
-                                <mx:MinimumValue>-10</mx:MinimumValue>
-                                <mx:MaximumValue>10</mx:MaximumValue>
-                                <mx:PhysicalChannel>Dev1/ai5</mx:PhysicalChannel>
-                                <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
-                                <mx:VoltageUnits>Volts</mx:VoltageUnits>
-                              </mx:AnalogInputChannelConfiguration>
-                              <mx:AnalogInputChannelConfiguration>
-                                <mx:ChannelName>CopyOptoStim</mx:ChannelName>
-                                <mx:MinimumValue>-10</mx:MinimumValue>
-                                <mx:MaximumValue>10</mx:MaximumValue>
-                                <mx:PhysicalChannel>Dev1/ai6</mx:PhysicalChannel>
-                                <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
-                                <mx:VoltageUnits>Volts</mx:VoltageUnits>
-                              </mx:AnalogInputChannelConfiguration>
-                            </mx:Channels>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>AI_Data</Name>
-                        </Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="SubscribeSubject">
                             <Name>AI_Settings</Name>
@@ -1677,28 +1602,45 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="PropertyMapping">
                             <PropertyMappings>
-                              <Property Name="BufferLength" />
+                              <Property Name="BufferSize" />
                             </PropertyMappings>
                           </Builder>
                         </Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="Combinator">
-                            <Combinator xsi:type="dsp:FunctionGenerator">
-                              <dsp:BufferLength>10</dsp:BufferLength>
-                              <dsp:Frequency>60</dsp:Frequency>
-                              <dsp:Waveform>Sine</dsp:Waveform>
-                              <dsp:SampleRate>1000</dsp:SampleRate>
-                              <dsp:Amplitude>1</dsp:Amplitude>
-                              <dsp:Offset>0</dsp:Offset>
-                              <dsp:Phase>0</dsp:Phase>
-                            </Combinator>
-                          </Builder>
-                        </Expression>
-                        <Expression xsi:type="Disable">
-                          <Builder xsi:type="Combinator">
-                            <Combinator xsi:type="dsp:Tile">
-                              <dsp:RowTiles>2</dsp:RowTiles>
-                              <dsp:ColumnTiles>1</dsp:ColumnTiles>
+                            <Combinator xsi:type="mx:AnalogInput">
+                              <mx:SignalSource />
+                              <mx:SampleRate>1000</mx:SampleRate>
+                              <mx:ActiveEdge>Rising</mx:ActiveEdge>
+                              <mx:SampleMode>ContinuousSamples</mx:SampleMode>
+                              <mx:BufferSize>10</mx:BufferSize>
+                              <mx:SamplesPerChannel xsi:nil="true" />
+                              <mx:Channels>
+                                <mx:AnalogInputChannelConfiguration>
+                                  <mx:ChannelName>LickSensor</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ai1</mx:PhysicalChannel>
+                                  <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogInputChannelConfiguration>
+                                <mx:AnalogInputChannelConfiguration>
+                                  <mx:ChannelName>Photodiode</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ai5</mx:PhysicalChannel>
+                                  <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogInputChannelConfiguration>
+                                <mx:AnalogInputChannelConfiguration>
+                                  <mx:ChannelName>CopyOptoStim</mx:ChannelName>
+                                  <mx:MinimumValue>-10</mx:MinimumValue>
+                                  <mx:MaximumValue>10</mx:MaximumValue>
+                                  <mx:PhysicalChannel>Dev1/ai6</mx:PhysicalChannel>
+                                  <mx:TerminalConfiguration>Differential</mx:TerminalConfiguration>
+                                  <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                                </mx:AnalogInputChannelConfiguration>
+                              </mx:Channels>
                             </Combinator>
                           </Builder>
                         </Expression>
@@ -1706,6 +1648,48 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                           <Builder xsi:type="rx:PublishSubject">
                             <Name>AI_Data</Name>
                           </Builder>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>AI_Settings</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>SamplingRate</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="SampleRate" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>AI_Settings</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>BufferSize</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="BufferLength" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:FunctionGenerator">
+                            <dsp:BufferLength>10</dsp:BufferLength>
+                            <dsp:Frequency>60</dsp:Frequency>
+                            <dsp:Waveform>Sine</dsp:Waveform>
+                            <dsp:SampleRate>1000</dsp:SampleRate>
+                            <dsp:Amplitude>1</dsp:Amplitude>
+                            <dsp:Offset>0</dsp:Offset>
+                            <dsp:Phase>0</dsp:Phase>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:Tile">
+                            <dsp:RowTiles>3</dsp:RowTiles>
+                            <dsp:ColumnTiles>1</dsp:ColumnTiles>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>AI_Data</Name>
                         </Expression>
                       </Nodes>
                       <Edges>
@@ -1771,48 +1755,64 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="rx:AsyncSubject">
                           <Name>DI_Settings</Name>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>DI_Settings</Name>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="SubscribeSubject">
+                            <Name>DI_Settings</Name>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>SamplingRate</Selector>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="MemberSelector">
+                            <Selector>SamplingRate</Selector>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="SampleRate" />
-                          </PropertyMappings>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="SampleRate" />
+                            </PropertyMappings>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>DI_Settings</Name>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="SubscribeSubject">
+                            <Name>DI_Settings</Name>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>BufferSize</Selector>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="MemberSelector">
+                            <Selector>BufferSize</Selector>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="BufferSize" />
-                          </PropertyMappings>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="BufferSize" />
+                            </PropertyMappings>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="Annotation">
-                          <Name>Notes</Name>
-                          <Text><![CDATA[The whole Digital Input port is acquired as a single byte per timepoint]]></Text>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="Annotation">
+                            <Name>Notes</Name>
+                            <Text><![CDATA[The whole Digital Input port is acquired as a single byte per timepoint]]></Text>
+                          </Builder>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="mx:DigitalInput">
-                            <mx:SignalSource />
-                            <mx:SampleRate>1000</mx:SampleRate>
-                            <mx:ActiveEdge>Rising</mx:ActiveEdge>
-                            <mx:SampleMode>ContinuousSamples</mx:SampleMode>
-                            <mx:BufferSize>100</mx:BufferSize>
-                            <mx:SamplesPerChannel xsi:nil="true" />
-                            <mx:Channels>
-                              <mx:DigitalInputChannelConfiguration>
-                                <mx:ChannelName>DigitalInputs</mx:ChannelName>
-                                <mx:Grouping>OneChannelForEachLine</mx:Grouping>
-                                <mx:Lines>Dev1/port0/line0:7</mx:Lines>
-                              </mx:DigitalInputChannelConfiguration>
-                            </mx:Channels>
-                          </Combinator>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="Combinator">
+                            <Combinator xsi:type="mx:DigitalInput">
+                              <mx:SignalSource />
+                              <mx:SampleRate>1000</mx:SampleRate>
+                              <mx:ActiveEdge>Rising</mx:ActiveEdge>
+                              <mx:SampleMode>ContinuousSamples</mx:SampleMode>
+                              <mx:BufferSize>100</mx:BufferSize>
+                              <mx:SamplesPerChannel xsi:nil="true" />
+                              <mx:Channels>
+                                <mx:DigitalInputChannelConfiguration>
+                                  <mx:ChannelName>DigitalInputs</mx:ChannelName>
+                                  <mx:Grouping>OneChannelForEachLine</mx:Grouping>
+                                  <mx:Lines>Dev1/port0/line0:7</mx:Lines>
+                                </mx:DigitalInputChannelConfiguration>
+                              </mx:Channels>
+                            </Combinator>
+                          </Builder>
                         </Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="rx:PublishSubject">
@@ -2351,7 +2351,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>-0.25</Value>
+                <Value>0.05</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">

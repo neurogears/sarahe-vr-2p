@@ -171,6 +171,36 @@
             },
             "type": "object"
         },
+        "teleportOnLickProtocol": {
+            "properties": {
+                "destination": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "locationEnd": {
+                    "default": 10,
+                    "type": "number"
+                },
+                "locationStart": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "maxRepeats": {
+                    "default": null,
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "refractoryDuration": {
+                    "default": 0,
+                    "type": [
+                        "number"
+                    ]
+                }
+            },
+            "type": "object"
+        },
         "teleportProtocol": {
             "properties": {
                 "destination": {
@@ -197,31 +227,6 @@
             },
             "type": "object"
         },
-        "teleportOnLickProtocol": {
-            "properties": {
-                "destination": {
-                    "default": 0,
-                    "type": "number"
-                },
-                "locationStart": {
-                    "default": 0,
-                    "type": "number"
-                },
-                "locationEnd": {
-                    "default": 10,
-                    "type": "number"
-                },
-                "maxRepeats": {
-                    "default": null,
-                    "type": ["null", "integer"]
-                },
-                "refractoryDuration": {
-                    "default": 0,
-                    "type": ["number"]
-                }
-            },
-            "type": "object"
-        },
         "trial": {
             "properties": {
                 "corridorSegments": {
@@ -229,10 +234,6 @@
                         "$ref": "#/definitions/corridorSegment"
                     },
                     "type": "array"
-                },
-                "trialTypeLabel": {
-                    "default": "",
-                    "type": "string"
                 },
                 "floorSegments": {
                     "items": {
@@ -269,6 +270,10 @@
                         "$ref": "#/definitions/teleportOnLickProtocol"
                     },
                     "type": "array"
+                },
+                "trialTypeLabel": {
+                    "default": "",
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -287,6 +292,19 @@
                         "integer",
                         "null"
                     ]
+                },
+                "rewardCalibration": {
+                    "properties": {
+                        "intercept": {
+                            "default": 0,
+                            "type": "number"
+                        },
+                        "slope": {
+                            "default": 1,
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
                 },
                 "rootPath": {
                     "default": "",

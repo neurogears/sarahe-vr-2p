@@ -16,22 +16,16 @@ namespace AutomaticGenerators
     [Combinator]
     [Description("Constructor.")]
     [WorkflowElementCategory(ElementCategory.Source)]
-    public partial class Trial
+    public partial class RewardCalibration
     {
-        public IObservable<Trial> Process()
+        public IObservable<RewardCalibration> Process()
         {
             return Observable.Defer(() =>
             {
-                var value = new Trial
+                var value = new RewardCalibration
                 {
-					CorridorSegments = CorridorSegments,
-					FloorSegments = FloorSegments,
-					OptoStim = OptoStim,
-					PassiveMode = PassiveMode,
-					Reward = Reward,
-					Teleport = Teleport,
-					TeleportOnLick = TeleportOnLick,
-					TrialTypeLabel = TrialTypeLabel,
+					Intercept = Intercept,
+					Slope = Slope,
 
                 };
                 return Observable.Return(value);

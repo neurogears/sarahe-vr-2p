@@ -25,8 +25,8 @@ namespace AutomaticGenerators
                 var value = new TeleportOnLickProtocol
                 {
 					Destination = Destination,
-					LocationStart = LocationStart,
 					LocationEnd = LocationEnd,
+					LocationStart = LocationStart,
 					MaxRepeats = MaxRepeats,
 					RefractoryDuration = RefractoryDuration,
 
