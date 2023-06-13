@@ -1,0 +1,3 @@
+[submodule "JsonGenerators"]
+	path = JsonGenerators
+	url = https://github.com/bruno-f-cruz/JsonGenerators
