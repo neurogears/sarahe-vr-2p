@@ -233,43 +233,51 @@
                     "items": {
                         "$ref": "#/definitions/corridorSegment"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
                 },
                 "floorSegments": {
                     "items": {
                         "$ref": "#/definitions/floorSegment"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
                 },
                 "optoStim": {
                     "items": {
                         "$ref": "#/definitions/optoStimProtocol"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
+
                 },
                 "passiveMode": {
                     "items": {
                         "$ref": "#/definitions/passiveModeProtocol"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
                 },
                 "reward": {
                     "items": {
                         "$ref": "#/definitions/rewardProtocol"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
                 },
                 "teleport": {
                     "items": {
                         "$ref": "#/definitions/teleportProtocol"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
                 },
                 "teleportOnLick": {
                     "items": {
                         "$ref": "#/definitions/teleportOnLickProtocol"
                     },
-                    "type": "array"
+                    "type": "array",
+                    "default": []
                 },
                 "trialTypeLabel": {
                     "default": "",
