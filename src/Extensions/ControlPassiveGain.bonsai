@@ -37,7 +37,7 @@
               <Combinator xsi:type="rx:WithLatestFrom" />
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>(it.Item1 &gt;= it.Item2.LocationStart) and (it.Item1 &lt; it.Item2.LocationStart)</scr:Expression>
+              <scr:Expression>(it.Item1 &gt;= it.Item2.LocationStart) and (it.Item1 &lt; it.Item2.LocationEnd)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:DistinctUntilChanged" />
