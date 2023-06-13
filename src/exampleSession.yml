@@ -67,7 +67,7 @@ trials:
             textureRight: Assets\\Textures\\colorful_dots.jpg,
             textureLeft: Assets\\Textures\\colorful_dots.jpg,
             stimControl:
-              { location: 3.5, delay: 0, leftValue: false, rightValue: true },
+              { location: 3.5, delay: 0, leftValue: true, rightValue: true },
           },
           {<<: *graywall, positionStart: 4, positionEnd: 4.5},
           {
@@ -75,7 +75,7 @@ trials:
             initialVisibility: true,
             positionStart: 4.5,
             positionEnd: 5,
-            textureRight: Assets\\Textures\\CamiloReward.jpg,
+            textureRight: Assets\\Textures\\colorful_dots.jpg,
             textureLeft: Assets\\Textures\\CamiloReward.jpg,
           },
         ],
@@ -105,8 +105,8 @@ trials:
         ],
       passiveMode:
         [
-          { gain: 0.05, locationStart: 1.5, locationEnd: 2 },
-          { gain: 0.05, locationStart: 3.5, locationEnd: 4 },
+          { gain: 0.005, locationStart: 1.5, locationEnd: 2 },
+          { gain: 0.005, locationStart: 3.5, locationEnd: 4 },
         ],
       floorSegments:
         [
