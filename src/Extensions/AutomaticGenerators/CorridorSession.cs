@@ -26,6 +26,7 @@ namespace AutomaticGenerators
                 {
 					Metadata = Metadata,
 					Trials = Trials,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

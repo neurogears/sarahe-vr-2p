@@ -29,6 +29,7 @@ namespace AutomaticGenerators
 					Location = Location,
 					LockAtLocation = LockAtLocation,
 					LockAtLocationDuration = LockAtLocationDuration,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

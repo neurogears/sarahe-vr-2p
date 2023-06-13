@@ -29,6 +29,7 @@ namespace AutomaticGenerators
 					RewardCalibration = RewardCalibration,
 					RootPath = RootPath,
 					TrialOrder = TrialOrder,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

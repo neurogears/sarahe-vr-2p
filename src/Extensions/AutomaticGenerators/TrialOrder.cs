@@ -26,6 +26,7 @@ namespace AutomaticGenerators
                 {
 					Blocks = Blocks,
 					Mode = Mode,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

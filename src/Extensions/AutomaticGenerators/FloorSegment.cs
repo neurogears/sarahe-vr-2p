@@ -29,6 +29,7 @@ namespace AutomaticGenerators
 					PositionEnd = PositionEnd,
 					PositionStart = PositionStart,
 					Texture = Texture,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

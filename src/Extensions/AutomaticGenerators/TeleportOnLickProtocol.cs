@@ -29,6 +29,7 @@ namespace AutomaticGenerators
 					LocationStart = LocationStart,
 					MaxRepeats = MaxRepeats,
 					RefractoryDuration = RefractoryDuration,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

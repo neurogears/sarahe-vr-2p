@@ -29,6 +29,7 @@ namespace AutomaticGenerators
 					Delay = Delay,
 					Location = Location,
 					ProbabilityHigh = ProbabilityHigh,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

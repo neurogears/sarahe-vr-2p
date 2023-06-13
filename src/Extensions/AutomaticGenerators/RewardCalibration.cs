@@ -26,6 +26,7 @@ namespace AutomaticGenerators
                 {
 					Intercept = Intercept,
 					Slope = Slope,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

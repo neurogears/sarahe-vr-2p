@@ -27,6 +27,7 @@ namespace AutomaticGenerators
 					Delay = Delay,
 					Location = Location,
 					WaveformIndex = WaveformIndex,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

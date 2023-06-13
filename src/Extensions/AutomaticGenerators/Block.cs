@@ -27,6 +27,7 @@ namespace AutomaticGenerators
 					Size = Size,
 					TailSize = TailSize,
 					TrialProbability = TrialProbability,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

@@ -31,6 +31,7 @@ namespace AutomaticGenerators
 					StimControl = StimControl,
 					TextureLeft = TextureLeft,
 					TextureRight = TextureRight,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

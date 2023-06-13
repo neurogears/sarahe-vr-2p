@@ -27,6 +27,7 @@ namespace AutomaticGenerators
 					Gain = Gain,
 					LocationEnd = LocationEnd,
 					LocationStart = LocationStart,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

@@ -28,6 +28,7 @@ namespace AutomaticGenerators
 					LeftValue = LeftValue,
 					Location = Location,
 					RightValue = RightValue,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);

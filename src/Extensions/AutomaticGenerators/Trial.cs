@@ -32,6 +32,7 @@ namespace AutomaticGenerators
 					Teleport = Teleport,
 					TeleportOnLick = TeleportOnLick,
 					TrialTypeLabel = TrialTypeLabel,
+					AdditionalProperties = AdditionalProperties,
 
                 };
                 return Observable.Return(value);
