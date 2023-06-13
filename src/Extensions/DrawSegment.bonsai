@@ -175,19 +175,32 @@ it.Item4 as SegmentSpecs,
 it.Item5 as PostSegmentSpecs)
 </scr:Expression>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>VisibilityLeft</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
                         <Expression xsi:type="rx:Condition">
                           <Name>IsVisible?</Name>
                           <Workflow>
                             <Nodes>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>VisibilityLeft</Name>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
                             </Edges>
                           </Workflow>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Draw</Selector>
@@ -293,18 +306,21 @@ it.Item5 as PostSegmentSpecs)
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source5" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="10" To="13" Label="Source2" />
+                        <Edge From="9" To="11" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source2" />
                         <Edge From="11" To="12" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="13" To="15" Label="Source2" />
+                        <Edge From="13" To="16" Label="Source2" />
                         <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="16" To="18" Label="Source2" />
                         <Edge From="17" To="18" Label="Source1" />
                         <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -352,19 +368,32 @@ it.Item4 as SegmentSpecs,
 it.Item5 as PostSegmentSpecs)
 </scr:Expression>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>VisibilityRight</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
                         <Expression xsi:type="rx:Condition">
                           <Name>IsVisible?</Name>
                           <Workflow>
                             <Nodes>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>VisibilityLeft</Name>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
                             </Edges>
                           </Workflow>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Draw</Selector>
@@ -470,30 +499,30 @@ it.Item5 as PostSegmentSpecs)
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source5" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="10" To="13" Label="Source2" />
+                        <Edge From="9" To="11" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source2" />
                         <Edge From="11" To="12" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="13" To="15" Label="Source2" />
+                        <Edge From="13" To="16" Label="Source2" />
                         <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="16" To="18" Label="Source2" />
                         <Edge From="17" To="18" Label="Source1" />
                         <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SegmentSpecs</Name>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>TextureLeft</Selector>
-                  </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
-                      <Property Name="FileName" Selector="it" />
+                      <Property Name="FileName" Selector="TextureLeft" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -510,15 +539,9 @@ it.Item5 as PostSegmentSpecs)
                       <gl:FlipMode>Vertical</gl:FlipMode>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>SegmentSpecs</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>TextureRight</Selector>
-                  </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
-                      <Property Name="FileName" Selector="it" />
+                      <Property Name="FileName" Selector="TextureRight" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -552,16 +575,14 @@ it.Item5 as PostSegmentSpecs)
                 </Nodes>
                 <Edges>
                   <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="2" To="5" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="10" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="4" To="7" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source2" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
