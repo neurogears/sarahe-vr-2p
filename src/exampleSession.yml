@@ -27,8 +27,8 @@ trials:
             initialVisibility: true,
             positionStart: 0,
             positionEnd: 0.5,
-            textureRight: Assets\\Textures\\Gray.jpg,
-            textureLeft: Assets\\Textures\\Gray.jpg,
+            textureRight: Assets\\Textures\\gray.png,
+            textureLeft: Assets\\Textures\\gray.png,
           },
           {
             name: Landmark1,
