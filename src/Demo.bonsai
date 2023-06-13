@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.0-alpha018"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
@@ -2847,8 +2847,8 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
-Double.NaN as Reward,
-2.0 as Lick,
+2.0 as Reward,
+Double.NaN as Lick,
 Double.NaN as OptoStim,
 Double.NaN as Telepoprt,
 Double.NaN as WallVisibility,
