@@ -39,10 +39,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="dsp:FunctionGenerator">
-                <dsp:BufferLength>100</dsp:BufferLength>
+                <dsp:BufferLength>3000</dsp:BufferLength>
                 <dsp:Frequency>0.1</dsp:Frequency>
                 <dsp:Waveform>Sawtooth</dsp:Waveform>
-                <dsp:SampleRate>1000</dsp:SampleRate>
+                <dsp:SampleRate>30000</dsp:SampleRate>
                 <dsp:Depth>F32</dsp:Depth>
                 <dsp:Amplitude>0.5</dsp:Amplitude>
                 <dsp:Offset>0.5</dsp:Offset>
@@ -54,8 +54,8 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="dsp:Threshold">
-                <dsp:ThresholdValue>0</dsp:ThresholdValue>
-                <dsp:MaxValue>1</dsp:MaxValue>
+                <dsp:ThresholdValue>0.01</dsp:ThresholdValue>
+                <dsp:MaxValue>5</dsp:MaxValue>
                 <dsp:ThresholdType>BinaryInv</dsp:ThresholdType>
               </Combinator>
             </Expression>
@@ -72,7 +72,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
+                <rx:Count>10</rx:Count>
               </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
