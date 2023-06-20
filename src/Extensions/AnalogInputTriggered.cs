@@ -12,7 +12,6 @@ namespace Bonsai.DAQmx
     /// Represents an operator that generates a sequence of voltage measurements
     /// from one or more DAQmx analog input channels.
     /// </summary>
-    [DefaultProperty(nameof(Channels))]
     [Description("Generates a sequence of voltage measurements from one or more DAQmx analog input channels.")]
     public class AnalogInputTriggered : Source<Mat>
     {
@@ -30,8 +29,12 @@ namespace Bonsai.DAQmx
             set { signalSource = value; }
         }
 
-        [Description("The optional source terminal of the clock. If not specified, the internal clock of the device will be used.")]
-        private string digitalTriggerSource = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the optional source terminal of the digital trigger.
+        /// </summary>
+        [Description("The optional source terminal of the trigger.")]
+        private string digitalTriggerSource = "di/StartTrigger";
         public string DigitalTriggerSource
         {
             get { return digitalTriggerSource; }

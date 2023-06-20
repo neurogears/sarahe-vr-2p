@@ -12,7 +12,6 @@ namespace Bonsai.DAQmx
     /// Represents an operator that reads a sequence of logical values from
     /// one or more DAQmx digital input lines.
     /// </summary>
-    [DefaultProperty(nameof(Channels))]
     [Description("Reads a sequence of logical values from one or more DAQmx digital input lines.")]
     public class DigitalInputTriggered : Source<Mat>
     {
@@ -28,6 +27,17 @@ namespace Bonsai.DAQmx
         {
             get { return signalSource; }
             set { signalSource = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the optional source terminal of the digital trigger.
+        /// </summary>
+        [Description("The optional source terminal of the trigger.")]
+        private string digitalTriggerSource = "ai/StartTrigger";
+        public string DigitalTriggerSource
+        {
+            get { return digitalTriggerSource; }
+            set { digitalTriggerSource = value; }
         }
 
         /// <summary>
@@ -125,7 +135,9 @@ namespace Bonsai.DAQmx
                 var task = CreateTask();
                 var bufferSize = BufferSize;
                 task.Timing.ConfigureSampleClock(SignalSource, SampleRate, ActiveEdge, SampleMode, bufferSize);
+                task.Triggers.StartTrigger.ConfigureDigitalEdgeTrigger(DigitalTriggerSource, DigitalEdgeStartTriggerEdge.Rising);
                 task.Control(TaskAction.Verify);
+                task.Control(TaskAction.Commit);
                 var digitalInReader = new DigitalMultiChannelReader(task.Stream);
                 var samplesPerChannel = SamplesPerChannel.GetValueOrDefault(bufferSize);
                 AsyncCallback digitalCallback = null;
