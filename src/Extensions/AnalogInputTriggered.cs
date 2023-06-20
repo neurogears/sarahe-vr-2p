@@ -29,6 +29,15 @@ namespace Bonsai.DAQmx
             get { return signalSource; }
             set { signalSource = value; }
         }
+
+        [Description("The optional source terminal of the clock. If not specified, the internal clock of the device will be used.")]
+        private string digitalTriggerSource = string.Empty;
+        public string DigitalTriggerSource
+        {
+            get { return digitalTriggerSource; }
+            set { digitalTriggerSource = value; }
+        }
+
         /// <summary>
         /// Gets or sets the sampling rate for acquiring voltage measurements, in
         /// samples per second.
@@ -125,7 +134,9 @@ namespace Bonsai.DAQmx
                 var task = CreateTask();
                 var bufferSize = BufferSize;
                 task.Timing.ConfigureSampleClock(SignalSource, SampleRate, ActiveEdge, SampleMode, bufferSize);
+                task.Triggers.StartTrigger.ConfigureDigitalEdgeTrigger(digitalTriggerSource, DigitalEdgeStartTriggerEdge.Rising);
                 task.Control(TaskAction.Verify);
+                task.Control(TaskAction.Commit);
                 var analogInReader = new AnalogMultiChannelReader(task.Stream);
                 var samplesPerChannel = SamplesPerChannel.GetValueOrDefault(bufferSize);
                 AsyncCallback analogCallback = null;
