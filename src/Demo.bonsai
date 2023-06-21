@@ -621,14 +621,14 @@ Item2 as Frame)</scr:Expression>
               <Combinator xsi:type="gl:CreateWindow">
                 <gl:Width>500</gl:Width>
                 <gl:Height>500</gl:Height>
-                <gl:VSync>Off</gl:VSync>
+                <gl:VSync>On</gl:VSync>
                 <gl:SwapSync>false</gl:SwapSync>
                 <gl:ClearColor>Gray</gl:ClearColor>
                 <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                 <gl:CursorVisible>false</gl:CursorVisible>
                 <gl:Location xsi:nil="true" />
-                <gl:WindowBorder>Hidden</gl:WindowBorder>
-                <gl:WindowState>Maximized</gl:WindowState>
+                <gl:WindowBorder>Resizable</gl:WindowBorder>
+                <gl:WindowState>Fullscreen</gl:WindowState>
                 <gl:DisplayDevice>Second</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
@@ -1987,7 +1987,6 @@ Item3 as RenderElapsedTime)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p3:PulseOutput">
                                   <p3:Channel>Dev1/ctr3</p3:Channel>
-                                  <p3:TriggerSource />
                                   <p3:InitialDelay>0</p3:InitialDelay>
                                   <p3:LowTime>0.001</p3:LowTime>
                                   <p3:HighTime>0.1</p3:HighTime>
@@ -2316,7 +2315,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>0</gl:Z>
+                <gl:Z>4.000054</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2381,7 +2380,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.05</Value>
+                <Value>-0.05</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3057,111 +3056,147 @@ Frame.Time as Time
         <Name>DEBUG</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>PostDrawing</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>PostDrawing</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:UpdateRenderState">
-                <gl:RenderState />
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="gl:UpdateRenderState">
+                  <gl:RenderState />
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:UpdateViewportState">
-                <gl:X>0</gl:X>
-                <gl:Y>0</gl:Y>
-                <gl:Width>1</gl:Width>
-                <gl:Height>1</gl:Height>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="gl:UpdateViewportState">
+                  <gl:X>0</gl:X>
+                  <gl:Y>0</gl:Y>
+                  <gl:Width>1</gl:Width>
+                  <gl:Height>1</gl:Height>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
-              <Left>-1</Left>
-              <Right>1</Right>
-              <Bottom>-1</Bottom>
-              <Top>1</Top>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
+                <Left>-1</Left>
+                <Right>1</Right>
+                <Bottom>-1</Bottom>
+                <Top>1</Top>
+              </Builder>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentPosition</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>CurrentPosition</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Format">
-              <Format>{0:0.####}</Format>
-              <Selector>it.Z</Selector>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Format">
+                <Format>{0:0.####}</Format>
+                <Selector>it.Z</Selector>
+              </Builder>
             </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Text" />
-              </PropertyMappings>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Text" />
+                </PropertyMappings>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
-              <ExtentX>1</ExtentX>
-              <ExtentY>1</ExtentY>
-              <Text>0</Text>
-              <Font>Microsoft Sans Serif, 48pt</Font>
-              <Alignment>Center</Alignment>
-              <LineAlignment>Center</LineAlignment>
-              <TextRenderingHint>AntiAliasGridFit</TextRenderingHint>
-              <Color>
-                <Val0>255</Val0>
-                <Val1>255</Val1>
-                <Val2>255</Val2>
-                <Val3>255</Val3>
-              </Color>
-              <LocationX>0</LocationX>
-              <LocationY>0.95</LocationY>
-              <Layer>0</Layer>
-              <Angle>0</Angle>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
+                <ExtentX>1</ExtentX>
+                <ExtentY>1</ExtentY>
+                <Text>4.8</Text>
+                <Font>Microsoft Sans Serif, 48pt</Font>
+                <Alignment>Center</Alignment>
+                <LineAlignment>Center</LineAlignment>
+                <TextRenderingHint>AntiAliasGridFit</TextRenderingHint>
+                <Color>
+                  <Val0>255</Val0>
+                  <Val1>255</Val1>
+                  <Val2>255</Val2>
+                  <Val3>255</Val3>
+                </Color>
+                <LocationX>0</LocationX>
+                <LocationY>0.95</LocationY>
+                <Layer>0</Layer>
+                <Angle>0</Angle>
+              </Builder>
             </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-            <Expression xsi:type="SubscribeSubject">
-              <Name>PostDrawing</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="WorkflowOutput" />
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="Int64Property">
-                <Value>1</Value>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>PostDrawing</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="rx:Accumulate" />
-            <Expression xsi:type="Mod">
-              <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>2</Value>
-              </Operand>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="Int64Property">
+                  <Value>1</Value>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:UpdateRenderState">
-                <gl:RenderState />
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:Accumulate" />
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:UpdateViewportState">
-                <gl:X>0</gl:X>
-                <gl:Y>0</gl:Y>
-                <gl:Width>1</gl:Width>
-                <gl:Height>1</gl:Height>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Mod">
+                <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
+                  <Value>2</Value>
+                </Operand>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
-              <Left>-8</Left>
-              <Right>8</Right>
-              <Bottom>-4.5</Bottom>
-              <Top>4.5</Top>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="gl:UpdateRenderState">
+                  <gl:RenderState />
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="ColorR" />
-                <Property Name="ColorG" />
-                <Property Name="ColorB" />
-              </PropertyMappings>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="gl:UpdateViewportState">
+                  <gl:X>0</gl:X>
+                  <gl:Y>0</gl:Y>
+                  <gl:Width>1</gl:Width>
+                  <gl:Height>1</gl:Height>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
-              <ExtentX>1000</ExtentX>
-              <ExtentY>1000</ExtentY>
-              <LocationX>7.9</LocationX>
-              <LocationY>4.4</LocationY>
-              <Layer>10</Layer>
-              <Angle>0</Angle>
-              <ColorR>0</ColorR>
-              <ColorG>0</ColorG>
-              <ColorB>0</ColorB>
-              <ColorA>1</ColorA>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
+                <Left>-8</Left>
+                <Right>8</Right>
+                <Bottom>-4.5</Bottom>
+                <Top>4.5</Top>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="ColorR" />
+                  <Property Name="ColorG" />
+                  <Property Name="ColorB" />
+                </PropertyMappings>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
+                <ExtentX>1000</ExtentX>
+                <ExtentY>1000</ExtentY>
+                <LocationX>7.9</LocationX>
+                <LocationY>4.4</LocationY>
+                <Layer>10</Layer>
+                <Angle>0</Angle>
+                <ColorR>1</ColorR>
+                <ColorG>1</ColorG>
+                <ColorB>1</ColorB>
+                <ColorA>1</ColorA>
+              </Builder>
             </Expression>
           </Nodes>
           <Edges>
