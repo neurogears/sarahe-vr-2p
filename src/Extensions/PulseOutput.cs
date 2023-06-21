@@ -13,7 +13,7 @@ namespace Bonsai.DAQmx
     /// output channels from a sequence of sample buffers.
     /// </summary>
     [DefaultProperty("Channel")]
-    [Description("Generates voltage signals in one or more DAQmx analog output channels from a sequence of sample buffers.")]
+    [Description("Generate a Pulse on a counter output using the specified time specifications (in seconds).")]
     public class PulseOutput : Source<Unit>
     {
 
@@ -41,15 +41,6 @@ namespace Bonsai.DAQmx
             }
         }
 
-
-        private string triggerSource = string.Empty;
-        public string TriggerSource
-        {
-            get { return triggerSource; }
-            set { triggerSource = value; }
-        }
-
-
         private double initialDelay = 0;
         public double InitialDelay
         {
@@ -71,11 +62,11 @@ namespace Bonsai.DAQmx
             set { highTime = value; }
         }
 
-        private int? numberOfSamples = null;
+        private int? NumberOfPulses = 1;
         public int? NumberOfSamples
         {
-            get { return numberOfSamples; }
-            set { numberOfSamples = value; }
+            get { return NumberOfPulses; }
+            set { NumberOfPulses = value; }
         }
 
         public override IObservable<Unit> Generate()
@@ -90,9 +81,9 @@ namespace Bonsai.DAQmx
                         COPulseTimeUnits.Seconds,
                         COPulseIdleState.Low,
                         InitialDelay, LowTime, HighTime);
-                    if (numberOfSamples.HasValue)
+                    if (NumberOfPulses.HasValue)
                     {
-                        task.Timing.ConfigureImplicit(SampleQuantityMode.FiniteSamples, numberOfSamples.Value);
+                        task.Timing.ConfigureImplicit(SampleQuantityMode.FiniteSamples, NumberOfPulses.Value);
                     }
                     else
                     {
