@@ -25,29 +25,21 @@
         <Name>Initialization</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>LoadSettings</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:LoadSettings">
-                      <p1:Path>exampleSession.yml</p1:Path>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:AsyncSubject">
-                    <Name>SessionSettings</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Path" DisplayName="SessionSettingsPath" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:LoadSettings">
+                <p1:Path>exampleSession.yml</p1:Path>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>SessionSettings</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SessionSettings</Name>
@@ -346,43 +338,16 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>CurrentRewardAmount</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>0</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>CurrentOptoStimId</Name>
-            </Expression>
           </Nodes>
           <Edges>
+            <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -555,53 +520,55 @@ Item2 as Frame)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>Loggers</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>AI_Data</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
-                    <FileName>AnalogInput.bin</FileName>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>DI_Data</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
-                    <FileName>DigitalInput.bin</FileName>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RotaryEncoderPosition</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-                    <FileName>RotaryEncoder.csv</FileName>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>CurrentPosition</Name>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(it.Z as Position)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-                    <FileName>VrPosition.csv</FileName>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>FrameEventLogger</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-                    <FileName>FrameEvents.csv</FileName>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="GroupWorkflow">
+                <Name>Loggers</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>AI_Data</Name>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
+                      <FileName>AnalogInput.bin</FileName>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>DI_Data</Name>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
+                      <FileName>DigitalInput.bin</FileName>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>RotaryEncoderPosition</Name>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                      <FileName>RotaryEncoder.csv</FileName>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>CurrentPosition</Name>
+                    </Expression>
+                    <Expression xsi:type="scr:ExpressionTransform">
+                      <scr:Expression>new(it.Z as Position)</scr:Expression>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                      <FileName>VrPosition.csv</FileName>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>FrameEventLogger</Name>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                      <FileName>FrameEvents.csv</FileName>
+                    </Expression>
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source1" />
+                    <Edge From="7" To="8" Label="Source1" />
+                    <Edge From="9" To="10" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
           </Nodes>
           <Edges>
@@ -1361,15 +1328,190 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                 <Combinator xsi:type="rx:TakeUntil" />
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>CurrentOptoStimId</Name>
+                                <Name>GiveOptoStim</Name>
                               </Expression>
-                              <Expression xsi:type="PropertyMapping">
+                              <Expression xsi:type="InputMapping">
                                 <PropertyMappings>
                                   <Property Name="StimId" Selector="it" />
                                 </PropertyMappings>
                               </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\PlayWaveform.bonsai">
-                                <StimId>0</StimId>
+                              <Expression xsi:type="rx:SelectMany">
+                                <Name>PlayWaveform</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>OptoWaveformBank</Name>
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedMapping">
+                                      <Property Name="Value" DisplayName="StimId" />
+                                    </Expression>
+                                    <Expression xsi:type="Index">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>0</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Take">
+                                        <rx:Count>1</rx:Count>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="rx:AsyncSubject">
+                                      <Name>ThisWaveform</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Annotation">
+                                      <Text><![CDATA[The idea of this workflow is to check how many times the incoming stored waveform "fits" inside each of the Clock buffers. Next, we round it up, and pad the remaining pixels with 0 using the IplImage operator.]]></Text>
+                                    </Expression>
+                                    <Expression xsi:type="GroupWorkflow">
+                                      <Name>PadWaveform</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>ThisWaveform</Name>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>ThisWaveform</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Size.Width</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>AO_Settings</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>BufferSize</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="rx:Zip" />
+                                          </Expression>
+                                          <Expression xsi:type="scr:ExpressionTransform">
+                                            <scr:Name>PaddingSize</scr:Name>
+                                            <scr:Expression>Convert.ToInt32(Math.Ceiling((Item1 *1.0) / Item2)) * Item2</scr:Expression>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>ThisWaveform</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Size.Height</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="rx:Zip" />
+                                          </Expression>
+                                          <Expression xsi:type="PropertyMapping">
+                                            <PropertyMappings>
+                                              <Property Name="Size" Selector="Item1, Item2" />
+                                            </PropertyMappings>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="cv:ResizeCanvas">
+                                              <cv:Size>
+                                                <cv:Width>3000</cv:Width>
+                                                <cv:Height>1</cv:Height>
+                                              </cv:Size>
+                                              <cv:BorderType>Constant</cv:BorderType>
+                                              <cv:FillValue>
+                                                <cv:Val0>0</cv:Val0>
+                                                <cv:Val1>0</cv:Val1>
+                                                <cv:Val2>0</cv:Val2>
+                                                <cv:Val3>0</cv:Val3>
+                                              </cv:FillValue>
+                                              <cv:Offset>
+                                                <cv:X>0</cv:X>
+                                                <cv:Y>0</cv:Y>
+                                              </cv:Offset>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="dsp:ConvertToMat" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="rx:Take">
+                                              <rx:Count>1</rx:Count>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="rx:AsyncSubject">
+                                            <Name>PaddedWaveform</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge From="0" To="11" Label="Source1" />
+                                          <Edge From="1" To="2" Label="Source1" />
+                                          <Edge From="2" To="5" Label="Source1" />
+                                          <Edge From="3" To="4" Label="Source1" />
+                                          <Edge From="4" To="5" Label="Source2" />
+                                          <Edge From="5" To="6" Label="Source1" />
+                                          <Edge From="6" To="9" Label="Source1" />
+                                          <Edge From="7" To="8" Label="Source1" />
+                                          <Edge From="8" To="9" Label="Source2" />
+                                          <Edge From="9" To="10" Label="Source1" />
+                                          <Edge From="10" To="11" Label="Source2" />
+                                          <Edge From="11" To="12" Label="Source1" />
+                                          <Edge From="12" To="13" Label="Source1" />
+                                          <Edge From="13" To="14" Label="Source1" />
+                                          <Edge From="14" To="15" Label="Source1" />
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>PaddedWaveform</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>AO_Settings</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>BufferSize</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:WithLatestFrom" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>AO_Settings</Name>
+                                    </Expression>
+                                    <Expression xsi:type="PropertyMapping">
+                                      <PropertyMappings>
+                                        <Property Name="Count" Selector="BufferSize" />
+                                        <Property Name="Skip" Selector="BufferSize" />
+                                      </PropertyMappings>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="dsp:Buffer">
+                                        <dsp:Count>3000</dsp:Count>
+                                        <dsp:Skip>3000</dsp:Skip>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>AO_Clock</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                    <Edge From="5" To="6" Label="Source1" />
+                                    <Edge From="7" To="10" Label="Source1" />
+                                    <Edge From="8" To="9" Label="Source1" />
+                                    <Edge From="9" To="10" Label="Source2" />
+                                    <Edge From="10" To="11" Label="Source1" />
+                                    <Edge From="11" To="14" Label="Source1" />
+                                    <Edge From="12" To="13" Label="Source1" />
+                                    <Edge From="13" To="14" Label="Source2" />
+                                    <Edge From="14" To="16" Label="Source1" />
+                                    <Edge From="15" To="16" Label="Source2" />
+                                    <Edge From="16" To="17" Label="Source1" />
+                                    <Edge From="17" To="18" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Concat" />
@@ -1971,10 +2113,37 @@ Item3 as RenderElapsedTime)</scr:Expression>
                     <Name>RewardDelivery</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="rx:PublishSubject" TypeArguments="sys:Object">
+                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
                           <rx:Name>GiveReward</rx:Name>
                         </Expression>
-                        <Expression xsi:type="rx:SelectMany">
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SessionSettings</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Metadata.RewardCalibration</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Name>CalibrateValue</scr:Name>
+                          <scr:Expression>Item1 * Item2.Intercept + Item2.Slope</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:Rescale">
+                            <dsp:Min>0.0001</dsp:Min>
+                            <dsp:Max>0.9999</dsp:Max>
+                            <dsp:RangeMin>0.0001</dsp:RangeMin>
+                            <dsp:RangeMax>0.9999</dsp:RangeMax>
+                            <dsp:RescaleType>Clamp</dsp:RescaleType>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings>
+                            <Property Name="HighTime" Selector="it" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="rx:CreateObservable">
                           <Name>GiveReward</Name>
                           <Workflow>
                             <Nodes>
@@ -1983,12 +2152,13 @@ Item3 as RenderElapsedTime)</scr:Expression>
                                 <Property Name="LowTime" />
                                 <Property Name="HighTime" />
                                 <Property Name="NumberOfSamples" />
+                                <Property Name="Channel" />
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p3:PulseOutput">
                                   <p3:Channel>Dev1/ctr3</p3:Channel>
                                   <p3:InitialDelay>0</p3:InitialDelay>
-                                  <p3:LowTime>0.001</p3:LowTime>
+                                  <p3:LowTime>0.1</p3:LowTime>
                                   <p3:HighTime>0.1</p3:HighTime>
                                   <p3:NumberOfSamples>1</p3:NumberOfSamples>
                                 </Combinator>
@@ -2001,11 +2171,21 @@ Item3 as RenderElapsedTime)</scr:Expression>
                             </Edges>
                           </Workflow>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Concat" />
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="0" To="3" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -3049,174 +3229,6 @@ Frame.Time as Time
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source6" />
             <Edge From="29" To="30" Label="Source1" />
-          </Edges>
-        </Workflow>
-      </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>DEBUG</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>PostDrawing</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="gl:UpdateRenderState">
-                  <gl:RenderState />
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="gl:UpdateViewportState">
-                  <gl:X>0</gl:X>
-                  <gl:Y>0</gl:Y>
-                  <gl:Width>1</gl:Width>
-                  <gl:Height>1</gl:Height>
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
-                <Left>-1</Left>
-                <Right>1</Right>
-                <Bottom>-1</Bottom>
-                <Top>1</Top>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>CurrentPosition</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Format">
-                <Format>{0:0.####}</Format>
-                <Selector>it.Z</Selector>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="PropertyMapping">
-                <PropertyMappings>
-                  <Property Name="Text" />
-                </PropertyMappings>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawText.bonsai">
-                <ExtentX>1</ExtentX>
-                <ExtentY>1</ExtentY>
-                <Text>4.8</Text>
-                <Font>Microsoft Sans Serif, 48pt</Font>
-                <Alignment>Center</Alignment>
-                <LineAlignment>Center</LineAlignment>
-                <TextRenderingHint>AntiAliasGridFit</TextRenderingHint>
-                <Color>
-                  <Val0>255</Val0>
-                  <Val1>255</Val1>
-                  <Val2>255</Val2>
-                  <Val3>255</Val3>
-                </Color>
-                <LocationX>0</LocationX>
-                <LocationY>0.95</LocationY>
-                <Layer>0</Layer>
-                <Angle>0</Angle>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="WorkflowOutput" />
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>PostDrawing</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="Int64Property">
-                  <Value>1</Value>
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="rx:Accumulate" />
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Mod">
-                <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                  <Value>2</Value>
-                </Operand>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="gl:UpdateRenderState">
-                  <gl:RenderState />
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="gl:UpdateViewportState">
-                  <gl:X>0</gl:X>
-                  <gl:Y>0</gl:Y>
-                  <gl:Width>1</gl:Width>
-                  <gl:Height>1</gl:Height>
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
-                <Left>-8</Left>
-                <Right>8</Right>
-                <Bottom>-4.5</Bottom>
-                <Top>4.5</Top>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="PropertyMapping">
-                <PropertyMappings>
-                  <Property Name="ColorR" />
-                  <Property Name="ColorG" />
-                  <Property Name="ColorB" />
-                </PropertyMappings>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
-                <ExtentX>1000</ExtentX>
-                <ExtentY>1000</ExtentY>
-                <LocationX>7.9</LocationX>
-                <LocationY>4.4</LocationY>
-                <Layer>10</Layer>
-                <Angle>0</Angle>
-                <ColorR>1</ColorR>
-                <ColorG>1</ColorG>
-                <ColorB>1</ColorB>
-                <ColorA>1</ColorA>
-              </Builder>
-            </Expression>
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="7" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source2" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source1" />
-            <Edge From="14" To="16" Label="Source1" />
-            <Edge From="15" To="17" Label="Source1" />
-            <Edge From="16" To="17" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>

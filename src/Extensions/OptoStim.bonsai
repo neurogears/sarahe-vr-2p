@@ -88,9 +88,6 @@
               <Selector>Item2.WaveformIndex</Selector>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>CurrentOptoStimId</Name>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
               <Name>GiveOptoStim</Name>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -121,7 +118,6 @@
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
