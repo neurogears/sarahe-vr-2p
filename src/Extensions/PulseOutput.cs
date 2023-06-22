@@ -62,11 +62,11 @@ namespace Bonsai.DAQmx
             set { highTime = value; }
         }
 
-        private int? NumberOfPulses = 1;
-        public int? NumberOfSamples
+        private int? numberOfPulses = 1;
+        public int? NumberOfPulses
         {
-            get { return NumberOfPulses; }
-            set { NumberOfPulses = value; }
+            get { return numberOfPulses; }
+            set { numberOfPulses = value; }
         }
 
         public override IObservable<Unit> Generate()

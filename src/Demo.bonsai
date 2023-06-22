@@ -29,7 +29,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:LoadSettings">
-                <p1:Path>exampleSession.yml</p1:Path>
+                <p1:Path>sessionTemplate.yml</p1:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1657,7 +1657,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
                                 <Property Name="InitialDelay" />
                                 <Property Name="LowTime" />
                                 <Property Name="HighTime" />
-                                <Property Name="NumberOfSamples" />
+                                <Property Name="NumberOfPulses" />
                                 <Property Name="Channel" />
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -1666,7 +1666,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
                                   <p3:InitialDelay>0</p3:InitialDelay>
                                   <p3:LowTime>0.1</p3:LowTime>
                                   <p3:HighTime>0.01</p3:HighTime>
-                                  <p3:NumberOfSamples>1</p3:NumberOfSamples>
+                                  <p3:NumberOfPulses>1</p3:NumberOfPulses>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -2004,7 +2004,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>2.0049994</gl:Z>
+                <gl:Z>0.0270000361</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2085,7 +2085,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.1</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
