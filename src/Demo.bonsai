@@ -64,6 +64,15 @@
             <Expression xsi:type="rx:AsyncSubject">
               <Name>RngSeed</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSettings</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata.DefaultEncoderGain</Selector>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>DefaultEncoderGain</Name>
+            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>VariableDeclaration</Name>
               <Workflow>
@@ -360,8 +369,10 @@
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -1966,7 +1977,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>4.000054</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1980,35 +1991,51 @@ Item3 as RenderElapsedTime)</scr:Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>EnableDisplacementUpdates</Name>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>EncoderPosition</Name>
-              </Builder>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RotaryEncoderPosition</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>RotaryEncoder</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="dsp:Difference">
+                <dsp:Order>1</dsp:Order>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>DefaultEncoderGain</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Multiply">
+              <Operand xsi:type="FloatProperty">
+                <Value>0.0005</Value>
+              </Operand>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Combinator">
-                <Combinator xsi:type="dsp:Difference">
-                  <dsp:Order>1</dsp:Order>
-                </Combinator>
+                <Combinator xsi:type="gli:MouseWheel" />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
+                <Selector>EventArgs.DeltaPrecise</Selector>
               </Builder>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Multiply">
                 <Operand xsi:type="FloatProperty">
-                  <Value>0.0005</Value>
+                  <Value>0.05</Value>
                 </Operand>
               </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gli:MouseWheel" />
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>EventArgs.DeltaPrecise</Selector>
-            </Expression>
-            <Expression xsi:type="Multiply">
-              <Operand xsi:type="FloatProperty">
-                <Value>0.05</Value>
-              </Operand>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:Merge" />
+              </Builder>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>EnableUpdates</Name>
@@ -2031,7 +2058,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>-0.05</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2073,18 +2100,22 @@ Item3 as RenderElapsedTime)</scr:Expression>
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="21" Label="Source1" />
+            <Edge From="17" To="20" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source2" />
+            <Edge From="19" To="20" Label="Source2" />
+            <Edge From="20" To="24" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="28" Label="Source1" />
-            <Edge From="24" To="27" Label="Source1" />
+            <Edge From="23" To="24" Label="Source2" />
+            <Edge From="24" To="25" Label="Source1" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source2" />
-            <Edge From="27" To="28" Label="Source2" />
-            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="32" Label="Source1" />
+            <Edge From="28" To="31" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
+            <Edge From="31" To="32" Label="Source2" />
+            <Edge From="32" To="33" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

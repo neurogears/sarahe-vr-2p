@@ -452,6 +452,13 @@ namespace AutomaticGenerators
 			set { animalId = value; }
 		}
 
+		private double defaultEncoderGain = 0.0005D;
+		public double DefaultEncoderGain
+		{
+			get { return defaultEncoderGain; }
+			set { defaultEncoderGain = value; }
+		}
+
         public int? RandomSeed { get; set; }
 
         public RewardCalibration RewardCalibration { get; set; }

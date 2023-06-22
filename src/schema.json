@@ -294,6 +294,10 @@
                     "default": "",
                     "type": "string"
                 },
+                "defaultEncoderGain": {
+                    "default": 0.0005,
+                    "type": "number"
+                },
                 "randomSeed": {
                     "default": null,
                     "type": [
