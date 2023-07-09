@@ -105,8 +105,8 @@ trials:
         ],
       passiveMode:
         [
-          { gain: 0.005, locationStart: 1.5, locationEnd: 2 },
-          { gain: 0.005, locationStart: 3.5, locationEnd: 4 },
+          { gain: 0.0001, locationStart: 1.5, locationEnd: 2 },
+          { gain: 0.0001, locationStart: 3.5, locationEnd: 4 },
         ],
       floorSegments:
         [

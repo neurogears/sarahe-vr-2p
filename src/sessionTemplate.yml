@@ -4,8 +4,9 @@
 
 metadata:
   rootPath: C:/
-  animalId: Mouse1
+  animalId: Mouse2
   randomSeed: null
+  defaultEncoderGain: 0.0005
   trialOrder:
     mode: block
     blocks:
@@ -30,6 +31,7 @@ trials:
             textureRight: Assets\\Textures\\gray.png,
             textureLeft: Assets\\Textures\\gray.png,
           },
+          &landmark1
           {
             name: Landmark1,
             initialVisibility: true,
@@ -39,7 +41,8 @@ trials:
             textureLeft: Assets\\Textures\\CamiloReward.jpg,
           },
           {<<: *graywall, positionStart: 1,positionEnd: 1.5},
-          {
+          &stimA
+          { 
             name: StimulusA,
             initialVisibility: false,
             positionStart: 1.5,
@@ -47,9 +50,10 @@ trials:
             textureRight: Assets\\Textures\\plaid_blue.png,
             textureLeft: Assets\\Textures\\plaid_blue.png,
             stimControl:
-              { location: 1.5, delay: 0, leftValue: false, rightValue: true },
+              { location: 1.4, delay: 0, leftValue: false, rightValue: true },
           },
           {<<: *graywall, positionStart: 2, positionEnd: 2.5},
+          &landmark2
           {
             name: Landmark2,
             initialVisibility: true,
@@ -59,6 +63,7 @@ trials:
             textureLeft: Assets\\Textures\\Camilo.jpg,
           },
           {<<: *graywall, positionStart: 3, positionEnd: 3.5},
+          &stimB
           {
             name: StimulusB,
             initialVisibility: false,
@@ -67,9 +72,10 @@ trials:
             textureRight: Assets\\Textures\\colorful_dots.jpg,
             textureLeft: Assets\\Textures\\colorful_dots.jpg,
             stimControl:
-              { location: 3.5, delay: 0, leftValue: false, rightValue: true },
+              { location: 3.4, delay: 0, leftValue: false, rightValue: true },
           },
           {<<: *graywall, positionStart: 4, positionEnd: 4.5},
+          &landmark3
           {
             name: Landmark3,
             initialVisibility: true,
@@ -105,8 +111,8 @@ trials:
         ],
       passiveMode:
         [
-          { gain: 0.05, locationStart: 1.5, locationEnd: 2 },
-          { gain: 0.05, locationStart: 3.5, locationEnd: 4 },
+          { gain: 0.005, locationStart: 1.5, locationEnd: 2 },
+          { gain: 0.005, locationStart: 3.5, locationEnd: 4 },
         ],
       floorSegments:
         [
@@ -119,67 +125,91 @@ trials:
           },
         ],
     },
+    &trialTypeB
     {<<: *trialTypeA,
       trialTypeLabel: "2",
       corridorSegments:
         [ 
-          {
-            name: StimulusB,
-            textureRight: Assets\\Textures\\inspiration.jpg,
-            textureLeft: Assets\\Textures\\inspiration.jpg,
-          },
+          {<<: *graywall, positionStart: 0, positionEnd: 0.5},
+          {<<: *landmark1 },
+          {<<: *graywall, positionStart: 1,positionEnd: 1.5},
+          {<<: *stimA },
+          {<<: *graywall, positionStart: 2, positionEnd: 2.5},
+          {<<: *landmark2 },
+          {<<: *graywall, positionStart: 3, positionEnd: 3.5},
+          {<<: *stimB,
+          textureRight: Assets\\Textures\\inspiration.jpg,
+          textureLeft: Assets\\Textures\\inspiration.jpg},
+          {<<: *graywall, positionStart: 4, positionEnd: 4.5},
+          {<<: *landmark3 },
         ]
     },
-    {<<: *trialTypeA,
+    {<<: *trialTypeB,
       trialTypeLabel: "3",
-      corridorSegments:
-        [
-          {
-            name: StimulusB,
-            textureRight: Assets\\Textures\\inspiration.jpg,
-            textureLeft: Assets\\Textures\\inspiration.jpg,
-          },
-        ],
       optoStim:
         [
-        { delay: 0, location: 3.4, refractoryDuration: 4.1, waveformIndex: 0 },
+        {delay: 0, location: 3.4, waveformIndex: 0},
         ],
     },
     {<<: *trialTypeA,
       trialTypeLabel: "4",
       corridorSegments:
-        [
-          {
-            name: StimulusB,
-            textureRight: Assets\\Textures\\inspiration.jpg,
-            textureLeft: Assets\\Textures\\inspiration.jpg,
-          },
+        [ 
+          {<<: *graywall, positionStart: 0, positionEnd: 0.5},
+          {<<: *landmark1 },
+          {<<: *graywall, positionStart: 1,positionEnd: 1.5},
+          {<<: *stimA },
+          {<<: *graywall, positionStart: 2, positionEnd: 2.5},
+          {<<: *landmark2 },
+          {<<: *graywall, positionStart: 3, positionEnd: 3.5},
+          {<<: *stimB, textureRight: Assets\\Textures\\inspiration.jpg,
+            textureLeft: Assets\\Textures\\inspiration.jpg},
           {<<: *graywall, positionStart: 4, positionEnd: 5},
-          {
-            name: Landmark3,
-            positionStart: 5,
-            positionEnd: 5.5,
-          },
+          {<<: *landmark3, positionStart: 5, positionEnd: 5.5},
         ],
-        reward:
-        [ { location: 5.25} ],
-      teleport:
-        [ { location: 5.5} ],
-      floorSegments:
-        [ { name: Floor, positionEnd: 5.5} ],
-    },
-    {<<: *trialTypeA,
-      trialTypeLabel: "5",
-      corridorSegments:
+      reward:
         [
           {
-            name: StimulusB,
-            textureRight: Assets\\Textures\\inspiration.jpg,
-            textureLeft: Assets\\Textures\\inspiration.jpg,
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 5.25,
+            delay: 0,
           }
         ],
-        reward:
-        [ { probabilityHigh: 0.8} ],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 5.5,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.5,
+            destination: 0,
+          }
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 5.5,
+            texture: Assets\\Textures\\Floor.png,
+          },
+        ],
+    },
+    {<<: *trialTypeB,
+      trialTypeLabel: "5",
+      reward:
+      [
+        {
+          amountHigh: 5,
+          amountLow: 1,
+          probabilityHigh: 0.8,
+          location: 4.75,
+          delay: 0,
+        }
+      ],
     },
     {<<: *trialTypeA,
       trialTypeLabel: "6",
@@ -188,14 +218,10 @@ trials:
             destination: 0,
             locationStart: 0,
             locationEnd: 10,
-            refractoryDuration: 0,
+            refractoryDuration: 0.5,
             maxRepeats: null
           } 
         ],
-    },
-    {<<: *trialTypeA,
-      trialTypeLabel: "7",
-
     },
     #{<<: *trialTypeA},
     #{<<: *trialTypeA},
