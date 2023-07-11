@@ -410,11 +410,11 @@ namespace AutomaticGenerators
 			set { delay = value; }
 		}
 
-		private bool leftValue = true;
-		public bool LeftValue
+		private bool leftInitStimState = true;
+		public bool LeftInitStimState
 		{
-			get { return leftValue; }
-			set { leftValue = value; }
+			get { return leftInitStimState; }
+			set { leftInitStimState = value; }
 		}
 
 		private double location = 0D;
@@ -424,11 +424,25 @@ namespace AutomaticGenerators
 			set { location = value; }
 		}
 
-		private bool rightValue = true;
-		public bool RightValue
+		private bool rightInitStimState = true;
+		public bool RightInitStimState
 		{
-			get { return rightValue; }
-			set { rightValue = value; }
+			get { return rightInitStimState; }
+			set { rightInitStimState = value; }
+		}
+
+		private string stimTextureLeft = "Assets\\Textures\\null.png";
+		public string StimTextureLeft
+		{
+			get { return stimTextureLeft; }
+			set { stimTextureLeft = value; }
+		}
+
+		private string stimTextureRight = "Assets\\Textures\\null.png";
+		public string StimTextureRight
+		{
+			get { return stimTextureRight; }
+			set { stimTextureRight = value; }
 		}
 
 

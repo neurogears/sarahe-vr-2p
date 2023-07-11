@@ -51,7 +51,7 @@
                             "minimum": 0,
                             "type": "number"
                         },
-                        "leftValue": {
+                        "leftInitStimState": {
                             "default": true,
                             "type": "boolean"
                         },
@@ -59,9 +59,17 @@
                             "default": 0,
                             "type": "number"
                         },
-                        "rightValue": {
+                        "rightInitStimState": {
                             "default": true,
                             "type": "boolean"
+                        },
+                        "stimTextureLeft": {
+                            "default": "Assets\\Textures\\null.png",
+                            "type": "string"
+                        },
+                        "stimTextureRight": {
+                            "default": "Assets\\Textures\\null.png",
+                            "type": "string"
                         }
                     },
                     "type": [
@@ -230,54 +238,53 @@
         "trial": {
             "properties": {
                 "corridorSegments": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/corridorSegment"
                     },
-                    "type": "array",
-                    "default": []
+                    "type": "array"
                 },
                 "floorSegments": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/floorSegment"
                     },
-                    "type": "array",
-                    "default": []
+                    "type": "array"
                 },
                 "optoStim": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/optoStimProtocol"
                     },
-                    "type": "array",
-                    "default": []
-
+                    "type": "array"
                 },
                 "passiveMode": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/passiveModeProtocol"
                     },
-                    "type": "array",
-                    "default": []
+                    "type": "array"
                 },
                 "reward": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/rewardProtocol"
                     },
-                    "type": "array",
-                    "default": []
+                    "type": "array"
                 },
                 "teleport": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/teleportProtocol"
                     },
-                    "type": "array",
-                    "default": []
+                    "type": "array"
                 },
                 "teleportOnLick": {
+                    "default": [],
                     "items": {
                         "$ref": "#/definitions/teleportOnLickProtocol"
                     },
-                    "type": "array",
-                    "default": []
+                    "type": "array"
                 },
                 "trialTypeLabel": {
                     "default": "",
