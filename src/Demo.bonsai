@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.0-alpha018"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
@@ -654,7 +654,7 @@ Item2 as Frame)</scr:Expression>
                 <gl:Location xsi:nil="true" />
                 <gl:WindowBorder>Resizable</gl:WindowBorder>
                 <gl:WindowState>Fullscreen</gl:WindowState>
-                <gl:DisplayDevice>Second</gl:DisplayDevice>
+                <gl:DisplayDevice>First</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
                 <gl:RenderState />
@@ -821,8 +821,8 @@ Item2 as Frame)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
                     <ExtentX>0.2</ExtentX>
                     <ExtentY>0.2</ExtentY>
-                    <LocationX>7.9</LocationX>
-                    <LocationY>4.4</LocationY>
+                    <LocationX>-0.5</LocationX>
+                    <LocationY>4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
                     <ColorR>0</ColorR>
