@@ -51,7 +51,7 @@
                             "minimum": 0,
                             "type": "number"
                         },
-                        "leftInitStimState": {
+                        "leftStimState": {
                             "default": true,
                             "type": "boolean"
                         },
@@ -59,7 +59,7 @@
                             "default": 0,
                             "type": "number"
                         },
-                        "rightInitStimState": {
+                        "rightStimState": {
                             "default": true,
                             "type": "boolean"
                         },

@@ -25,9 +25,9 @@ namespace AutomaticGenerators
                 var value = new StimControl
                 {
 					Delay = Delay,
-					LeftInitStimState = LeftInitStimState,
+					LeftStimState = LeftStimState,
 					Location = Location,
-					RightInitStimState = RightInitStimState,
+					RightStimState = RightStimState,
 					StimTextureLeft = StimTextureLeft,
 					StimTextureRight = StimTextureRight,
 					AdditionalProperties = AdditionalProperties,
