@@ -53,7 +53,8 @@
                         },
                         "leftStimState": {
                             "default": true,
-                            "type": "boolean"
+                            "type": "boolean",
+                            "description": "Determines whether the wall texture will be update to the stimTexture or not."
                         },
                         "location": {
                             "default": 0,
@@ -61,7 +62,8 @@
                         },
                         "rightStimState": {
                             "default": true,
-                            "type": "boolean"
+                            "type": "boolean",
+                            "description": "Determines whether the wall texture will be update to the stimTexture or not."
                         },
                         "stimTextureLeft": {
                             "default": "Assets\\Textures\\null.png",

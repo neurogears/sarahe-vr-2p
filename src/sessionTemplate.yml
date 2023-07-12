@@ -28,8 +28,6 @@ trials:
             initialVisibility: true,
             positionStart: 0,
             positionEnd: 0.5,
-            leftOn: false,
-            rightOn: false,
             textureLeftOn: Assets\\Textures\\gray.png,
             textureRightOn: Assets\\Textures\\gray.png,
           },
@@ -52,7 +50,14 @@ trials:
             textureRightOn: Assets\\Textures\\plaid_blue.png,
             textureLeftOn: Assets\\Textures\\plaid_blue.png,
             stimControl:
-              { location: 1.4, delay: 0, leftValue: false, rightValue: true },
+            {
+              location: 1.4,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: Assets\\Textures\\null.png,
+              stimTextureRight: Assets\\Textures\\null.png
+            },
           },
           {<<: *graywall, positionStart: 2, positionEnd: 2.5},
           &landmark2
@@ -74,7 +79,14 @@ trials:
             textureRightOn: Assets\\Textures\\colorful_dots.jpg,
             textureLeftOn: Assets\\Textures\\colorful_dots.jpg,
             stimControl:
-              { location: 3.4, delay: 0, leftValue: false, rightValue: true },
+            {
+              location: 3.4,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: Assets\\Textures\\null.png,
+              stimTextureRight: Assets\\Textures\\null.png
+            },
           },
           {<<: *graywall, positionStart: 4, positionEnd: 4.5},
           &landmark3
