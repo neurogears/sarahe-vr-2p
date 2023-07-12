@@ -4,6 +4,6 @@ rotation:
    y: 0.7
    z: 0.
 translation:
-   x: 0.
-   y: 0.
-   z: 0.1
+   x: 0.21
+   y: -0.21
+   z: 0.30
