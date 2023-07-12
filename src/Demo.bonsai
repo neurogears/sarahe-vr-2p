@@ -654,7 +654,7 @@ Item2 as Frame)</scr:Expression>
                 <gl:Location xsi:nil="true" />
                 <gl:WindowBorder>Resizable</gl:WindowBorder>
                 <gl:WindowState>Fullscreen</gl:WindowState>
-                <gl:DisplayDevice>First</gl:DisplayDevice>
+                <gl:DisplayDevice>Second</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
                 <gl:RenderState />
@@ -825,9 +825,9 @@ Item2 as Frame)</scr:Expression>
                     <LocationY>4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
-                    <ColorR>0</ColorR>
-                    <ColorG>0</ColorG>
-                    <ColorB>0</ColorB>
+                    <ColorR>1</ColorR>
+                    <ColorG>1</ColorG>
+                    <ColorB>1</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -2010,7 +2010,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>4.45000267</gl:Z>
+                <gl:Z>1.1</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2024,46 +2024,52 @@ Item3 as RenderElapsedTime)</scr:Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>EnableDisplacementUpdates</Name>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RotaryEncoderPosition</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>RotaryEncoder</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Difference">
-                <dsp:Order>1</dsp:Order>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>DefaultEncoderGain</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Multiply">
-              <Operand xsi:type="FloatProperty">
-                <Value>0.001</Value>
-              </Operand>
-            </Expression>
             <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="gli:MouseWheel" />
+              <Builder xsi:type="SubscribeSubject">
+                <Name>RotaryEncoderPosition</Name>
               </Builder>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="MemberSelector">
-                <Selector>EventArgs.DeltaPrecise</Selector>
+                <Selector>RotaryEncoder</Selector>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="dsp:Difference">
+                  <dsp:Order>1</dsp:Order>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>DefaultEncoderGain</Name>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Value" />
+                </PropertyMappings>
               </Builder>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Multiply">
                 <Operand xsi:type="FloatProperty">
-                  <Value>0.05</Value>
+                  <Value>0.0005</Value>
                 </Operand>
               </Builder>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gli:MouseWheel" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>EventArgs.DeltaPrecise</Selector>
+            </Expression>
+            <Expression xsi:type="Multiply">
+              <Operand xsi:type="FloatProperty">
+                <Value>0.05</Value>
+              </Operand>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Combinator">
@@ -2091,7 +2097,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>0.05</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">

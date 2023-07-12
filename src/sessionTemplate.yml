@@ -44,19 +44,19 @@ trials:
           &stimA
           { 
             name: StimulusA,
-            initialVisibility: false,
+            initialVisibility: true,
             positionStart: 1.5,
             positionEnd: 2,
-            textureRight: Assets\\Textures\\plaid_blue.png,
-            textureLeft: Assets\\Textures\\plaid_blue.png,
+            textureRight: Assets\\Textures\\gray.png,
+            textureLeft: Assets\\Textures\\gray.png,
             stimControl:
             {
               location: 1.4,
               delay: 0,
               rightStimState: true,
               leftStimState: true,
-              stimTextureLeft: Assets\\Textures\\null.png,
-              stimTextureRight: Assets\\Textures\\null.png
+              stimTextureLeft: Assets\\Textures\\plaid_blue.png,
+              stimTextureRight: Assets\\Textures\\plaid_blue.png
             },
           },
           {<<: *graywall, positionStart: 2, positionEnd: 2.5},
@@ -73,7 +73,7 @@ trials:
           &stimB
           {
             name: StimulusB,
-            initialVisibility: false,
+            initialVisibility: true,
             positionStart: 3.5,
             positionEnd: 4,
             textureRight: Assets\\Textures\\colorful_dots.jpg,
@@ -84,8 +84,8 @@ trials:
               delay: 0,
               rightStimState: true,
               leftStimState: true,
-              stimTextureLeft: Assets\\Textures\\null.png,
-              stimTextureRight: Assets\\Textures\\null.png
+              stimTextureLeft: Assets\\Textures\\plaid_blue.png,
+              stimTextureRight: Assets\\Textures\\plaid_blue.png
             },
           },
           {<<: *graywall, positionStart: 4, positionEnd: 4.5},
