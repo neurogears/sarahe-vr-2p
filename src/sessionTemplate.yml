@@ -28,8 +28,8 @@ trials:
             initialVisibility: true,
             positionStart: 0,
             positionEnd: 0.5,
-            textureLeftOn: Assets\\Textures\\gray.png,
-            textureRightOn: Assets\\Textures\\gray.png,
+            textureLeft: Assets\\Textures\\gray.png,
+            textureRight: Assets\\Textures\\gray.png,
           },
           &landmark1
           {
@@ -37,8 +37,8 @@ trials:
             initialVisibility: true,
             positionStart: 0.5,
             positionEnd: 1,
-            textureRightOn: Assets\\Textures\\CamiloReward.jpg,
-            textureLeftOn: Assets\\Textures\\CamiloReward.jpg,
+            textureRight: Assets\\Textures\\CamiloReward.jpg,
+            textureLeft: Assets\\Textures\\CamiloReward.jpg,
           },
           {<<: *graywall, positionStart: 1,positionEnd: 1.5},
           &stimA
@@ -47,8 +47,8 @@ trials:
             initialVisibility: false,
             positionStart: 1.5,
             positionEnd: 2,
-            textureRightOn: Assets\\Textures\\plaid_blue.png,
-            textureLeftOn: Assets\\Textures\\plaid_blue.png,
+            textureRight: Assets\\Textures\\plaid_blue.png,
+            textureLeft: Assets\\Textures\\plaid_blue.png,
             stimControl:
             {
               location: 1.4,
@@ -66,8 +66,8 @@ trials:
             initialVisibility: true,
             positionStart: 2.5,
             positionEnd: 3,
-            textureRightOn: Assets\\Textures\\Camilo.jpg,
-            textureLeftOn: Assets\\Textures\\Camilo.jpg,
+            textureRight: Assets\\Textures\\Camilo.jpg,
+            textureLeft: Assets\\Textures\\Camilo.jpg,
           },
           {<<: *graywall, positionStart: 3, positionEnd: 3.5},
           &stimB
@@ -76,8 +76,8 @@ trials:
             initialVisibility: false,
             positionStart: 3.5,
             positionEnd: 4,
-            textureRightOn: Assets\\Textures\\colorful_dots.jpg,
-            textureLeftOn: Assets\\Textures\\colorful_dots.jpg,
+            textureRight: Assets\\Textures\\colorful_dots.jpg,
+            textureLeft: Assets\\Textures\\colorful_dots.jpg,
             stimControl:
             {
               location: 3.4,
@@ -95,8 +95,8 @@ trials:
             initialVisibility: true,
             positionStart: 4.5,
             positionEnd: 5,
-            textureRightOn: Assets\\Textures\\CamiloReward.jpg,
-            textureLeftOn: Assets\\Textures\\CamiloReward.jpg,
+            textureRight: Assets\\Textures\\CamiloReward.jpg,
+            textureLeft: Assets\\Textures\\CamiloReward.jpg,
           },
         ],
         reward:
@@ -152,8 +152,8 @@ trials:
           {<<: *landmark2 },
           {<<: *graywall, positionStart: 3, positionEnd: 3.5},
           {<<: *stimB,
-          textureRightOn: Assets\\Textures\\inspiration.jpg,
-          textureLeftOn: Assets\\Textures\\inspiration.jpg},
+          textureRight: Assets\\Textures\\inspiration.jpg,
+          textureLeft: Assets\\Textures\\inspiration.jpg},
           {<<: *graywall, positionStart: 4, positionEnd: 4.5},
           {<<: *landmark3 },
         ]
@@ -176,8 +176,8 @@ trials:
           {<<: *graywall, positionStart: 2, positionEnd: 2.5},
           {<<: *landmark2 },
           {<<: *graywall, positionStart: 3, positionEnd: 3.5},
-          {<<: *stimB, textureRightOn: Assets\\Textures\\inspiration.jpg,
-            textureLeftOn: Assets\\Textures\\inspiration.jpg},
+          {<<: *stimB, textureRight: Assets\\Textures\\inspiration.jpg,
+            textureLeft: Assets\\Textures\\inspiration.jpg},
           {<<: *graywall, positionStart: 4, positionEnd: 5},
           {<<: *landmark3, positionStart: 5, positionEnd: 5.5},
         ],
