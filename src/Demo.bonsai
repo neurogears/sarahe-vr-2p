@@ -16,7 +16,6 @@
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -578,55 +577,67 @@ Item2 as Frame)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="GroupWorkflow">
-                <Name>Loggers</Name>
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="SubscribeSubject">
-                      <Name>AI_Data</Name>
-                    </Expression>
-                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
-                      <FileName>AnalogInput.bin</FileName>
-                    </Expression>
-                    <Expression xsi:type="SubscribeSubject">
-                      <Name>DI_Data</Name>
-                    </Expression>
-                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
-                      <FileName>DigitalInput.bin</FileName>
-                    </Expression>
-                    <Expression xsi:type="SubscribeSubject">
-                      <Name>RotaryEncoderPosition</Name>
-                    </Expression>
-                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-                      <FileName>RotaryEncoder.csv</FileName>
-                    </Expression>
-                    <Expression xsi:type="SubscribeSubject">
-                      <Name>CurrentPosition</Name>
-                    </Expression>
-                    <Expression xsi:type="scr:ExpressionTransform">
-                      <scr:Expression>new(it.Z as Position)</scr:Expression>
-                    </Expression>
-                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-                      <FileName>VrPosition.csv</FileName>
-                    </Expression>
-                    <Expression xsi:type="SubscribeSubject">
-                      <Name>FrameEventLogger</Name>
-                    </Expression>
-                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
-                      <FileName>FrameEvents.csv</FileName>
-                    </Expression>
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                    <Edge From="2" To="3" Label="Source1" />
-                    <Edge From="4" To="5" Label="Source1" />
-                    <Edge From="6" To="7" Label="Source1" />
-                    <Edge From="7" To="8" Label="Source1" />
-                    <Edge From="9" To="10" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Builder>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Loggers</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>AI_Data</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
+                    <FileName>AnalogInput.bin</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>DI_Data</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerBlob.bonsai">
+                    <FileName>DigitalInput.bin</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RotaryEncoderPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                    <FileName>RotaryEncoder.csv</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(it.Z as Position)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                    <FileName>VrPosition.csv</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>FrameEventLogger</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                    <FileName>FrameEvents.csv</FileName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>PupilCamera</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCamera.bonsai">
+                    <CameraName>PupilCamera</CameraName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>BodyCamera</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCamera.bonsai">
+                    <CameraName>BodyCamera</CameraName>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
           </Nodes>
           <Edges>
@@ -772,13 +783,13 @@ Item2 as Frame)</scr:Expression>
               <Height>0.34</Height>
               <Rotation>
                 <X>0</X>
-                <Y>40.10704565915762</Y>
+                <Y>28.647889756541161</Y>
                 <Z>0</Z>
               </Rotation>
               <Translation>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0.1</Z>
+                <X>0.35</X>
+                <Y>-0.03</Y>
+                <Z>0.3</Z>
               </Translation>
             </Expression>
             <Expression xsi:type="Annotation">
@@ -812,12 +823,12 @@ Item2 as Frame)</scr:Expression>
               <Height>0.34</Height>
               <Rotation>
                 <X>0</X>
-                <Y>-40.10704565915762</Y>
+                <Y>-28.647889756541161</Y>
                 <Z>0</Z>
               </Rotation>
               <Translation>
-                <X>-0.21</X>
-                <Y>0.21</Y>
+                <X>-0.35</X>
+                <Y>-0.03</Y>
                 <Z>0.3</Z>
               </Translation>
             </Expression>
@@ -1800,7 +1811,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
                 <Nodes>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="IntProperty">
-                      <Value>50</Value>
+                      <Value>30</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1811,10 +1822,74 @@ Item3 as RenderElapsedTime)</scr:Expression>
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>CameraFPS</Name>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CameraFPS</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>(1.0 / it) *1000000 - 3000</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="ExposureTime" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="SerialNumber" DisplayName="PupilCameraSerialNumber" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:MySpinnakerCapture">
+                      <p1:Index xsi:nil="true" />
+                      <p1:SerialNumber>23319722</p1:SerialNumber>
+                      <p1:ColorProcessing>Default</p1:ColorProcessing>
+                      <p1:ExposureTime>19000</p1:ExposureTime>
+                      <p1:Gain>0</p1:Gain>
+                      <p1:Binning>1</p1:Binning>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>PupilCamera</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CameraFPS</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>(1.0 / it) *1000000 - 3000</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="ExposureTime" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="SerialNumber" DisplayName="BodyCameraSerialNumber" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:MySpinnakerCapture">
+                      <p1:Index xsi:nil="true" />
+                      <p1:SerialNumber>23315309</p1:SerialNumber>
+                      <p1:ColorProcessing>Default</p1:ColorProcessing>
+                      <p1:ExposureTime>19000</p1:ExposureTime>
+                      <p1:Gain>0</p1:Gain>
+                      <p1:Binning>1</p1:Binning>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>BodyCamera</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="7" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="13" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2823,13 +2898,6 @@ Frame.Time as Time
               <Selector>Z</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="vid:VideoCaptureDevice">
-                <vid:Index>0</vid:Index>
-                <vid:CaptureProperties />
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:Trial">
               <rx:Name>CurrentTrial</rx:Name>
             </Expression>
@@ -2848,6 +2916,20 @@ Frame.Time as Time
             <Expression xsi:type="Format">
               <Format>Trial {0}: {1} @ {2}</Format>
               <Selector>Item1.Index,Item1.Value,Item2</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>PupilCamera</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>BodyCamera</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
@@ -2878,30 +2960,34 @@ Frame.Time as Time
             <Edge From="10" To="11" Label="Source5" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="36" Label="Source1" />
+            <Edge From="13" To="40" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="36" Label="Source2" />
+            <Edge From="15" To="40" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="36" Label="Source3" />
+            <Edge From="19" To="40" Label="Source3" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="36" Label="Source4" />
+            <Edge From="23" To="40" Label="Source4" />
             <Edge From="24" To="25" Label="Source1" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="36" Label="Source5" />
+            <Edge From="26" To="40" Label="Source5" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="36" Label="Source6" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="33" Label="Source1" />
-            <Edge From="32" To="33" Label="Source2" />
-            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="31" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="40" Label="Source6" />
             <Edge From="34" To="35" Label="Source1" />
-            <Edge From="35" To="36" Label="Source7" />
-            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="40" Label="Source7" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="40" Label="Source8" />
+            <Edge From="40" To="41" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
