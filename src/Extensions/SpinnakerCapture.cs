@@ -12,8 +12,8 @@ public class MySpinnakerCapture : Bonsai.Spinnaker.SpinnakerCapture
     public MySpinnakerCapture()
     {
         ExposureTime = 1e6 / 50 - 1000;
-        Binning = 1;
-    }
+        Binning = 2;
+    }   
 
     [Description("The duration of each individual exposure, in microseconds. In general, this should be 1 / frameRate - 1 millisecond to prepare for next trigger.")]
     public double ExposureTime { get; set; }
@@ -45,6 +45,7 @@ public class MySpinnakerCapture : Bonsai.Spinnaker.SpinnakerCapture
         camera.DeviceLinkThroughputLimit.Value = camera.DeviceLinkThroughputLimit.Max;
         camera.GainAuto.Value = GainAutoEnums.Off.ToString();
         camera.Gain.Value = Gain;
+        camera.IspEnable.Value = false;
         base.Configure(camera);
     }
 

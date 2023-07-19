@@ -1637,7 +1637,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                           <Combinator xsi:type="p3:CounterOutput">
                             <p3:Channel>Dev1/ctr0</p3:Channel>
                             <p3:TriggerSource />
-                            <p3:Frequency>50</p3:Frequency>
+                            <p3:Frequency>30</p3:Frequency>
                             <p3:DutyCycle>0.5</p3:DutyCycle>
                             <p3:NumberOfSamples xsi:nil="true" />
                           </Combinator>
@@ -1841,9 +1841,9 @@ Item3 as RenderElapsedTime)</scr:Expression>
                       <p1:Index xsi:nil="true" />
                       <p1:SerialNumber>23319722</p1:SerialNumber>
                       <p1:ColorProcessing>Default</p1:ColorProcessing>
-                      <p1:ExposureTime>19000</p1:ExposureTime>
+                      <p1:ExposureTime>30333.333333333336</p1:ExposureTime>
                       <p1:Gain>0</p1:Gain>
-                      <p1:Binning>1</p1:Binning>
+                      <p1:Binning>2</p1:Binning>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
@@ -1868,9 +1868,9 @@ Item3 as RenderElapsedTime)</scr:Expression>
                       <p1:Index xsi:nil="true" />
                       <p1:SerialNumber>23315309</p1:SerialNumber>
                       <p1:ColorProcessing>Default</p1:ColorProcessing>
-                      <p1:ExposureTime>19000</p1:ExposureTime>
+                      <p1:ExposureTime>30333.333333333336</p1:ExposureTime>
                       <p1:Gain>0</p1:Gain>
-                      <p1:Binning>1</p1:Binning>
+                      <p1:Binning>2</p1:Binning>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
