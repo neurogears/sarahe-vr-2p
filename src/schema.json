@@ -133,6 +133,14 @@
                     "default": 0,
                     "minimum": 0,
                     "type": "integer"
+                },
+                "abortLocation": {
+                    "default": null,
+                    "type": ["number", "null"]
+                },
+                "abortDelay": {
+                    "default": 0,
+                    "type": "number"
                 }
             }
         },
