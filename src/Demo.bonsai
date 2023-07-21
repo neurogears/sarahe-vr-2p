@@ -1528,14 +1528,6 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                 <p3:TerminalConfiguration>Differential</p3:TerminalConfiguration>
                                 <p3:VoltageUnits>Volts</p3:VoltageUnits>
                               </p3:AnalogInputChannelConfiguration>
-                              <p3:AnalogInputChannelConfiguration>
-                                <p3:ChannelName>Photodiode</p3:ChannelName>
-                                <p3:MinimumValue>-10</p3:MinimumValue>
-                                <p3:MaximumValue>10</p3:MaximumValue>
-                                <p3:PhysicalChannel>Dev1/ai5</p3:PhysicalChannel>
-                                <p3:TerminalConfiguration>Differential</p3:TerminalConfiguration>
-                                <p3:VoltageUnits>Volts</p3:VoltageUnits>
-                              </p3:AnalogInputChannelConfiguration>
                             </p3:Channels>
                           </Combinator>
                         </Expression>
