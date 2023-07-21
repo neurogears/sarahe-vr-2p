@@ -656,6 +656,24 @@ Item2 as Frame)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCamera.bonsai">
                     <CameraName>BodyCamera</CameraName>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SessionSettings</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:Serialize" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerYaml.bonsai">
+                    <FileName>SessionSettings.yaml</FileName>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:Trial">
+                    <rx:Name>TrialLogger</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:Serialize" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerYaml.bonsai">
+                    <FileName>TrialLogging.yaml</FileName>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -666,6 +684,10 @@ Item2 as Frame)</scr:Expression>
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2411,6 +2433,9 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>ThisTrial</Name>
                   </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>TrialLogger</Name>
+                  </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>Trial</Name>
                     <Workflow>
@@ -2644,10 +2669,11 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
