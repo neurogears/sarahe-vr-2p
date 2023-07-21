@@ -989,9 +989,9 @@ it.Item2.Time as Time
                     <LocationY>4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
-                    <ColorR>1</ColorR>
-                    <ColorG>1</ColorG>
-                    <ColorB>1</ColorB>
+                    <ColorR>0</ColorR>
+                    <ColorG>0</ColorG>
+                    <ColorB>0</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1103,7 +1103,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="dsp:FunctionGenerator">
-                            <dsp:BufferLength>3000</dsp:BufferLength>
+                            <dsp:BufferLength>1500</dsp:BufferLength>
                             <dsp:Frequency>50</dsp:Frequency>
                             <dsp:Waveform>Square</dsp:Waveform>
                             <dsp:SampleRate>30000</dsp:SampleRate>
@@ -1134,7 +1134,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             <mx:SampleRate>30000</mx:SampleRate>
                             <mx:ActiveEdge>Rising</mx:ActiveEdge>
                             <mx:SampleMode>ContinuousSamples</mx:SampleMode>
-                            <mx:BufferSize>3000</mx:BufferSize>
+                            <mx:BufferSize>1500</mx:BufferSize>
                             <mx:Channels>
                               <mx:AnalogOutputChannelConfiguration>
                                 <mx:ChannelName>OptoStim</mx:ChannelName>
@@ -1179,6 +1179,18 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Expression xsi:type="rx:AsyncSubject">
                           <Name>OptoWaveformBank</Name>
                         </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\PulseGenerator.bonsai">
+                          <SampleRate>1000</SampleRate>
+                          <Frequency>10</Frequency>
+                          <Amplitude>1</Amplitude>
+                          <WaveDuration>1</WaveDuration>
+                          <PulseDuration>0.02</PulseDuration>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="GroupWorkflow">
                           <Name>OptoStimWaveform</Name>
                           <Workflow>
@@ -1212,7 +1224,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="dsp:ScalarBuffer">
                                         <dsp:Size>
-                                          <dsp:Width>3000</dsp:Width>
+                                          <dsp:Width>1500</dsp:Width>
                                           <dsp:Height>1</dsp:Height>
                                         </dsp:Size>
                                         <dsp:Depth>F32</dsp:Depth>
@@ -1327,7 +1339,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                           <Expression xsi:type="Combinator">
                                             <Combinator xsi:type="cv:ResizeCanvas">
                                               <cv:Size>
-                                                <cv:Width>3000</cv:Width>
+                                                <cv:Width>1500</cv:Width>
                                                 <cv:Height>1</cv:Height>
                                               </cv:Size>
                                               <cv:BorderType>Constant</cv:BorderType>
@@ -1401,8 +1413,8 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="dsp:Buffer">
-                                        <dsp:Count>3000</dsp:Count>
-                                        <dsp:Skip>3000</dsp:Skip>
+                                        <dsp:Count>1500</dsp:Count>
+                                        <dsp:Skip>1500</dsp:Skip>
                                       </Combinator>
                                     </Expression>
                                     <Expression xsi:type="SubscribeSubject">
@@ -1440,6 +1452,11 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                 <Name>AbortOptoStim</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Skip">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:TakeUntil" />
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -1454,14 +1471,15 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                               <Edge From="0" To="3" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
                               <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="9" Label="Source1" />
+                              <Edge From="3" To="10" Label="Source1" />
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="8" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source2" />
+                              <Edge From="6" To="9" Label="Source1" />
+                              <Edge From="7" To="8" Label="Source1" />
                               <Edge From="8" To="9" Label="Source2" />
-                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source2" />
                               <Edge From="10" To="11" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1490,6 +1508,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         <Edge From="20" To="21" Label="Source1" />
                         <Edge From="21" To="22" Label="Source1" />
                         <Edge From="23" To="24" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2257,7 +2276,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>0.2</gl:Z>
+                <gl:Z>4.00102139</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2292,7 +2311,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Multiply">
               <Operand xsi:type="FloatProperty">
-                <Value>0.0005</Value>
+                <Value>0.0015</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Disable">
@@ -2338,7 +2357,7 @@ Item3 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.2</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3095,11 +3114,64 @@ Frame.Time as Time
             <Expression xsi:type="MulticastSubject">
               <Name>DefaultEncoderGain</Name>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gli:KeyDown">
+                <gli:Key>KeypadAdd</gli:Key>
+                <gli:Modifiers>Control</gli:Modifiers>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gli:KeyDown">
+                <gli:Key>KeypadSubtract</gli:Key>
+                <gli:Modifiers>Control</gli:Modifiers>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>-1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="KeyDownGain" />
+            </Expression>
+            <Expression xsi:type="Multiply">
+              <Operand xsi:type="FloatProperty">
+                <Value>0.001</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>DefaultEncoderGain</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="Add" />
+            <Expression xsi:type="MulticastSubject">
+              <Name>DefaultEncoderGain</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="8" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="8" To="10" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="10" To="12" Label="Source1" />
+            <Edge From="11" To="12" Label="Source2" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
