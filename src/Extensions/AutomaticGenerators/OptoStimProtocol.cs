@@ -27,6 +27,8 @@ namespace AutomaticGenerators
 					Delay = Delay,
 					Location = Location,
 					WaveformIndex = WaveformIndex,
+					AbortLocation = AbortLocation,
+					AbortDelay = AbortDelay,
 					AdditionalProperties = AdditionalProperties,
 
                 };

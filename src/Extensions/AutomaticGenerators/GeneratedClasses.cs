@@ -159,6 +159,15 @@ namespace AutomaticGenerators
 			set { waveformIndex = value; }
 		}
 
+        public double? AbortLocation { get; set; }
+
+		private double abortDelay = 0D;
+		public double AbortDelay
+		{
+			get { return abortDelay; }
+			set { abortDelay = value; }
+		}
+
 
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
@@ -410,6 +419,9 @@ namespace AutomaticGenerators
 			set { delay = value; }
 		}
 
+        /// <summary>
+        /// Determines whether the wall texture will be update to the stimTexture or not.
+        /// </summary>
 		private bool leftStimState = true;
 		public bool LeftStimState
 		{
@@ -424,6 +436,9 @@ namespace AutomaticGenerators
 			set { location = value; }
 		}
 
+        /// <summary>
+        /// Determines whether the wall texture will be update to the stimTexture or not.
+        /// </summary>
 		private bool rightStimState = true;
 		public bool RightStimState
 		{
