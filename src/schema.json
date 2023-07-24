@@ -311,6 +311,13 @@
                     "default": "",
                     "type": "string"
                 },
+                "waveformBankPath": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "defaultEncoderGain": {
                     "default": 0.0005,
                     "type": "number"

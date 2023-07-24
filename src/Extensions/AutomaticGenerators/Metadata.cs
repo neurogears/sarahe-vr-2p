@@ -25,6 +25,7 @@ namespace AutomaticGenerators
                 var value = new Metadata
                 {
 					AnimalId = AnimalId,
+					WaveformBankPath = WaveformBankPath,
 					DefaultEncoderGain = DefaultEncoderGain,
 					RandomSeed = RandomSeed,
 					RewardCalibration = RewardCalibration,

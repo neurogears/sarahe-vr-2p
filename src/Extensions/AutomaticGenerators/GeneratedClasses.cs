@@ -481,6 +481,8 @@ namespace AutomaticGenerators
 			set { animalId = value; }
 		}
 
+        public System.Collections.Generic.IList<string> WaveformBankPath { get; set; }
+
 		private double defaultEncoderGain = 0.0005D;
 		public double DefaultEncoderGain
 		{

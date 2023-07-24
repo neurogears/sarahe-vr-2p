@@ -16,6 +16,9 @@ metadata:
         { size: 10, tailSize: 0, trialProbability: [0, 0, 0, 0, 1, 1] },
       ]
   rewardCalibration: {slope: 0.01, intercept: 0}
+  waveformBankPath:
+    - Assets\\Waveforms\\wf0.bin
+    - Assets\\Waveforms\\wf1.bin
 trials:
   [
     &trialTypeA
