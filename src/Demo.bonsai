@@ -1023,16 +1023,6 @@ it.Item2.Time as Time
               <Name>SyncQuad</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="Int64Property">
-                      <Value>1</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>PostDrawing</Name>
                   </Expression>
@@ -1040,9 +1030,6 @@ it.Item2.Time as Time
                     <Combinator xsi:type="Int64Property">
                       <Value>1</Value>
                     </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
                   </Expression>
                   <Expression xsi:type="rx:Accumulate" />
                   <Expression xsi:type="Mod">
@@ -1069,6 +1056,19 @@ it.Item2.Time as Time
                     <Bottom>-4.5</Bottom>
                     <Top>4.5</Top>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="Int64Property">
+                      <Value>0</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="ColorR" />
@@ -1092,16 +1092,16 @@ it.Item2.Time as Time
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="5" To="9" Label="Source1" />
+                  <Edge From="6" To="11" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="8" To="10" Label="Source1" />
-                  <Edge From="9" To="11" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source2" />
                   <Edge From="11" To="12" Label="Source1" />
                 </Edges>
@@ -1820,16 +1820,9 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                     <Name>RotaryEncoder</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RenderFrameEvent</Name>
-                        </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:ElementIndex" />
+                          <Combinator xsi:type="gl:UpdateFrame" />
                         </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value.TimeStep.ElapsedRealTime</Selector>
-                        </Expression>
-                        <Expression xsi:type="rx:Accumulate" />
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p3:RotaryEncoderInput">
                             <p3:Channel>Dev1/ctr1</p3:Channel>
@@ -1839,17 +1832,30 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             <p3:ResetOnZ>false</p3:ResetOnZ>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>RenderFrameEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:ElementIndex" />
+                        </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Index</Selector>
                         </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Value.TimeStep.ElapsedRealTime</Selector>
+                        </Expression>
+                        <Expression xsi:type="rx:Accumulate" />
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>new(
 Item1 as RotaryEncoder,
-Item2 as FrameIndex,
-Item3 as RenderElapsedTime)</scr:Expression>
+Item2.Item1 as FrameIndex,
+Item2.Item2 as RenderElapsedTime)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="rx:PublishSubject">
                           <Name>RotaryEncoderPosition</Name>
@@ -1858,16 +1864,17 @@ Item3 as RenderElapsedTime)</scr:Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="1" To="5" Label="Source1" />
+                        <Edge From="1" To="8" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="3" To="6" Label="Source3" />
-                        <Edge From="4" To="6" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source2" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="3" To="5" Label="Source1" />
+                        <Edge From="4" To="7" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source2" />
                         <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -3257,7 +3264,7 @@ Frame.Time as Time
               <Expression xsi:type="MulticastSubject">
                 <Name>AbortOptoStim</Name>
               </Expression>
-    </Nodes>
+            </Nodes>
             <Edges>
               <Edge From="0" To="1" Label="Source1" />
               <Edge From="1" To="2" Label="Source1" />
