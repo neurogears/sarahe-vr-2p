@@ -19,7 +19,7 @@ public class BuildTrialsFromBlock
         set { random = value; }
     }
 
-    public IObservable<IList<Trial>> Process(IObservable<CorridorSession> source)
+    public IObservable<List<Trial>> Process(IObservable<CorridorSession> source)
     {
         return source.Select(value => {
             var blocks = value.Metadata.TrialOrder.Blocks;
