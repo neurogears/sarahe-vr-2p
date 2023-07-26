@@ -88,9 +88,9 @@ namespace AutomaticGenerators
     
         private StimControl _stimControl;
     
-        private string _textureLeft = "Assets\\Textures\\null.png";
+        private int _textureLeft = 0;
     
-        private string _textureRight = "Assets\\Textures\\null.png";
+        private int _textureRight = 0;
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialVisibility")]
         public bool InitialVisibility
@@ -159,7 +159,7 @@ namespace AutomaticGenerators
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureLeft")]
-        public string TextureLeft
+        public int TextureLeft
         {
             get
             {
@@ -172,7 +172,7 @@ namespace AutomaticGenerators
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureRight")]
-        public string TextureRight
+        public int TextureRight
         {
             get
             {
@@ -214,7 +214,7 @@ namespace AutomaticGenerators
     
         private double _positionStart = 0D;
     
-        private string _texture = "Assets\\Textures\\null.png";
+        private int _texture = 0;
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialVisibility")]
         public bool InitialVisibility
@@ -269,7 +269,7 @@ namespace AutomaticGenerators
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="texture")]
-        public string Texture
+        public int Texture
         {
             get
             {
@@ -552,69 +552,6 @@ namespace AutomaticGenerators
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class EndTrial
-    {
-    
-        private double _destination = 0D;
-    
-        private double _location = 10D;
-    
-        private double _delay = 0D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="destination")]
-        public double Destination
-        {
-            get
-            {
-                return _destination;
-            }
-            set
-            {
-                _destination = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="location")]
-        public double Location
-        {
-            get
-            {
-                return _location;
-            }
-            set
-            {
-                _location = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
-        public double Delay
-        {
-            get
-            {
-                return _delay;
-            }
-            set
-            {
-                _delay = value;
-            }
-        }
-    
-        public System.IObservable<EndTrial> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new EndTrial
-                {
-                    Destination = _destination,
-                    Location = _location,
-                    Delay = _delay
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class TeleportOnLickProtocol
     {
     
@@ -809,8 +746,6 @@ namespace AutomaticGenerators
     public partial class Trial
     {
     
-        private EndTrial _endTrial = new EndTrial();
-    
         private System.Collections.Generic.List<CorridorSegment> _corridorSegments = new System.Collections.Generic.List<CorridorSegment>();
     
         private System.Collections.Generic.List<FloorSegment> _floorSegments = new System.Collections.Generic.List<FloorSegment>();
@@ -826,20 +761,6 @@ namespace AutomaticGenerators
         private System.Collections.Generic.List<TeleportOnLickProtocol> _teleportOnLick = new System.Collections.Generic.List<TeleportOnLickProtocol>();
     
         private string _trialTypeLabel = "";
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="endTrial")]
-        public EndTrial EndTrial
-        {
-            get
-            {
-                return _endTrial;
-            }
-            set
-            {
-                _endTrial = value;
-            }
-        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="corridorSegments")]
@@ -957,7 +878,6 @@ namespace AutomaticGenerators
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Trial
                 {
-                    EndTrial = _endTrial,
                     CorridorSegments = _corridorSegments,
                     FloorSegments = _floorSegments,
                     OptoStim = _optoStim,
@@ -1033,9 +953,9 @@ namespace AutomaticGenerators
     
         private bool _rightStimState = true;
     
-        private string _stimTextureLeft = "Assets\\Textures\\null.png";
+        private int _stimTextureLeft = 0;
     
-        private string _stimTextureRight = "Assets\\Textures\\null.png";
+        private int _stimTextureRight = 0;
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
         public double Delay
@@ -1098,7 +1018,7 @@ namespace AutomaticGenerators
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimTextureLeft")]
-        public string StimTextureLeft
+        public int StimTextureLeft
         {
             get
             {
@@ -1111,7 +1031,7 @@ namespace AutomaticGenerators
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimTextureRight")]
-        public string StimTextureRight
+        public int StimTextureRight
         {
             get
             {
@@ -1148,6 +1068,8 @@ namespace AutomaticGenerators
     
         private System.Collections.Generic.List<string> _waveformBankPath = new System.Collections.Generic.List<string>();
     
+        private System.Collections.Generic.List<string> _textureBankPath = new System.Collections.Generic.List<string>();
+    
         private double _defaultEncoderGain = 0.0005D;
     
         private int? _randomSeed;
@@ -1182,6 +1104,20 @@ namespace AutomaticGenerators
             set
             {
                 _waveformBankPath = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureBankPath")]
+        public System.Collections.Generic.List<string> TextureBankPath
+        {
+            get
+            {
+                return _textureBankPath;
+            }
+            set
+            {
+                _textureBankPath = value;
             }
         }
     
@@ -1260,6 +1196,7 @@ namespace AutomaticGenerators
                 {
                     AnimalId = _animalId,
                     WaveformBankPath = _waveformBankPath,
+                    TextureBankPath = _textureBankPath,
                     DefaultEncoderGain = _defaultEncoderGain,
                     RandomSeed = _randomSeed,
                     RewardCalibration = _rewardCalibration,
@@ -1428,11 +1365,6 @@ namespace AutomaticGenerators
             return Process<RewardProtocol>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<EndTrial> source)
-        {
-            return Process<EndTrial>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<TeleportOnLickProtocol> source)
         {
             return Process<TeleportOnLickProtocol>(source);
@@ -1486,7 +1418,6 @@ namespace AutomaticGenerators
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OptoStimProtocol>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PassiveModeProtocol>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardProtocol>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EndTrial>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TeleportOnLickProtocol>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TeleportProtocol>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
