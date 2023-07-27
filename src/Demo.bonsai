@@ -837,6 +837,25 @@ it.Item2.Time as Time
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerYaml.bonsai">
                     <FileName>TrialLogging.yaml</FileName>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RenderFrameEvent</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ElementIndex" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Index</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.TimeStep.ElapsedRealTime</Selector>
+                  </Expression>
+                  <Expression xsi:type="rx:Accumulate" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                    <FileName>FrameCounter.csv</FileName>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -857,6 +876,13 @@ it.Item2.Time as Time
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="28" To="30" Label="Source1" />
+                  <Edge From="29" To="32" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="32" To="33" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
