@@ -4,17 +4,18 @@
                  xmlns:p1="clr-namespace:;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
-                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p2="clr-namespace:AutomaticGenerators;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:mx="clr-namespace:Bonsai.DAQmx;assembly=Bonsai.DAQmx"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p3="clr-namespace:Bonsai.DAQmx;assembly=Extensions"
+                 xmlns:p4="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p5="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -82,14 +83,31 @@
               <Name>VariableDeclaration</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:StimControl">
                     <rx:Name>WallVisibilityEvent</rx:Name>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:String">
-                    <rx:Name>LogFrameEvent</rx:Name>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:IgnoreElements" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>LogFrameEvent</Name>
                   </Expression>
                 </Nodes>
-                <Edges />
+                <Edges>
+                  <Edge From="1" To="3" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
               </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
@@ -365,8 +383,11 @@
               <Name>StartExperiment</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>0</Value>
+              <Combinator xsi:type="p2:OptoStimProtocol">
+                <p2:Location>0</p2:Location>
+                <p2:Delay>0</p2:Delay>
+                <p2:WaveformIndex>0</p2:WaveformIndex>
+                <p2:AbortDelay>0</p2:AbortDelay>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -639,8 +660,10 @@ Value as Time)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>new(
-Item1 as EventName,
-Item2 as Frame)</scr:Expression>
+Item2 as Frame,
+Item1.Item1 as EventName,
+Item1.Item2 as EventData
+)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="rx:PublishSubject">
                           <Name>FrameEventLogger</Name>
@@ -675,6 +698,17 @@ Item2 as Frame)</scr:Expression>
                             <Value>Lick</Value>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:Serialize" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
                         </Expression>
@@ -686,6 +720,12 @@ Item2 as Frame)</scr:Expression>
                             <Value>Reward</Value>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:Serialize" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
                         </Expression>
@@ -693,9 +733,15 @@ Item2 as Frame)</scr:Expression>
                           <Name>GiveOptoStim</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:Serialize" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
                           <Combinator xsi:type="StringProperty">
                             <Value>OptoStim</Value>
                           </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
@@ -708,6 +754,29 @@ Item2 as Frame)</scr:Expression>
                             <Value>Teleport</Value>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:Serialize" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>LogFrameEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TeleportOnLickTo</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="StringProperty">
+                            <Value>TeleportOnLick</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:Serialize" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
                         </Expression>
@@ -719,6 +788,12 @@ Item2 as Frame)</scr:Expression>
                             <Value>WallVisibility</Value>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:Serialize" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>LogFrameEvent</Name>
                         </Expression>
@@ -729,16 +804,37 @@ Item2 as Frame)</scr:Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="6" To="8" Label="Source1" />
+                        <Edge From="7" To="9" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source2" />
                         <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="11" To="13" Label="Source1" />
+                        <Edge From="12" To="14" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source2" />
+                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="16" To="18" Label="Source1" />
+                        <Edge From="17" To="19" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source2" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="21" To="23" Label="Source1" />
+                        <Edge From="22" To="24" Label="Source1" />
+                        <Edge From="23" To="24" Label="Source2" />
+                        <Edge From="24" To="25" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source1" />
+                        <Edge From="26" To="28" Label="Source1" />
+                        <Edge From="27" To="29" Label="Source1" />
+                        <Edge From="28" To="29" Label="Source2" />
+                        <Edge From="29" To="30" Label="Source1" />
+                        <Edge From="31" To="32" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1387,6 +1483,9 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>GiveOptoStim</Name>
                               </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>WaveformIndex</Selector>
+                              </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Take">
                                   <rx:Count>1</rx:Count>
@@ -1598,16 +1697,17 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                               <Edge From="0" To="3" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
                               <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="11" Label="Source1" />
+                              <Edge From="3" To="12" Label="Source1" />
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="10" Label="Source1" />
-                              <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source2" />
+                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="8" To="11" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source1" />
                               <Edge From="10" To="11" Label="Source2" />
-                              <Edge From="11" To="12" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source2" />
                               <Edge From="12" To="13" Label="Source1" />
+                              <Edge From="13" To="14" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1955,8 +2055,51 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                     <Name>RewardDelivery</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:RewardProtocol">
                           <rx:Name>GiveReward</rx:Name>
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Name>DetermineRewardAmount</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RngSeed</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p4:CreateContinuousUniform">
+                                  <p4:Lower>0</p4:Lower>
+                                  <p4:Upper>1</p4:Upper>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p4:Sample" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Expression>Item2 &gt; Item1.ProbabilityHigh ? Item1.AmountLow : Item1.AmountHigh</scr:Expression>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="4" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source2" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source1" />
+                            </Edges>
+                          </Workflow>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>SessionSettings</Name>
@@ -2019,15 +2162,16 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="3" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2253,8 +2397,23 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                 <Value>0</Value>
               </Combinator>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:TeleportProtocol">
               <rx:Name>TeleportTo</rx:Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Destination</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>Convert.ToSingle(it)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:TeleportOnLickProtocol">
+              <rx:Name>TeleportOnLickTo</rx:Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Destination</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>Convert.ToSingle(it)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
@@ -2513,36 +2672,41 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="5" Label="Source1" />
+            <Edge From="1" To="10" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="5" Label="Source2" />
-            <Edge From="4" To="5" Label="Source3" />
-            <Edge From="5" To="7" Label="Source1" />
-            <Edge From="6" To="7" Label="Source2" />
+            <Edge From="3" To="10" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="10" Label="Source3" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="11" Label="Source1" />
-            <Edge From="10" To="11" Label="Source2" />
-            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="9" To="10" Label="Source4" />
+            <Edge From="10" To="12" Label="Source1" />
+            <Edge From="11" To="12" Label="Source2" />
+            <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="14" To="16" Label="Source1" />
+            <Edge From="15" To="16" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="20" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source2" />
-            <Edge From="20" To="24" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="24" Label="Source2" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="22" To="25" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="25" To="29" Label="Source1" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="32" Label="Source1" />
-            <Edge From="28" To="31" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source2" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source2" />
-            <Edge From="31" To="32" Label="Source2" />
-            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="37" Label="Source1" />
+            <Edge From="33" To="36" Label="Source1" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source2" />
+            <Edge From="36" To="37" Label="Source2" />
+            <Edge From="37" To="38" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2615,7 +2779,7 @@ it.Item2 * 0.5 as WidthOffset)</scr:Expression>
                     <Name>Trial</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="rx:PublishSubject" TypeArguments="p4:Unit">
+                        <Expression xsi:type="rx:PublishSubject" TypeArguments="p5:Unit">
                           <rx:Name>EndTrial</rx:Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -3016,20 +3180,41 @@ Frame.Time as Time
                     <Selector>EventName</Selector>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" />
+                    <Property Name="Value" DisplayName="Event1" />
                   </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="StringProperty">
                       <Value>Teleport</Value>
                     </Operand>
                   </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>EventName</Selector>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="Event2" />
+                  </Expression>
+                  <Expression xsi:type="Equal">
+                    <Operand xsi:type="StringProperty">
+                      <Value>TeleportOnLick</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="BitwiseOr" />
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="0" To="4" Label="Source1" />
                   <Edge From="1" To="3" Label="Source1" />
                   <Edge From="2" To="3" Label="Source2" />
-                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="3" To="7" Label="Source1" />
+                  <Edge From="4" To="6" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

@@ -85,7 +85,7 @@
               <Combinator xsi:type="rx:WithLatestFrom" />
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Item2.WaveformIndex</Selector>
+              <Selector>Item2</Selector>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>GiveOptoStim</Name>
