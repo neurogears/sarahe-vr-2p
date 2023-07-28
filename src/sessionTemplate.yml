@@ -4,7 +4,7 @@
 
 metadata:
   rootPath: C:/
-  animalId: Mouse2
+  animalId: Mouse5
   randomSeed: null
   defaultEncoderGain: 0.0005
   trialOrder:
@@ -28,7 +28,13 @@ metadata:
     - Assets\\Textures\\Reward.png
     - Assets\\Textures\\Floor.png
     - Assets\\Textures\\D_single.png
+    - Assets\\Textures\\Camilo.jpg
+    - Assets\\Textures\\CamiloReward.jpg
+    - Assets\\Textures\\colorful_dots.jpg
     - Assets\\Textures\\inspiration.jpg
+    - Assets\\Textures\\plaid_blue.png
+    - Assets\\Textures\\null.png
+       
 trials:
   [
     &trialTypeA
@@ -197,8 +203,8 @@ trials:
           {<<: *graywall, positionStart: 2, positionEnd: 2.5},
           {<<: *landmark2 },
           {<<: *graywall, positionStart: 3, positionEnd: 3.5},
-          {<<: *stimB, textureRight: 8,
-            textureLeft: 8},
+          {<<: *stimB, textureRight: 7,
+            textureLeft: 7},
           {<<: *graywall, positionStart: 4, positionEnd: 5},
           {<<: *landmark3, positionStart: 5, positionEnd: 5.5},
         ],

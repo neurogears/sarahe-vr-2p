@@ -1,0 +1,145 @@
+%YAML 1.1
+---
+# yaml-language-server: $schema=schema.json
+
+metadata:
+  rootPath: C:/
+  animalId: Mouse3
+  randomSeed: null
+  defaultEncoderGain: 0.0005
+  trialOrder:
+    mode: block
+    blocks:
+      [
+        { size: 10, tailSize: 0, trialProbability: [1] },
+        { size: 10, tailSize: 0, trialProbability: [1]},
+        { size: 10, tailSize: 0, trialProbability: [1] },
+      ]
+  rewardCalibration: {slope: 0.01, intercept: 0}
+  waveformBankPath:
+    - Assets\\Waveforms\\wf1.bin
+    - Assets\\Waveforms\\wf0.bin
+trials:
+  [
+    &trialTypeA
+    {
+      trialTypeLabel: "1",
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 5,
+            textureLeft: Assets\\Textures\\WP_single.png,
+            textureRight: Assets\\Textures\\WP_single.png,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 5,
+            positionEnd: 10,
+            textureRight: Assets\\Textures\\LM1.png,
+            textureLeft: Assets\\Textures\\LM1.png,
+          },
+          {<<: *graywall, positionStart: 10,positionEnd: 15},
+          &stimA
+          { 
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 15,
+            positionEnd: 20,
+            textureRight: Assets\\Textures\\WP_single.png,
+            textureLeft: Assets\\Textures\\WP_single.png,
+            stimControl:
+            {
+              location: 15,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: Assets\\Textures\\A_single.png,
+              stimTextureRight: Assets\\Textures\\A_single.png
+            },
+          },
+          {<<: *graywall, positionStart: 20, positionEnd: 25},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 25,
+            positionEnd: 30,
+            textureRight: Assets\\Textures\\LM2.png,
+            textureLeft: Assets\\Textures\\LM2.png,
+          },
+          {<<: *graywall, positionStart: 30, positionEnd: 35},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 35,
+            positionEnd: 40,
+            textureRight: Assets\\Textures\\WP_single.png,
+            textureLeft: Assets\\Textures\\WP_single.png,
+            stimControl:
+            {
+              location: 35,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: Assets\\Textures\\B_single.png,
+              stimTextureRight: Assets\\Textures\\B_single.png
+            },
+          },
+          {<<: *graywall, positionStart: 40, positionEnd: 45},
+          &landmark3
+          {
+            name: Landmark3,
+            initialVisibility: true,
+            positionStart: 45,
+            positionEnd: 50,
+            textureRight: Assets\\Textures\\Reward.png,
+            textureLeft: Assets\\Textures\\Reward.png,
+          },
+        ],
+        reward:
+        [
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 4.75,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 50,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.5,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.005, locationStart: 1.5, locationEnd: 2 },
+          { gain: 0.005, locationStart: 3.5, locationEnd: 4 },
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 50,
+            texture: Assets\\Textures\\Floor.png,
+          },
+        ]
+    }
+  ]
