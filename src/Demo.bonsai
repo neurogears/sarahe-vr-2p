@@ -983,7 +983,7 @@ it.Item2.Time as Time
                 <gl:Location xsi:nil="true" />
                 <gl:WindowBorder>Resizable</gl:WindowBorder>
                 <gl:WindowState>Fullscreen</gl:WindowState>
-                <gl:DisplayDevice>Second</gl:DisplayDevice>
+                <gl:DisplayDevice>First</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
                 <gl:RenderState />
@@ -1274,7 +1274,7 @@ Value as Time)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="GreaterThanOrEqual">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                                  <Value>262</Value>
+                                  <Value>139</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -1338,7 +1338,7 @@ Value as Time)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
                     <ExtentX>0.5</ExtentX>
                     <ExtentY>1</ExtentY>
-                    <LocationX>7.7</LocationX>
+                    <LocationX>-0.302325577</LocationX>
                     <LocationY>4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
@@ -2661,7 +2661,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>0</gl:Z>
+                <gl:Z>0.0005000004</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
