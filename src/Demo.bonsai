@@ -23,6 +23,7 @@
     <Nodes>
       <Expression xsi:type="GroupWorkflow">
         <Name>Initialization</Name>
+        <Description>Sarah</Description>
         <Workflow>
           <Nodes>
             <Expression xsi:type="ExternalizedMapping">
@@ -30,7 +31,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:LoadSettings">
-                <p1:Path>sessionTemplate.yml</p1:Path>
+                <p1:Path>PE_session.yml</p1:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1059,7 +1060,7 @@ it.Item2.Time as Time
                 <Z>0</Z>
               </Eye>
               <NearClip>1E-05</NearClip>
-              <FarClip>1</FarClip>
+              <FarClip>2</FarClip>
               <Light>
                 <X>0</X>
                 <Y>0</Y>
@@ -1101,13 +1102,13 @@ it.Item2.Time as Time
               <Height>0.34</Height>
               <Rotation>
                 <X>0</X>
-                <Y>28.647889756541161</Y>
+                <Y>40.10704565915762</Y>
                 <Z>0</Z>
               </Rotation>
               <Translation>
-                <X>0.35</X>
-                <Y>-0.03</Y>
-                <Z>0.3</Z>
+                <X>0.4</X>
+                <Y>-0.01</Y>
+                <Z>0.2</Z>
               </Translation>
             </Expression>
             <Expression xsi:type="Annotation">
@@ -1141,13 +1142,13 @@ it.Item2.Time as Time
               <Height>0.34</Height>
               <Rotation>
                 <X>0</X>
-                <Y>-28.647889756541161</Y>
+                <Y>-40.10704565915762</Y>
                 <Z>0</Z>
               </Rotation>
               <Translation>
-                <X>-0.35</X>
-                <Y>-0.03</Y>
-                <Z>0.3</Z>
+                <X>-0.4</X>
+                <Y>-0.01</Y>
+                <Z>0.2</Z>
               </Translation>
             </Expression>
             <Expression xsi:type="Annotation">
@@ -1274,7 +1275,7 @@ Value as Time)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="GreaterThanOrEqual">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                                  <Value>139</Value>
+                                  <Value>226</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -2242,7 +2243,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                                   <p4:Channel>Dev1/ctr3</p4:Channel>
                                   <p4:InitialDelay>0</p4:InitialDelay>
                                   <p4:LowTime>0.1</p4:LowTime>
-                                  <p4:HighTime>0.01</p4:HighTime>
+                                  <p4:HighTime>0.05</p4:HighTime>
                                   <p4:NumberOfPulses>1</p4:NumberOfPulses>
                                 </Combinator>
                               </Expression>
@@ -2401,7 +2402,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="dsp:Threshold">
-                            <dsp:ThresholdValue>1</dsp:ThresholdValue>
+                            <dsp:ThresholdValue>0.4585635359116022</dsp:ThresholdValue>
                             <dsp:MaxValue>1</dsp:MaxValue>
                             <dsp:ThresholdType>Binary</dsp:ThresholdType>
                           </Combinator>
@@ -2540,7 +2541,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>-0.5</Value>
+                      <Value>-0.2</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -2548,7 +2549,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>7</Value>
+                      <Value>12</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2661,7 +2662,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>0.0005000004</gl:Z>
+                <gl:Z>5</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2696,7 +2697,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Multiply">
               <Operand xsi:type="FloatProperty">
-                <Value>0.0005</Value>
+                <Value>0.001</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Disable">
@@ -2742,7 +2743,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>0.001</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3527,24 +3528,24 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gli:KeyDown">
-                <gli:Key>KeypadAdd</gli:Key>
-                <gli:Modifiers>Control</gli:Modifiers>
+                <gli:Key>A</gli:Key>
+                <gli:Modifiers xsi:nil="true" />
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
+                <Value>5E-05</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gli:KeyDown">
-                <gli:Key>KeypadSubtract</gli:Key>
-                <gli:Modifiers>Control</gli:Modifiers>
+                <gli:Key>D</gli:Key>
+                <gli:Modifiers xsi:nil="true" />
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>-1</Value>
+                <Value>-5E-05</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3555,7 +3556,7 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="Multiply">
               <Operand xsi:type="FloatProperty">
-                <Value>0.001</Value>
+                <Value>1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
