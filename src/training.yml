@@ -1,0 +1,200 @@
+%YAML 1.1
+---
+# yaml-language-server: $schema=schema.json
+
+metadata:
+  rootPath: C:/
+  animalId: Mouse5
+  randomSeed: null
+  defaultEncoderGain: 0.0005
+  trialOrder:
+    mode: block
+    blocks:
+      [
+        { size: 200, tailSize: 0, trialProbability: [0, 1] },
+        # { size: 10, tailSize: 0, trialProbability: [0, 0, 1, 1, 0, 0] },
+        # { size: 10, tailSize: 0, trialProbability: [0, 0, 0, 0, 1, 1] },
+      ]
+  rewardCalibration: {slope: 0.5, intercept: 0}
+  waveformBankPath:
+    - Assets\\Waveforms\\wf0.bin
+    - Assets\\Waveforms\\wf1.bin
+  textureBankPath:
+    - Assets\\Textures\\WP_single.png
+    - Assets\\Textures\\LM1.png
+    - Assets\\Textures\\A_single.png
+    - Assets\\Textures\\LM2.png
+    - Assets\\Textures\\B_single.png
+    - Assets\\Textures\\Reward.png
+    - Assets\\Textures\\Floor.png
+    - Assets\\Textures\\D_single.png
+    - Assets\\Textures\\Camilo.jpg
+    - Assets\\Textures\\CamiloReward.jpg
+    - Assets\\Textures\\colorful_dots.jpg
+    - Assets\\Textures\\inspiration.jpg
+    - Assets\\Textures\\plaid_blue.png
+    - Assets\\Textures\\null.png
+       
+trials:
+  [
+    &trialTypeA
+    {
+      trialTypeLabel: "1",
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1,
+            textureLeft: 0,
+            textureRight: 0,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 1,
+            positionEnd: 2,
+            textureRight: 1,
+            textureLeft: 1,
+          },
+          {<<: *graywall, positionStart: 2,positionEnd: 3},
+          &stimA
+          {
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 3,
+            positionEnd: 4,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 3,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 2,
+              stimTextureRight: 2
+            },
+          },
+          {<<: *graywall, positionStart: 4, positionEnd: 5},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 5,
+            positionEnd: 6,
+            textureRight: 3,
+            textureLeft: 3,
+          },
+          {<<: *graywall, positionStart: 6, positionEnd: 7},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 7,
+            positionEnd: 8,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 7,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 4,
+              stimTextureRight: 4
+            },
+          },
+          {<<: *graywall, positionStart: 8, positionEnd: 9},
+          &landmark3
+          {
+            name: Landmark3,
+            initialVisibility: true,
+            positionStart: 9,
+            positionEnd: 10,
+            textureRight: 5,
+            textureLeft: 5,
+          },
+        ],
+        reward:
+        [
+          {
+            amountHigh: 5,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 9.75,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 10,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.5,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.005, locationStart: 3.2, locationEnd: 4 },
+          { gain: 0.005, locationStart: 7.2, locationEnd: 8 },
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 10,
+            texture: 6,
+          },
+        ],
+    },
+    &trialTypeB
+    {
+      trialTypeLabel: "2",
+      corridorSegments:
+        [ 
+          {<<: *graywall, positionStart: 0, positionEnd: 0.5},
+          {<<: *graywall, positionStart: 0.5, positionEnd: 1}
+        ],
+        reward:
+        [
+          {
+            amountHigh: .5,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: .75,
+            delay: 0,
+          }
+        ],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 1,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.5,
+            destination: 0,
+          }
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1,
+            texture: 6,
+          },
+        ],
+    },
+  ]

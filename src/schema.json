@@ -353,7 +353,7 @@
 					"type": "object"
 				},
 				"rootPath": {
-					"default": "",
+					"default": "",  
 					"type": "string"
 				},
 				"trialOrder": {
