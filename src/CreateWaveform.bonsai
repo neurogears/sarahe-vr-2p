@@ -6,11 +6,11 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\PulseGenerator.bonsai">
-        <SampleRate>30000</SampleRate>
-        <Frequency>5</Frequency>
-        <Amplitude>1</Amplitude>
-        <WaveDuration>1</WaveDuration>
-        <PulseDuration>0.02</PulseDuration>
+        <SampleRate>1000</SampleRate>
+        <Frequency>0.1</Frequency>
+        <Amplitude>10</Amplitude>
+        <WaveDuration>30</WaveDuration>
+        <PulseDuration>30</PulseDuration>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="dsp:MatrixWriter">

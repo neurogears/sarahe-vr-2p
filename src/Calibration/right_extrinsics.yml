@@ -1,9 +1,9 @@
 %YAML:1.0
 rotation:
    x: 0.
-   y: -.7
+   y: -.69
    z: 0.
 translation:
-   x: -0.4
-   y: -.01
+   x: -0.46
+   y: 0.03
    z: 0.2

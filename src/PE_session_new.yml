@@ -1,0 +1,813 @@
+%YAML 1.1
+---
+# yaml-language-server: $schema=schema.json
+
+metadata:
+  rootPath: D:/Sarah/
+  animalId: aa006
+  randomSeed: null
+  defaultEncoderGain: 0.001
+  trialOrder:
+    mode: block
+    blocks:
+      [
+        # { size: 500, tailSize: 0, trialProbability: [0, 0, 0, 0, 0, 1] }, # training
+        { size: 400, tailSize: 0, trialProbability: [0, 1, 0, 0, 0, 0] }, # with landmark
+        { size: 400, tailSize: 0, trialProbability: [1, 0, 0, 0, 0, 0] }, # without landmark
+        { size: 10, tailSize: 0, trialProbability: [0, 1, 0, 0, 0, 0] }, # 100% landmark
+        { size: 20, tailSize: 0, trialProbability: [0, 0, 1, 0, 0, 0] }, # 33% landmark 
+        { size: 10, tailSize: 0, trialProbability: [0, 0, 0, 1, 0, 0] }, # 66% landmark opaque
+        { size: 30, tailSize: 0, trialProbability: [0, 0, 0, 0, 1, 0] }, # 84% landmark opaque
+        { size: 200, tailSize: 0, trialProbability: [1, 0, 0, 0, 0, 0] }, # 0% landmark
+        # order: no landmark, 100% landmark, 33% landmark, 66% landmark, 84% landmark
+      ]
+  rewardCalibration: {slope: .2, intercept: 0}
+  waveformBankPath:
+    - Assets\\Waveforms\\wf0.bin
+    - Assets\\Waveforms\\wf1.bin
+  textureBankPath:
+    - Assets\\Textures\\WP.png
+    - Assets\\Textures\\LM1.png
+    - Assets\\Textures\\A.png
+    - Assets\\Textures\\LM2.png
+    - Assets\\Textures\\B.png
+    - Assets\\Textures\\Reward.png
+    - Assets\\Textures\\Floor.png
+    - Assets\\Textures\\C.png
+    - Assets\\Textures\\C.png
+    - Assets\\Textures\\null.png
+    - Assets\\Textures\\Reward_33%.png # 9
+    - Assets\\Textures\\Reward_66%.png # 10
+    - Assets\\Textures\\Reward_84%.png # 10
+
+trials:
+  [
+    &trialTypenoLM
+    {
+      trialTypeLabel: "1", # no landmark
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1.5,
+            textureLeft: 0,
+            textureRight: 0,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 1.5,
+            positionEnd: 2.35,
+            textureRight: 3,
+            textureLeft: 3,
+          },
+          {<<: *graywall, positionStart: 2.35,positionEnd: 3.9},
+          &stimA
+          {
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 3.9,
+            positionEnd: 4.75,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 3.9,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 2,
+              stimTextureRight: 0
+            },
+          },
+          {<<: *graywall, positionStart: 4.75, positionEnd: 6.25},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 6.25,
+            positionEnd: 7.15,
+            textureRight: 1,
+            textureLeft: 1,
+          },
+          {<<: *graywall, positionStart: 7.15, positionEnd: 8.65},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 8.65,
+            positionEnd: 9.5,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 8.65,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 4,
+              stimTextureRight: 0            
+            },
+          },
+          {<<: *graywall, positionStart: 9.5, positionEnd: 11.7},
+          # &landmark3
+          # {
+          #   name: Landmark3,
+          #   initialVisibility: true,
+          #   positionStart: 11,
+          #   positionEnd: 12.75,
+          #   textureRight: 0,
+          #   textureLeft: 0,
+          # },
+        ],
+        reward:
+        [
+          {
+            amountHigh: 1,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 10.6,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        [ 
+          {
+            destination: 0.1,
+            locationStart: 0.1,
+            locationEnd: 9.5,
+            refractoryDuration: 1,
+            maxRepeats: 4,
+          } 
+        ],
+        # [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 11.7,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.85,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.0063, locationStart: 3.9, locationEnd: 4.75},
+          { gain: 0.0063, locationStart: 8.65, locationEnd: 9.5 },
+        ],
+      floorSegments:
+        [ &floor
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 0.85,
+            texture: 6,
+          },
+          {<<: *floor, positionStart: .85,positionEnd: 1.7},
+          {<<: *floor, positionStart: 1.7,positionEnd: 2.55},
+          {<<: *floor, positionStart: 2.55,positionEnd: 3.4},
+          {<<: *floor, positionStart: 3.4,positionEnd: 4.25},
+          {<<: *floor, positionStart: 4.25,positionEnd: 5.1},
+          {<<: *floor, positionStart: 5.1,positionEnd: 5.95},
+          {<<: *floor, positionStart: 5.95,positionEnd: 6.8},
+          {<<: *floor, positionStart: 6.8,positionEnd: 7.65},
+          {<<: *floor, positionStart: 7.65,positionEnd: 8.5},
+          {<<: *floor, positionStart: 8.5,positionEnd: 9.35},
+          {<<: *floor, positionStart: 9.35,positionEnd: 10.2},
+          {<<: *floor, positionStart: 10.2,positionEnd: 11.05},
+          {<<: *floor, positionStart: 11.05,positionEnd: 11.7},
+          # {<<: *floor, positionStart: 11.9,positionEnd: 12.75},
+        ],
+    },
+    
+    &trialTypenoLM
+    {
+      trialTypeLabel: "2", #landmark
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1.5,
+            textureLeft: 0,
+            textureRight: 0,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 1.5,
+            positionEnd: 2.35,
+            textureRight: 3,
+            textureLeft: 3,
+          },
+          {<<: *graywall, positionStart: 2.35,positionEnd: 3.9},
+          &stimA
+          {
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 3.9,
+            positionEnd: 4.75,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 3.9,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 2,
+              stimTextureRight: 0
+            },
+          },
+          {<<: *graywall, positionStart: 4.75, positionEnd: 6.25},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 6.25,
+            positionEnd: 7.15,
+            textureRight: 1,
+            textureLeft: 1,
+          },
+          {<<: *graywall, positionStart: 7.15, positionEnd: 8.65},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 8.65,
+            positionEnd: 9.5,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 8.65,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 4,
+              stimTextureRight: 0            
+            },
+          },
+          {<<: *graywall, positionStart: 9.5, positionEnd: 10.3},
+          &landmark3
+          {
+            name: Landmark3,
+            initialVisibility: true,
+            positionStart: 10.3,
+            positionEnd: 11.2,
+            textureRight: 5,
+            textureLeft: 5,
+          },
+          {<<: *graywall, positionStart: 11.2, positionEnd: 11.7},
+        ],
+        reward:
+        [
+          {
+            amountHigh: 1,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 10.6,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        # [ 
+        #   {
+        #      destination: 0.2,
+        #      locationStart: 0.2,
+        #      locationEnd: 9.5,
+        #      refractoryDuration: 1,
+        #      maxRepeats: 4,
+        #   } 
+        # ],
+        [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 11.7,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.85,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.0063, locationStart: 3.9, locationEnd: 4.75},
+          { gain: 0.0063, locationStart: 8.65, locationEnd: 9.5 },
+        ],
+      floorSegments:
+        [ &floor
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 0.85,
+            texture: 6,
+          },
+          {<<: *floor, positionStart: .85,positionEnd: 1.7},
+          {<<: *floor, positionStart: 1.7,positionEnd: 2.55},
+          {<<: *floor, positionStart: 2.55,positionEnd: 3.4},
+          {<<: *floor, positionStart: 3.4,positionEnd: 4.25},
+          {<<: *floor, positionStart: 4.25,positionEnd: 5.1},
+          {<<: *floor, positionStart: 5.1,positionEnd: 5.95},
+          {<<: *floor, positionStart: 5.95,positionEnd: 6.8},
+          {<<: *floor, positionStart: 6.8,positionEnd: 7.65},
+          {<<: *floor, positionStart: 7.65,positionEnd: 8.5},
+          {<<: *floor, positionStart: 8.5,positionEnd: 9.35},
+          {<<: *floor, positionStart: 9.35,positionEnd: 10.2},
+          {<<: *floor, positionStart: 10.2,positionEnd: 11.05},
+          {<<: *floor, positionStart: 11.05,positionEnd: 11.7},
+          # {<<: *floor, positionStart: 11.9,positionEnd: 12.75},
+        ],
+    },
+    &trialTypenoLM
+    {
+      trialTypeLabel: "3", #landmark low contrast
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1.5,
+            textureLeft: 0,
+            textureRight: 0,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 1.5,
+            positionEnd: 2.35,
+            textureRight: 3,
+            textureLeft: 3,
+          },
+          {<<: *graywall, positionStart: 2.35,positionEnd: 3.9},
+          &stimA
+          {
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 3.9,
+            positionEnd: 4.75,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 3.9,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 2,
+              stimTextureRight: 0
+            },
+          },
+          {<<: *graywall, positionStart: 4.75, positionEnd: 6.25},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 6.25,
+            positionEnd: 7.15,
+            textureRight: 1,
+            textureLeft: 1,
+          },
+          {<<: *graywall, positionStart: 7.15, positionEnd: 8.65},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 8.65,
+            positionEnd: 9.5,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 8.65,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 4,
+              stimTextureRight: 0            
+            },
+          },
+          {<<: *graywall, positionStart: 9.5, positionEnd: 10.3},
+          &landmark3
+          {
+            name: Landmark3,
+            initialVisibility: true,
+            positionStart: 10.3,
+            positionEnd: 11.2,
+            textureRight: 10,
+            textureLeft: 10,
+          },
+          {<<: *graywall, positionStart: 11.2, positionEnd: 11.7},
+        ],
+        reward:
+        [
+          {
+            amountHigh: 1,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 10.6,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        # [ 
+        #   {
+        #     destination: 0,
+        #     locationStart: 0,
+        #     locationEnd: 9.5,
+        #     refractoryDuration: 0.5,
+        #     maxRepeats: 4,
+        #   } 
+        # ],
+        [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 11.7,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.85,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.0063, locationStart: 3.9, locationEnd: 4.75},
+          { gain: 0.0063, locationStart: 8.65, locationEnd: 9.5 },
+        ],
+      floorSegments:
+        [ &floor
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 0.85,
+            texture: 6,
+          },
+          {<<: *floor, positionStart: .85,positionEnd: 1.7},
+          {<<: *floor, positionStart: 1.7,positionEnd: 2.55},
+          {<<: *floor, positionStart: 2.55,positionEnd: 3.4},
+          {<<: *floor, positionStart: 3.4,positionEnd: 4.25},
+          {<<: *floor, positionStart: 4.25,positionEnd: 5.1},
+          {<<: *floor, positionStart: 5.1,positionEnd: 5.95},
+          {<<: *floor, positionStart: 5.95,positionEnd: 6.8},
+          {<<: *floor, positionStart: 6.8,positionEnd: 7.65},
+          {<<: *floor, positionStart: 7.65,positionEnd: 8.5},
+          {<<: *floor, positionStart: 8.5,positionEnd: 9.35},
+          {<<: *floor, positionStart: 9.35,positionEnd: 10.2},
+          {<<: *floor, positionStart: 10.2,positionEnd: 11.05},
+          {<<: *floor, positionStart: 11.05,positionEnd: 11.7},
+          # {<<: *floor, positionStart: 11.9,positionEnd: 12.75},
+        ],
+    },
+    &trialTypenoLM
+    {
+      trialTypeLabel: "4", #landmark high contrast
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1.5,
+            textureLeft: 0,
+            textureRight: 0,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 1.5,
+            positionEnd: 2.35,
+            textureRight: 3,
+            textureLeft: 3,
+          },
+          {<<: *graywall, positionStart: 2.35,positionEnd: 3.9},
+          &stimA
+          {
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 3.9,
+            positionEnd: 4.75,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 3.9,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 2,
+              stimTextureRight: 0
+            },
+          },
+          {<<: *graywall, positionStart: 4.75, positionEnd: 6.25},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 6.25,
+            positionEnd: 7.15,
+            textureRight: 1,
+            textureLeft: 1,
+          },
+          {<<: *graywall, positionStart: 7.15, positionEnd: 8.65},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 8.65,
+            positionEnd: 9.5,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 8.65,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 4,
+              stimTextureRight: 0            
+            },
+          },
+          {<<: *graywall, positionStart: 9.5, positionEnd: 10.3},
+          &landmark3
+          {
+            name: Landmark3,
+            initialVisibility: true,
+            positionStart: 10.3,
+            positionEnd: 11.2,
+            textureRight: 11,
+            textureLeft: 11,
+          },
+          {<<: *graywall, positionStart: 11.2, positionEnd: 11.7},
+        ],
+        reward:
+        [
+          {
+            amountHigh: 1,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 10.6,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        # [ 
+        #   {
+        #      destination: 0,
+        #      locationStart: 0,
+        #      locationEnd: 9.5,
+        #      refractoryDuration: 0.5,
+        #      maxRepeats: 4,
+        #   } 
+        # ],
+        [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 11.7,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.85,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.0063, locationStart: 3.9, locationEnd: 4.75},
+          { gain: 0.0063, locationStart: 8.65, locationEnd: 9.5 },
+        ],
+      floorSegments:
+        [ &floor
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 0.85,
+            texture: 6,
+          },
+          {<<: *floor, positionStart: .85,positionEnd: 1.7},
+          {<<: *floor, positionStart: 1.7,positionEnd: 2.55},
+          {<<: *floor, positionStart: 2.55,positionEnd: 3.4},
+          {<<: *floor, positionStart: 3.4,positionEnd: 4.25},
+          {<<: *floor, positionStart: 4.25,positionEnd: 5.1},
+          {<<: *floor, positionStart: 5.1,positionEnd: 5.95},
+          {<<: *floor, positionStart: 5.95,positionEnd: 6.8},
+          {<<: *floor, positionStart: 6.8,positionEnd: 7.65},
+          {<<: *floor, positionStart: 7.65,positionEnd: 8.5},
+          {<<: *floor, positionStart: 8.5,positionEnd: 9.35},
+          {<<: *floor, positionStart: 9.35,positionEnd: 10.2},
+          {<<: *floor, positionStart: 10.2,positionEnd: 11.05},
+          {<<: *floor, positionStart: 11.05,positionEnd: 11.7},
+          # {<<: *floor, positionStart: 11.9,positionEnd: 12.75},
+        ],
+    },
+    &trialTypenoLM
+    {
+      trialTypeLabel: "5", #landmark high contrast
+      corridorSegments:
+        [ &graywall
+          {
+            name: Gray,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1.5,
+            textureLeft: 0,
+            textureRight: 0,
+          },
+          &landmark1
+          {
+            name: Landmark1,
+            initialVisibility: true,
+            positionStart: 1.5,
+            positionEnd: 2.35,
+            textureRight: 3,
+            textureLeft: 3,
+          },
+          {<<: *graywall, positionStart: 2.35,positionEnd: 3.9},
+          &stimA
+          {
+            name: StimulusA,
+            initialVisibility: true,
+            positionStart: 3.9,
+            positionEnd: 4.75,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 3.9,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 2,
+              stimTextureRight: 0
+            },
+          },
+          {<<: *graywall, positionStart: 4.75, positionEnd: 6.25},
+          &landmark2
+          {
+            name: Landmark2,
+            initialVisibility: true,
+            positionStart: 6.25,
+            positionEnd: 7.15,
+            textureRight: 1,
+            textureLeft: 1,
+          },
+          {<<: *graywall, positionStart: 7.15, positionEnd: 8.65},
+          &stimB
+          {
+            name: StimulusB,
+            initialVisibility: true,
+            positionStart: 8.65,
+            positionEnd: 9.5,
+            textureRight: 0,
+            textureLeft: 0,
+            stimControl:
+            {
+              location: 8.65,
+              delay: 0,
+              rightStimState: true,
+              leftStimState: true,
+              stimTextureLeft: 4,
+              stimTextureRight: 0            
+            },
+          },
+          {<<: *graywall, positionStart: 9.5, positionEnd: 10.3},
+          &landmark3
+          {
+            name: Landmark3,
+            initialVisibility: true,
+            positionStart: 10.3,
+            positionEnd: 11.2,
+            textureRight: 12,
+            textureLeft: 12,
+          },
+          {<<: *graywall, positionStart: 11.2, positionEnd: 11.7},
+        ],
+        reward:
+        [
+          {
+            amountHigh: 1,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: 10.6,
+            delay: 0,
+          }
+        ],
+      optoStim:
+        [],
+      teleportOnLick:
+        # [ 
+        #   {
+        #      destination: 0,
+        #      locationStart: 0,
+        #      locationEnd: 9.5,
+        #      refractoryDuration: 0.5,
+        #      maxRepeats: 4,
+        #   } 
+        # ],
+        [],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 11.7,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.85,
+            destination: 0,
+          }
+        ],
+      passiveMode:
+        [
+          { gain: 0.0063, locationStart: 3.9, locationEnd: 4.75},
+          { gain: 0.0063, locationStart: 8.65, locationEnd: 9.5 },
+        ],
+      floorSegments:
+        [ &floor
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 0.85,
+            texture: 6,
+          },
+          {<<: *floor, positionStart: .85,positionEnd: 1.7},
+          {<<: *floor, positionStart: 1.7,positionEnd: 2.55},
+          {<<: *floor, positionStart: 2.55,positionEnd: 3.4},
+          {<<: *floor, positionStart: 3.4,positionEnd: 4.25},
+          {<<: *floor, positionStart: 4.25,positionEnd: 5.1},
+          {<<: *floor, positionStart: 5.1,positionEnd: 5.95},
+          {<<: *floor, positionStart: 5.95,positionEnd: 6.8},
+          {<<: *floor, positionStart: 6.8,positionEnd: 7.65},
+          {<<: *floor, positionStart: 7.65,positionEnd: 8.5},
+          {<<: *floor, positionStart: 8.5,positionEnd: 9.35},
+          {<<: *floor, positionStart: 9.35,positionEnd: 10.2},
+          {<<: *floor, positionStart: 10.2,positionEnd: 11.05},
+          {<<: *floor, positionStart: 11.05,positionEnd: 11.7},
+          # {<<: *floor, positionStart: 11.9,positionEnd: 12.75},
+        ],
+    },
+    &trialTypeAB
+    {
+      trialTypeLabel: "6", # training level 0
+      corridorSegments:
+        [ 
+          {<<: *graywall, positionStart: 0, positionEnd: 0.5},
+          {<<: *graywall, positionStart: 0.5, positionEnd: 1}
+        ],
+        reward:
+        [
+          {
+            amountHigh: 1,
+            amountLow: 1,
+            probabilityHigh: 1,
+            location: .75,
+            delay: 0,
+          }
+        ],
+      teleport:
+        [
+          {
+            lockAtLocation: true,
+            location: 1,
+            endTrialOnTeleport: true,
+            lockAtLocationDuration: 0.85,
+            destination: 0,
+          }
+        ],
+      floorSegments:
+        [
+          {
+            name: Floor,
+            initialVisibility: true,
+            positionStart: 0,
+            positionEnd: 1,
+            texture: 6,
+          },
+        ],
+      optoStim:
+        [
+        {delay: 1, location: 0, waveformIndex: 0},
+        ],
+    },
+  ]

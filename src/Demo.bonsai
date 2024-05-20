@@ -8,11 +8,12 @@
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:mx="clr-namespace:Bonsai.DAQmx;assembly=Bonsai.DAQmx"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p4="clr-namespace:Bonsai.DAQmx;assembly=Extensions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:p5="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
@@ -31,7 +32,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:LoadSettings">
-                <p1:Path>PE_session.yml</p1:Path>
+                <p1:Path>PE_session_new.yml</p1:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -537,7 +538,7 @@
                       <gl:WrapT>Repeat</gl:WrapT>
                       <gl:MinFilter>Linear</gl:MinFilter>
                       <gl:MagFilter>Linear</gl:MagFilter>
-                      <gl:FileName>Assets\\Textures\\null.png</gl:FileName>
+                      <gl:FileName>Assets\\Textures\\Reward_84%.png</gl:FileName>
                       <gl:ColorType>Unchanged</gl:ColorType>
                       <gl:FlipMode>Vertical</gl:FlipMode>
                     </Combinator>
@@ -904,11 +905,127 @@ it.Item2.Time as Time
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
                     <FileName>FrameEvents.csv</FileName>
                   </Expression>
-                  <Expression xsi:type="SubscribeSubject">
+                  <Expression xsi:type="SubscribeSubject" TypeArguments="spk:SpinnakerDataFrame">
                     <Name>PupilCamera</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCamera.bonsai">
-                    <CameraName>PupilCamera</CameraName>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>Data</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="CameraName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="StringProperty">
+                            <Value>PupilCamera</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:AsyncSubject">
+                          <Name>CameraName</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Data</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ChunkData</Selector>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>FrameID,Timestamp</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>CameraName</Name>
+                        </Expression>
+                        <Expression xsi:type="Format">
+                          <Format>{0}_CameraMetadata.csv</Format>
+                          <Selector>it</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="FileName" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerCsv.bonsai">
+                          <FileName>PupilCamera_CameraMetadata.csv</FileName>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Data</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Image</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="cv:Crop">
+                            <cv:RegionOfInterest>
+                              <cv:X>325</cv:X>
+                              <cv:Y>218</cv:Y>
+                              <cv:Width>207</cv:Width>
+                              <cv:Height>162</cv:Height>
+                            </cv:RegionOfInterest>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>CameraName</Name>
+                        </Expression>
+                        <Expression xsi:type="Format">
+                          <Format>{0}_CameraVideo.avi</Format>
+                          <Selector>it</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="FileName" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>CameraFPS</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="FrameRate" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoggerVideo.bonsai">
+                          <FileName>PupilCamera_CameraVideo.avi</FileName>
+                          <FrameRate>30</FrameRate>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="12" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source2" />
+                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="15" To="21" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="21" Label="Source2" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source3" />
+                        <Edge From="21" To="22" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="IncludeWorkflow" Path="Extensions\LoggerCamera.bonsai">
+                      <CameraName>PupilCamera</CameraName>
+                    </Builder>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>BodyCamera</Name>
@@ -950,11 +1067,12 @@ it.Item2.Time as Time
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -978,13 +1096,13 @@ it.Item2.Time as Time
                 <gl:Height>500</gl:Height>
                 <gl:VSync>On</gl:VSync>
                 <gl:SwapSync>false</gl:SwapSync>
-                <gl:ClearColor>Gray</gl:ClearColor>
+                <gl:ClearColor>#48484A</gl:ClearColor>
                 <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                 <gl:CursorVisible>false</gl:CursorVisible>
                 <gl:Location xsi:nil="true" />
                 <gl:WindowBorder>Resizable</gl:WindowBorder>
                 <gl:WindowState>Fullscreen</gl:WindowState>
-                <gl:DisplayDevice>First</gl:DisplayDevice>
+                <gl:DisplayDevice>Primary</gl:DisplayDevice>
                 <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                 <gl:TargetUpdateFrequency xsi:nil="true" />
                 <gl:RenderState />
@@ -1060,7 +1178,7 @@ it.Item2.Time as Time
                 <Z>0</Z>
               </Eye>
               <NearClip>1E-05</NearClip>
-              <FarClip>2</FarClip>
+              <FarClip>2.5</FarClip>
               <Light>
                 <X>0</X>
                 <Y>0</Y>
@@ -1073,53 +1191,13 @@ it.Item2.Time as Time
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:RenderCubemap">
                 <gl:RenderState />
-                <gl:ClearColor>DimGray</gl:ClearColor>
+                <gl:ClearColor>#48484A</gl:ClearColor>
                 <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                 <gl:FaceSize xsi:nil="true" />
                 <gl:InternalFormat>Rgb</gl:InternalFormat>
                 <gl:MinFilter>Linear</gl:MinFilter>
                 <gl:MagFilter>Linear</gl:MagFilter>
               </Combinator>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ScreenCalibrationSettings</Name>
-            </Expression>
-            <Expression xsi:type="Index">
-              <Operand xsi:type="IntProperty">
-                <Value>0</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Width" Selector="DisplayWidth" />
-                <Property Name="Height" Selector="DisplayHeight" />
-                <Property Name="Rotation" Selector="Rotation" />
-                <Property Name="Translation" Selector="Translation" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
-              <Width>0.6</Width>
-              <Height>0.34</Height>
-              <Rotation>
-                <X>0</X>
-                <Y>40.10704565915762</Y>
-                <Z>0</Z>
-              </Rotation>
-              <Translation>
-                <X>0.4</X>
-                <Y>-0.01</Y>
-                <Z>0.2</Z>
-              </Translation>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>LeftScreen</Name>
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
-              <X>0</X>
-              <Y>0</Y>
-              <Width>0.5</Width>
-              <Height>1</Height>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ScreenCalibrationSettings</Name>
@@ -1142,12 +1220,52 @@ it.Item2.Time as Time
               <Height>0.34</Height>
               <Rotation>
                 <X>0</X>
-                <Y>-40.10704565915762</Y>
+                <Y>-39.5340878640268</Y>
                 <Z>0</Z>
               </Rotation>
               <Translation>
-                <X>-0.4</X>
-                <Y>-0.01</Y>
+                <X>-0.46</X>
+                <Y>0.03</Y>
+                <Z>0.2</Z>
+              </Translation>
+            </Expression>
+            <Expression xsi:type="Annotation">
+              <Name>LeftScreen</Name>
+              <Text><![CDATA[]]></Text>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
+              <X>0</X>
+              <Y>0</Y>
+              <Width>0.5</Width>
+              <Height>1</Height>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ScreenCalibrationSettings</Name>
+            </Expression>
+            <Expression xsi:type="Index">
+              <Operand xsi:type="IntProperty">
+                <Value>0</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Width" Selector="DisplayWidth" />
+                <Property Name="Height" Selector="DisplayHeight" />
+                <Property Name="Rotation" Selector="Rotation" />
+                <Property Name="Translation" Selector="Translation" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
+              <Width>0.6</Width>
+              <Height>0.34</Height>
+              <Rotation>
+                <X>0</X>
+                <Y>39.5340878640268</Y>
+                <Z>0</Z>
+              </Rotation>
+              <Translation>
+                <X>0.46</X>
+                <Y>0.03</Y>
                 <Z>0.2</Z>
               </Translation>
             </Expression>
@@ -1275,7 +1393,7 @@ Value as Time)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="GreaterThanOrEqual">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                                  <Value>226</Value>
+                                  <Value>284</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -1339,13 +1457,13 @@ Value as Time)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
                     <ExtentX>0.5</ExtentX>
                     <ExtentY>1</ExtentY>
-                    <LocationX>-0.302325577</LocationX>
+                    <LocationX>7.75</LocationX>
                     <LocationY>4</LocationY>
                     <Layer>10</Layer>
                     <Angle>0</Angle>
-                    <ColorR>0</ColorR>
-                    <ColorG>0</ColorG>
-                    <ColorB>0</ColorB>
+                    <ColorR>1</ColorR>
+                    <ColorG>1</ColorG>
+                    <ColorB>1</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1664,7 +1782,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                                           <Expression xsi:type="Combinator">
                                             <Combinator xsi:type="cv:ResizeCanvas">
                                               <cv:Size>
-                                                <cv:Width>1500</cv:Width>
+                                                <cv:Width>30000</cv:Width>
                                                 <cv:Height>1</cv:Height>
                                               </cv:Size>
                                               <cv:BorderType>Constant</cv:BorderType>
@@ -1849,7 +1967,7 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>10</Value>
+                            <Value>100</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -1898,14 +2016,14 @@ it.Item1 / it.Item2 as NumBuffersPerSecond)</scr:Expression>
                             <p4:SampleRate>1000</p4:SampleRate>
                             <p4:ActiveEdge>Rising</p4:ActiveEdge>
                             <p4:SampleMode>ContinuousSamples</p4:SampleMode>
-                            <p4:BufferSize>10</p4:BufferSize>
+                            <p4:BufferSize>100</p4:BufferSize>
                             <p4:SamplesPerChannel xsi:nil="true" />
                             <p4:Channels>
                               <p4:AnalogInputChannelConfiguration>
                                 <p4:ChannelName>LickDetector</p4:ChannelName>
                                 <p4:MinimumValue>-10</p4:MinimumValue>
                                 <p4:MaximumValue>10</p4:MaximumValue>
-                                <p4:PhysicalChannel>Dev1/ai1</p4:PhysicalChannel>
+                                <p4:PhysicalChannel>Dev1/ai0</p4:PhysicalChannel>
                                 <p4:TerminalConfiguration>Differential</p4:TerminalConfiguration>
                                 <p4:VoltageUnits>Volts</p4:VoltageUnits>
                               </p4:AnalogInputChannelConfiguration>
@@ -2243,7 +2361,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                                   <p4:Channel>Dev1/ctr3</p4:Channel>
                                   <p4:InitialDelay>0</p4:InitialDelay>
                                   <p4:LowTime>0.1</p4:LowTime>
-                                  <p4:HighTime>0.05</p4:HighTime>
+                                  <p4:HighTime>0.2</p4:HighTime>
                                   <p4:NumberOfPulses>1</p4:NumberOfPulses>
                                 </Combinator>
                               </Expression>
@@ -2322,6 +2440,33 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                       <p1:Binning>2</p1:Binning>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MemberSelector">
+                      <Selector>Image</Selector>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="cv:Crop">
+                        <cv:RegionOfInterest>
+                          <cv:X>200</cv:X>
+                          <cv:Y>100</cv:Y>
+                          <cv:Width>150</cv:Width>
+                          <cv:Height>100</cv:Height>
+                        </cv:RegionOfInterest>
+                      </Combinator>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MemberSelector">
+                      <Selector>ChunkData</Selector>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Zip" />
+                    </Builder>
+                  </Expression>
                   <Expression xsi:type="rx:PublishSubject">
                     <Name>PupilCamera</Name>
                   </Expression>
@@ -2361,11 +2506,16 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                   <Edge From="5" To="7" Label="Source1" />
                   <Edge From="6" To="7" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="13" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="7" To="10" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="11" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="17" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="17" To="18" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2402,7 +2552,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="dsp:Threshold">
-                            <dsp:ThresholdValue>0.4585635359116022</dsp:ThresholdValue>
+                            <dsp:ThresholdValue>0.872093023255814</dsp:ThresholdValue>
                             <dsp:MaxValue>1</dsp:MaxValue>
                             <dsp:ThresholdType>Binary</dsp:ThresholdType>
                           </Combinator>
@@ -2549,7 +2699,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>12</Value>
+                      <Value>24</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2662,7 +2812,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0.2</gl:Y>
-                <gl:Z>5</gl:Z>
+                <gl:Z>0.297600031</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -2697,7 +2847,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Multiply">
               <Operand xsi:type="FloatProperty">
-                <Value>0.001</Value>
+                <Value>0.00119999994</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Disable">
@@ -2743,7 +2893,7 @@ Item2.Item2 as RenderElapsedTime)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.001</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3439,6 +3589,16 @@ Frame.Time as Time
             <Expression xsi:type="MemberSelector">
               <Selector>Image</Selector>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Crop">
+                <cv:RegionOfInterest>
+                  <cv:X>325</cv:X>
+                  <cv:Y>218</cv:Y>
+                  <cv:Width>207</cv:Width>
+                  <cv:Height>162</cv:Height>
+                </cv:RegionOfInterest>
+              </Combinator>
+            </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
               <Name>BodyCamera</Name>
@@ -3475,34 +3635,35 @@ Frame.Time as Time
             <Edge From="10" To="11" Label="Source5" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="40" Label="Source1" />
+            <Edge From="13" To="41" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="40" Label="Source2" />
+            <Edge From="15" To="41" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="40" Label="Source3" />
+            <Edge From="19" To="41" Label="Source3" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="40" Label="Source4" />
+            <Edge From="23" To="41" Label="Source4" />
             <Edge From="24" To="25" Label="Source1" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="40" Label="Source5" />
+            <Edge From="26" To="41" Label="Source5" />
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="31" Label="Source1" />
             <Edge From="30" To="31" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
-            <Edge From="33" To="40" Label="Source6" />
+            <Edge From="33" To="41" Label="Source6" />
             <Edge From="34" To="35" Label="Source1" />
             <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="40" Label="Source7" />
-            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="41" Label="Source7" />
             <Edge From="38" To="39" Label="Source1" />
-            <Edge From="39" To="40" Label="Source8" />
-            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="40" To="41" Label="Source8" />
+            <Edge From="41" To="42" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3528,7 +3689,7 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gli:KeyDown">
-                <gli:Key>A</gli:Key>
+                <gli:Key>M</gli:Key>
                 <gli:Modifiers xsi:nil="true" />
               </Combinator>
             </Expression>
@@ -3539,7 +3700,7 @@ Frame.Time as Time
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gli:KeyDown">
-                <gli:Key>D</gli:Key>
+                <gli:Key>N</gli:Key>
                 <gli:Modifiers xsi:nil="true" />
               </Combinator>
             </Expression>
